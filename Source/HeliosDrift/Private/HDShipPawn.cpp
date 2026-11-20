@@ -6,6 +6,9 @@
 #include "HDFittingComponent.h"
 #include "HDCargoComponent.h"
 #include "HDCatalog.h"
+#include "HDEconomy.h"
+#include "HDWreckActor.h"
+#include "HDPlayerState.h"
 #include "HDPlayerController.h"
 #include "HeliosDrift.h"
 #include "Components/BoxComponent.h"
@@ -122,21 +125,31 @@ float AHDShipPawn::TakeDamage(float Damage, FDamageEvent const& Event, AControll
 	FVector Dir = Causer ? (GetActorLocation() - Causer->GetActorLocation()).GetSafeNormal() : FVector::ZeroVector;
 	if (Dir.IsNearlyZero()) { Dir = -GetActorForwardVector(); } // unknown source: treat as a hit on the fore facing
 	const float Overflow = Shields ? Shields->AbsorbDamage(Damage, Dir) : Damage;
+	const float HPBefore = HullHP;
 	HullHP = FMath::Max(0.f, HullHP - Overflow);
 	if (Movement) { Movement->DropOut(true); } // any hit interdicts slipstream / spool
 
 	if (HullHP <= 0.f)
 	{
 		UE_LOG(LogHelios, Log, TEXT("Ship %s destroyed"), *GetName());
-		// TODO(M2): spawn wreck, report loss to backend.
 		AController* C = GetController();
 		UWorld* World = GetWorld();
 		if (Laser) { Laser->StopFiringAuthority(); }
+		SpawnDeathWreck(Overflow - HPBefore);
+		OnAnyShipDestroyed().Broadcast(this, Inst);
 		if (C) { C->UnPossess(); }
 		Destroy();
 		if (C && World)
 		{
-			if (AGameModeBase* GM = World->GetAuthGameMode()) { GM->RestartPlayer(C); }
+			// Only pilots respawn; NPC controllers are cleaned up by the NPC layer.
+			if (C->IsPlayerController())
+			{
+				if (AGameModeBase* GM = World->GetAuthGameMode()) { GM->RestartPlayer(C); }
+			}
+			else
+			{
+				C->Destroy();
+			}
 		}
 	}
 	return Damage;
@@ -336,4 +349,38 @@ void AHDShipPawn::SetPower(const FVector4& WSEA)
 	TArray<float> Alloc;
 	Alloc.Add((float)WSEA.X); Alloc.Add((float)WSEA.Y); Alloc.Add((float)WSEA.Z); Alloc.Add((float)WSEA.W);
 	Power->ServerSetAllocation(Alloc);
+}
+
+void AHDShipPawn::SpawnDeathWreck(float Overkill)
+{
+	UWorld* World = GetWorld();
+	if (!World || !Fitting || Fitting->HullId.IsNone()) return;
+	// Clean kills leave better wrecks (doc 16): overkill relative to max hull HP sets the grade.
+	const float MaxHP = FMath::Max(1.f, Fitting->Stats.HP);
+	const float Ratio = FMath::Max(0.f, Overkill) / MaxHP;
+	const int32 Grade = Ratio < 0.05f ? 0 : Ratio < 0.15f ? 1 : Ratio < 0.35f ? 2 : Ratio < 0.7f ? 3 : 4;
+	TArray<FName> Mods = Fitting->Modules;
+	Mods.RemoveAll([](const FName& M) { return M.IsNone(); });
+	AHDWreckActor* W = UHDEconomySubsystem::SpawnWreck(World, SystemIndex, GetActorLocation(), Fitting->HullId, Mods, Grade, 0, false);
+	if (!W) return;
+	if (const AHDPlayerState* PS = GetPlayerState<AHDPlayerState>()) W->VictimPilot = PS->PilotId;
+	if (Cargo)
+	{
+		// Part of the hold survives the kill as loot.
+		for (const FHDItemStack& S : Cargo->Items)
+		{
+			const int32 Kept = FMath::FloorToInt(S.Qty * FMath::FRandRange(0.4f, 0.9f));
+			if (Kept <= 0) continue;
+			FHDItemStack L = S;
+			L.Qty = Kept;
+			W->Loot.Add(L);
+		}
+		Cargo->Items.Reset();
+	}
+}
+
+FHDOnShipDestroyed& AHDShipPawn::OnAnyShipDestroyed()
+{
+	static FHDOnShipDestroyed Delegate;
+	return Delegate;
 }

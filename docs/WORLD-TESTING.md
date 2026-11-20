@@ -139,8 +139,64 @@ Test commands are compiled out of Shipping builds.
 
 ### Checklist
 - [ ] On spawn the HUD shows `SHIP Lance power 44/100 MW stability 61/100`. From outside (a second PIE client), the Lance has two guns on top, a mast, a side pod and a bulky rear hold.
-- [ ] Dock: `Starter kit delivered`. `HDCmd storage` lists it. `HDCmd fit 2 autocannon_s` works, and the HUD power goes up. `HDCmd fit 5 reactor_s` is refused (wrong slot type; `fitting` shows support slots 5–6).
+- [ ] Dock: `Starter kit delivered`. `HDCmd storage` lists it. `HDCmd fit 2 autocannon_s` works, and the HUD power goes up. `HDCmd give reactor_s`, then `HDCmd fit 4 reactor_s` is refused (slot 4 is a utility slot; `fitting` shows support slots 5–6, where `fit 6 reactor_s` works).
 - [ ] Overfit power: `HDCmd give railgun_m 3` won't fit on a Lance (too large). `hull harrier`, then fit three railguns: power or stability refuses the last one.
 - [ ] `HDCmd buyhull lance`, then `HDCmd board 0`: you're in a bare Lance (no drive, so it's slow). `board 0` again brings back the old ship.
 - [ ] `HDCmd buyhull ironvale` at a Halvar station: refused without standing. After `HDCmd standing halvar_combine 5` it works, and `sellhull` on it is refused.
 - [ ] `HDCmd hull monolith`: a huge ship, jump drive fitted, `HDCmd navstatus` shows 3.5 ly range. `HDCmd unfit` on the jump-drive slot while docked, then the galaxy map: no range ring, and jumping is refused.
+
+## 4. Economy (milestone 4)
+
+**What's in:** `UHDEconomySubsystem` (game instance, ticked by the system director), `AHDWreckActor`, mining / salvage / gas on the fire trigger, and the economy console verbs in `HDEconomyCommands.cpp`.
+
+- **Mining (doc 16):** aim the mining laser at a rock within 3 km and fire. Belts need a stable orbit (ship speed under 50 m/s); ice needs a near-stationary hold (under 10 m/s) and cuts at 0.6×. Deep-core rocks yield 1.5×. Ore, ice and gas go to the ore hold first. Rocks mine out and vanish.
+- **Regional consumption:** every unit mined counts against its region. Richness = 1 − mined / 40 000 (floor 0.2), recovering with a 12 h time constant. Belts stream in with `RocksPerField × richness` rocks, and mined-out rocks come back at about one per minute × richness.
+- **Industrial command boost:** a ship with `command_burst_m/l` within 50 km boosts its corp-mates' mining and gas rates by 25% / 40%. It doesn't boost itself.
+- **Gas:** a fitted `gas_siphon` works automatically while you're slow (<50 m/s) in normal flight, either inside a gas-cloud pocket (finite) or within 50 km of a gas giant's cloud tops (unlimited, × this week's density: Rare 0.4, Consistent 1, Abundant 1.8).
+- **Fuel platforms (doc 19):** NPC gas-giant platforms regenerate stock with the week's density. Jump fuel costs 120 cr/t × (Rare 1.6, Consistent 1, Abundant 0.7). Ship fuel is 25 cr/t at platforms and 40 elsewhere. `buyfuel` loads jump fuel as cargo to haul; `loadfuel` moves it into a capital's jump tank.
+- **NPC markets (doc 03):** prices derive from catalog reference prices.
+  - Raw goods: NPCs buy at 60% everywhere and sell at 130% only at refineries and industrial stations.
+  - Refined goods: bought at 70%, sold at 120%.
+  - Components: bought at 75% (players make them).
+  - Salvage: bought at 70%. Modules: bought back at 30%.
+  - Trade goods: each station deterministically produces (cheap), consumes (expensive) or ignores each good.
+  - Contraband: only at pirate stations. Pirate tags are bought at Accord stations (+Accord standing).
+  - Pirate stations buy anything and sell goods marked stolen.
+  - Stock drift moves prices between 0.6× and 1.8× and relaxes back over time. A lane cut in the system raises trade-good prices by 25%.
+  - Sales tax is 2% (1% at Accord stations, 0 at pirate stations); the broker fee for placing an order is 1%.
+- **Player orders:** placed at a station, visible region-wide (`regionorders`), filled only at that station. Sell orders escrow the goods; buy orders escrow the credits. `buy` / `sell` fill the best player orders first when they beat the NPC price. Sellers are paid the price minus tax; offline sellers are paid at their next login.
+- **Industry:** `recipes` / `refine` / `build` run jobs at the right facility. Refinery recipes need `bRefinery`, shipyard recipes need a shipyard, and factory recipes need an industrial or corporate station (or a shipyard). Inputs come from storage here, then the hold. Outputs go to storage at that station; built hulls go to the hangar as bare ships.
+- **Wrecks (doc 16):**
+  - Every ship kill leaves a graded wreck. Grade follows overkill: a clean kill is G-A, a massive overkill is G-E. The wreck keeps the fit and 40–90% of the hold as loot.
+  - Hulk sites stream in 1–3 class-matched hulks at G-B…G-D. Derelict stations and sentinel vaults hold ancient G-D/G-E derelicts.
+  - Hulks need a breach flag allowed by their class: 1 Solo/Corp, 2 any, 3 Open/Corp, 4 Open only. The flag is broadcast within 12 AU and starts a collapse clock (Solo 40 min, Corp 2 h, Open 4 h). Open pays 2× materials and can drop relics; Corp pays 1.4×.
+  - Each salvage pass (8 × size × (1 + 0.5 × class) work units) recovers modules (G-A 80–95%, B 60%, C 40%, D 20%, E 5%) and materials, then drops one grade. Untouched wrecks also drop a grade per 24 h.
+  - Picked-clean hulk sites stay cleared until the weekly re-roll.
+- **Rebuild:** tow a G-A…G-D wreck with a tractor beam (size limit 2 / 4 / 6 for S / M / L) to a shipyard and `rebuild` it. It costs 30 / 45 / 60 / 80% of the hull price, and the ship comes back to the hangar with a `recovered` tag and its surviving modules.
+
+### Console
+| Command | Does |
+|---|---|
+| `HDCmd market [filter]` | Docked: NPC buy/sell and best player orders per item. |
+| `HDCmd buy <item> [qty] [maxprice]` / `sell <item> [qty\|all]` | Trade from the hold (overflow goes to storage). |
+| `HDCmd order buy\|sell <item> <qty> <price>` / `orders` / `cancelorder <id>` | Player orders at this station. |
+| `HDCmd regionorders <item>` | Orders for an item anywhere in your region. |
+| `HDCmd recipes [filter]` / `refine <recipe> [runs]` / `build <recipe or output> [runs]` / `jobs` | Industry. |
+| `HDCmd fuelprice` / `buyfuel <t>` / `loadfuel [t]` | Fuel platform prices, jump fuel as cargo, filling the jump tank. |
+| `HDCmd salvageinfo` / `breach solo\|open\|corp` / `loot` / `tow` / `release` / `rebuild` | Wrecks (target one or be within 3 km). |
+| `HDCmd spawnwreck [hull] [grade] [class]` | **Test:** a wreck 2 km ahead. |
+| `HDCmd econ` / `mined <units>` | **Test:** regional richness readout / simulate heavy mining. |
+
+### Checklist
+- [ ] Fly into a belt, stop, aim at a rock and fire: `ore_*` fills the ore hold (`HDCmd cargo`). Moving faster than 50 m/s shows `Match the rock`. Mine a small rock out and it disappears.
+- [ ] `HDCmd mined 30000`, then `econ`: richness ≈ 0.25. Leave the belt (stream-out) and come back: fewer rocks.
+- [ ] Dock at a refinery or industrial station: `market ore` shows NPC sells and buys. `sell ore_ferrite all` pays about 60% of 12 cr each, minus 2% tax.
+- [ ] `order sell ore_crystal 10 60`: the ore leaves the hold and `orders` lists it. From a second PIE client docked at the same station, `buy ore_crystal 10` fills it, and the first client gets `Market: +588 cr`.
+- [ ] `cancelorder <id>` returns goods to storage, or credits for a buy order.
+- [ ] `recipes refinery`, then `give ore_ferrite 100`, `store ore_ferrite 100`, `refine <recipe>`: `jobs` counts down, and the output lands in `storage`.
+- [ ] `hull siphon`, then fly to within 50 km of a gas giant's cloud tops and slow down: `gas_nebular` accumulates. A Rare week is visibly slower.
+- [ ] At a fuel platform: `fuelprice` changes with the gas giant's weekly density. `hull monolith`, `buyfuel 50`, `loadfuel` fills the jump tank.
+- [ ] `spawnwreck lance 0`, then aim the salvager (`hull gleaner`) and fire: a pass completes with modules and salvage, and the grade drops to G-B. `loot` takes 5 alloy.
+- [ ] `spawnwreck lance 1 1`: `salvageinfo` says unbreached (Solo/Corp allowed); `breach open` is refused; `breach solo` broadcasts. A second client is told someone else holds it.
+- [ ] `give tractor_beam_s`, fit it to a utility slot, `spawnwreck lance 0`, `tow`, fly to a shipyard, dock, `rebuild`: the hangar shows a recovered Lance.
+- [ ] Kill a ship (the target drone or a second client): a wreck appears where it died.

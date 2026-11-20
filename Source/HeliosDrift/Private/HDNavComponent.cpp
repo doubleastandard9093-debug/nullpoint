@@ -1,4 +1,5 @@
 #include "HDNavComponent.h"
+#include "HDEconomy.h"
 #include "HDShipPawn.h"
 #include "HDShipMovementComponent.h"
 #include "HDShipTypes.h"
@@ -546,7 +547,10 @@ void UHDNavComponent::Refuel(float Fraction)
 	const float Avail = St->FuelStock;
 	const float ShipT = FMath::Min(ShipNeed, Avail);
 	const float JumpT = FMath::Max(0.f, FMath::Min(JumpNeed, Avail - ShipT));
-	const int64 Cost = (int64)(ShipT * 40.f + JumpT * 120.f);
+	const UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this);
+	const float ShipPrice = Econ ? (float)Econ->ShipFuelPrice(St) : 40.f;
+	const float JumpPrice = Econ ? (float)Econ->JumpFuelPrice(St) : 120.f;
+	const int64 Cost = (int64)FMath::CeilToDouble(ShipT * ShipPrice + JumpT * JumpPrice);
 	if (ShipT + JumpT <= 0.f) { Notify(MaxJumpFuel > 0.f && !St->Info.bFuelStation ? TEXT("Tanks full. Jump fuel is sold at gas-giant fuel platforms.") : TEXT("Tanks full.")); return; }
 	if (!PS->TrySpend(Cost)) { Notify(FString::Printf(TEXT("Need %lld cr"), Cost)); return; }
 	ShipFuel += ShipT;

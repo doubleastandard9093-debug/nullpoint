@@ -1,4 +1,5 @@
 #include "HDGameMode.h"
+#include "HDEconomy.h"
 #include "HDShipPawn.h"
 #include "HDPlayerController.h"
 #include "HDPlayerState.h"
@@ -103,6 +104,11 @@ void AHDGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 	const FString Pilot = PilotIdFor(NewPlayer);
+	if (AHDPlayerState* HPS = NewPlayer ? NewPlayer->GetPlayerState<AHDPlayerState>() : nullptr)
+	{
+		HPS->PilotId = Pilot;
+		if (UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this)) Econ->ClaimPending(HPS);
+	}
 	UE_LOG(LogHelios, Log, TEXT("Pilot %s joined"), *Pilot);
 
 	TWeakObjectPtr<APlayerController> WeakPC(NewPlayer);

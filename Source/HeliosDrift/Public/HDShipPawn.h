@@ -17,6 +17,8 @@ class AHDPlayerController;
 class USceneComponent;
 class UCameraComponent;
 struct FInputActionValue;
+class AHDShipPawn;
+DECLARE_MULTICAST_DELEGATE_TwoParams(FHDOnShipDestroyed, AHDShipPawn* /*Victim*/, AController* /*Killer*/);
 
 /** Player ship: 6DoF movement, power, 4-facing shields, laser, cockpit camera (flat + VR). */
 UCLASS()
@@ -26,6 +28,10 @@ class HELIOSDRIFT_API AHDShipPawn : public APawn
 public:
 	AHDShipPawn();
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& Event, AController* Instigator, AActor* Causer) override;
+	/** Server: every ship death (victim, killer controller) for security response, bounties and standing (M5). */
+	static FHDOnShipDestroyed& OnAnyShipDestroyed();
+	/** Server: leave a graded wreck with the fit and part of the hold (doc 16). */
+	void SpawnDeathWreck(float Overkill);
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual FVector GetVelocity() const override;
 	virtual void BeginPlay() override;

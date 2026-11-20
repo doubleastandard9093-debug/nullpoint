@@ -4,3 +4,8 @@ bool AHDPlayerController::HandleNpcCommand(const FString& Verb, const FString& A
 {
 	return false; // M5
 }
+
+void AHDPlayerController::OnWreckLooted(AHDWreckActor* Wreck)
+{
+	Notify(TEXT("Looted another pilot's wreck.")); // M5: criminal flag in lawful space
+}

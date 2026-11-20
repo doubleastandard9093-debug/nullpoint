@@ -6,6 +6,10 @@
 #include "HDNavComponent.h"
 #include "HDTargetDrone.h"
 #include "HDGameMode.h"
+#include "HDEconomy.h"
+#include "HDCatalog.h"
+#include "HDFittingComponent.h"
+#include "HDWreckActor.h"
 #include "HeliosDrift.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -317,7 +321,12 @@ AHDSiteActor* AHDSystemDirector::FindSite(int32 System, int32 SiteIndex) const
 void AHDSystemDirector::AddTransient(int32 System, AActor* Actor)
 {
 	if (!Actor) return;
-	if (FHDActiveSystem* A = FindActive(System)) { A->Transient.Add(Actor); }
+	// An actor belongs to one system: moving (e.g. a towed wreck) must not leave it in the old system's cleanup list.
+	for (FHDActiveSystem& Other : Active)
+	{
+		if (Other.System != System) Other.Transient.RemoveAll([Actor](const TWeakObjectPtr<AActor>& P) { return P.Get() == Actor; });
+	}
+	if (FHDActiveSystem* A = FindActive(System)) { A->Transient.AddUnique(Actor); }
 }
 
 void AHDSystemDirector::Tick(float DeltaSeconds)
@@ -364,12 +373,18 @@ void AHDSystemDirector::Tick(float DeltaSeconds)
 		StreamSites(A, Ships, DeltaSeconds);
 		TickAmbient(A, Ships, DeltaSeconds);
 	}
+
+	if (UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this)) Econ->Tick(DeltaSeconds, GetWorld());
 }
 
 void AHDSystemDirector::StreamFields(FHDActiveSystem& A, const TArray<AHDShipPawn*>& Ships, float Dt)
 {
+	const UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this);
+	const float Richness = Econ ? Econ->GetRegionRichness(A.Region) : 1.f;
 	for (FHDFieldStream& F : A.Fields)
 	{
+		// Mined-out rocks return at about one per minute in an untouched region, slower where mining is heavy (doc 16).
+		if (F.RespawnDebt > 0.f) F.RespawnDebt = FMath::Max(0.f, F.RespawnDebt - Dt * Richness / 60.f);
 		bool bNear = false;
 		for (const AHDShipPawn* S : Ships)
 		{
@@ -400,8 +415,10 @@ void AHDSystemDirector::SpawnFieldRocks(FHDActiveSystem& A, FHDFieldStream& F)
 	UWorld* World = GetWorld();
 	if (!World) return;
 	FRandomStream R((int32)HDUniverse::Mix(GetTypeHash(F.Field.Id), (uint32)LastWeek));
-	// Mined-out rocks come back slowly: debt is paid off over time by the economy layer (doc 16).
-	const int32 Count = FMath::Max(4, RocksPerField - FMath::FloorToInt(F.RespawnDebt));
+	// Mined-out rocks come back slowly, and heavily mined regions stream in thinner belts (doc 16).
+	const UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this);
+	const float Richness = Econ ? Econ->GetRegionRichness(A.Region) : 1.f;
+	const int32 Count = FMath::Max(4, FMath::RoundToInt(RocksPerField * Richness) - FMath::FloorToInt(F.RespawnDebt));
 	for (int32 i = 0; i < Count; ++i)
 	{
 		const FVector Loc = F.World + R.GetUnitVector() * R.FRandRange(5000.f, 3.0e6f) * FVector(1.0, 1.0, 0.25);
@@ -446,6 +463,16 @@ void AHDSystemDirector::StreamSites(FHDActiveSystem& A, const TArray<AHDShipPawn
 void AHDSystemDirector::ClearSiteContents(AHDSiteActor* Site)
 {
 	if (!Site) return;
+	// A site whose wrecks were picked clean (or rocks mined out) stays cleared until the weekly re-roll,
+	// so streaming out and back can't refill it.
+	int32 Workable = 0, Total = 0;
+	for (const TObjectPtr<AActor>& C : Site->Contents)
+	{
+		if (const AHDWreckActor* W = Cast<AHDWreckActor>(C.Get())) { ++Total; if (W->Grade < 5) ++Workable; }
+		else if (const AHDAsteroidActor* R = Cast<AHDAsteroidActor>(C.Get())) { ++Total; if (!R->IsDepleted()) ++Workable; }
+		else if (C.Get() == nullptr) { ++Total; }
+	}
+	if (Total > 0 && Workable == 0) Site->bCleared = true;
 	for (TObjectPtr<AActor>& C : Site->Contents) { if (IsValid(C)) C->Destroy(); }
 	Site->Contents.Reset();
 }
@@ -468,6 +495,41 @@ void AHDSystemDirector::SpawnSiteContents(FHDActiveSystem& A, AHDSiteActor* Site
 			Rock->RegionIndex = A.Region;
 			Rock->FinishSpawning(FTransform(Loc));
 			Site->Contents.Add(Rock);
+		}
+	}
+	else if (Site->Site.Type == EHDSiteType::Hulk || Site->Site.Type == EHDSiteType::DerelictStation || Site->Site.Type == EHDSiteType::SentinelVault)
+	{
+		// Hulks: graded wrecks by class (doc 16). Class 1 small hulls ... Class 4 capitals. Grades B-D for hulks,
+		// D-E for station derelicts and sentinel vaults (ancient, mostly materials and relics).
+		const UHDCatalogSubsystem* Cat = UHDCatalogSubsystem::Get(this);
+		if (!Cat) return;
+		const int32 HClass = FMath::Clamp(Site->Site.HulkClass, 1, 4);
+		const bool bAncient = Site->Site.Type != EHDSiteType::Hulk;
+		TArray<FName> Pool;
+		for (const TPair<FName, FHDHullDef>& H : Cat->GetHulls())
+		{
+			const EHDHullClass K = H.Value.Class;
+			int32 Want = 1;
+			if (K >= EHDHullClass::Capital) Want = 4;
+			else if (K >= EHDHullClass::Battlecruiser) Want = 3;
+			else if (K == EHDHullClass::Cruiser) Want = 2;
+			if (Want == HClass && H.Value.Supply != EHDSupplyTier::Advanced) Pool.Add(H.Key);
+		}
+		if (Pool.Num() == 0) { for (const TPair<FName, FHDHullDef>& H : Cat->GetHulls()) Pool.Add(H.Key); }
+		if (Pool.Num() == 0) return;
+		Pool.Sort([](const FName& L, const FName& Rn) { return L.LexicalLess(Rn); }); // deterministic with the seed
+		const int32 Num = bAncient ? 1 : (HClass >= 3 ? 1 : R.RandRange(1, 3));
+		for (int32 i = 0; i < Num; ++i)
+		{
+			const FName Hull = Pool[R.RandRange(0, Pool.Num() - 1)];
+			TArray<FName> Mods = UHDFittingComponent::SuggestFit(Cat, Hull, R.FRand() < 0.5f);
+			Mods.RemoveAll([](const FName& M) { return M.IsNone(); });
+			const int32 Grade = bAncient ? R.RandRange(3, 4) : R.RandRange(1, 3);
+			const FVector Loc = C + R.GetUnitVector() * R.FRandRange(10000.f, 200000.f);
+			AHDWreckActor* W = UHDEconomySubsystem::SpawnWreck(World, A.System, Loc, Hull, Mods, Grade, HClass, Site->Site.Type == EHDSiteType::DerelictStation);
+			if (!W) continue;
+			W->SalvageTollOwner = Site->TollOwner;
+			Site->Contents.Add(W);
 		}
 	}
 }

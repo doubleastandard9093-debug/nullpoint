@@ -38,4 +38,16 @@ private:
 	void FireOnce();
 	bool bWantsFire = false;
 	float Cooldown = 0.f;
+	/** Server: tool work on rocks / wrecks / gas (M4). */
+	void MineRock(class AHDAsteroidActor* Rock, float Seconds);
+	void SalvageWreck(class AHDWreckActor* Wreck, float Seconds);
+	void TickGasSiphon(float Dt);
+	/** Fleet mining boost from nearby industrial command ships (doc 16: boosts the fleet, not the booster). */
+	float GetFleetBoost();
+	float MiningAccum = 0.f;
+	float GasTimer = 0.f;
+	float GasAccum = 0.f;
+	float BoostCache = 0.f;
+	float BoostTimer = 0.f;
+	float HoldFullWarn = 0.f;
 };

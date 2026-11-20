@@ -14,6 +14,7 @@ void AHDPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AHDPlayerState, Credits);
 	DOREPLIFETIME(AHDPlayerState, Corp);
+	DOREPLIFETIME(AHDPlayerState, PilotId);
 	DOREPLIFETIME(AHDPlayerState, bDuelFlag);
 	DOREPLIFETIME(AHDPlayerState, CriminalUntil);
 	DOREPLIFETIME_CONDITION(AHDPlayerState, Revealed, COND_OwnerOnly);

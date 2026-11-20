@@ -173,6 +173,8 @@ public:
 	bool HandleShipCommand(const FString& Verb, const FString& Arg, AActor* Target);
 	/** M4 economy verbs (HDEconomyCommands.cpp). */
 	bool HandleEconomyCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** Server: looted another pilot's wreck (theft in lawful space; doc 18). Implemented with the security layer. */
+	void OnWreckLooted(class AHDWreckActor* Wreck);
 	/** M5 NPC / law verbs (HDNpcCommands.cpp). */
 	bool HandleNpcCommand(const FString& Verb, const FString& Arg, AActor* Target);
 	/** M6 territory / building verbs (HDTerritoryCommands.cpp). */

@@ -34,6 +34,8 @@ public:
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") int64 Credits = 25000;
 	/** Company (corp) id. Empty = solo pilot. */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") FName Corp;
+	/** Stable pilot id (backend key), set by the GameMode at login. */
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") FString PilotId;
 	/** Opt-in duel flag: the only PVP allowed in Secured space (doc 15). */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") bool bDuelFlag = false;
 	/** Unix time until which this pilot is a criminal (attacked a lawful target in Secured/Restricted). */
