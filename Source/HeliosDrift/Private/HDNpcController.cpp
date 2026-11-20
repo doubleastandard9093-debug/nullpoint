@@ -14,7 +14,6 @@
 AHDNpcController::AHDNpcController()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	bWantsPlayerState = false;
 }
 
 const TCHAR* AHDNpcController::PopName(EHDNpcPop P)
