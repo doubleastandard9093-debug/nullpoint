@@ -128,10 +128,10 @@ void AHDGameMode::PostLogin(APlayerController* NewPlayer)
 		}
 		else if (Sys >= 0 && bValidPos)
 		{
-			const FString Pilot = PilotIdFor(WeakPC.Get());
-			GM->PendingSystem.Add(Pilot, Sys);
-			GM->PendingLocal.Add(Pilot, Rec.Location);
-			GM->PendingRot.Add(Pilot, Rec.Rotation);
+			const FString LoadedPilot = PilotIdFor(WeakPC.Get());
+			GM->PendingSystem.Add(LoadedPilot, Sys);
+			GM->PendingLocal.Add(LoadedPilot, Rec.Location);
+			GM->PendingRot.Add(LoadedPilot, Rec.Rotation);
 		}
 		UE_LOG(LogHelios, Log, TEXT("Loaded ship for %s: hull=%s hp=%.0f system=%s"), *Rec.PilotId, *Rec.Hull, Rec.HullHP, *Rec.SystemId);
 	}));

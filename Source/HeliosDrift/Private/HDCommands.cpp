@@ -84,9 +84,9 @@ void AHDPlayerController::HandleCommand(const FString& Verb, const FString& Arg,
 		if (Sys < 0) { Notify(TEXT("Not found")); return; }
 		const FHDStarSystem& S = U->GetSystemSkeleton(Sys);
 		const float D = Ship ? U->DistanceLy(Ship->SystemIndex, Sys) : 0.f;
-		const TArray<int32> Route = Ship ? U->FindGateRoute(Ship->SystemIndex, Sys) : TArray<int32>();
+		const TArray<int32> GateRoute = Ship ? U->FindGateRoute(Ship->SystemIndex, Sys) : TArray<int32>();
 		Notify(FString::Printf(TEXT("%s %s: %s, %.1f ly away, %s"), *S.Id.ToString(), *S.Name, HDUniverse::BandName(S.Band), D,
-			Route.Num() > 0 ? *FString::Printf(TEXT("%d gate jumps"), Route.Num() - 1) : TEXT("no gate route (wormholes or capital jump)")));
+			GateRoute.Num() > 0 ? *FString::Printf(TEXT("%d gate jumps"), GateRoute.Num() - 1) : TEXT("no gate route (wormholes or capital jump)")));
 		return;
 	}
 	if (Verb == TEXT("week"))
