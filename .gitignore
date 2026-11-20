@@ -16,3 +16,6 @@ Plugins/*/Intermediate/
 # backend
 backend/bin/
 .env
+
+build-log.txt
+build-errors.txt
