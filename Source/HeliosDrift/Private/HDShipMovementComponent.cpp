@@ -255,3 +255,25 @@ void UHDShipMovementComponent::UpdateTravelAuthority(float DeltaTime)
 		}
 	}
 }
+
+void UHDShipMovementComponent::TeleportAuthority(const FVector& Location, const FQuat& Rotation, bool bResetVelocity)
+{
+	AActor* Owner = GetOwner();
+	if (!Owner || !Owner->HasAuthority()) return;
+	Owner->SetActorLocationAndRotation(Location, Rotation, false, nullptr, ETeleportType::TeleportPhysics);
+	if (bResetVelocity) { Velocity = FVector::ZeroVector; AngularVelocity = FVector::ZeroVector; }
+	ServerState = CaptureState(FMath::Max(LastServerTimestamp, 0.f));
+	const APawn* Pawn = Cast<APawn>(Owner);
+	if (Pawn && !Pawn->IsLocallyControlled()) { ClientTeleport(ServerState); }
+}
+
+void UHDShipMovementComponent::ClientTeleport_Implementation(const FHDShipState& State)
+{
+	AActor* Owner = GetOwner();
+	if (!Owner) return;
+	// Drop predicted moves: they were made from the old place.
+	Unacked.Reset();
+	Owner->SetActorLocationAndRotation(State.Location, State.Rotation, false, nullptr, ETeleportType::TeleportPhysics);
+	Velocity = State.Velocity;
+	AngularVelocity = State.AngularVelocity;
+}

@@ -62,6 +62,9 @@ public:
 	/** Server: leave slipstream/spool. Interdicted adds a cooldown. */
 	void DropOut(bool bInterdicted);
 
+	/** Server: hard-move the ship (system change, dock, land) and tell the owning client to snap there. */
+	void TeleportAuthority(const FVector& Location, const FQuat& Rotation, bool bResetVelocity);
+
 	UFUNCTION(BlueprintPure, Category = "Flight") EHDTravelMode GetTravelMode() const { return TravelMode; }
 	UFUNCTION(BlueprintPure, Category = "Flight") FVector GetShipVelocity() const { return Velocity; }
 	UFUNCTION(BlueprintPure, Category = "Flight") float GetSpeedCap() const;
@@ -98,6 +101,7 @@ public:
 protected:
 	UFUNCTION(Server, Unreliable) void ServerMove(const FHDShipMove& Move);
 	UFUNCTION(Client, Unreliable) void ClientAck(const FHDShipState& State);
+	UFUNCTION(Client, Reliable) void ClientTeleport(const FHDShipState& State);
 
 	UPROPERTY(Replicated) EHDTravelMode TravelMode = EHDTravelMode::Normal;
 	UPROPERTY(Replicated) FHDShipState ServerState;

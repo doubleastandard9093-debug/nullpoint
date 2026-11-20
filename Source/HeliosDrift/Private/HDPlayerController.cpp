@@ -5,6 +5,10 @@
 #include "InputModifiers.h"
 #include "InputCoreTypes.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/DirectionalLight.h"
+#include "Components/LightComponent.h"
+#include "Engine/World.h"
+#include "HDShipPawn.h"
 
 namespace
 {
@@ -54,8 +58,74 @@ namespace
 void AHDPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	if (IsLocalController()) { GetFlightInput(); }
+	if (IsLocalController())
+	{
+		GetFlightInput();
+		if (UWorld* World = GetWorld())
+		{
+			FActorSpawnParameters P;
+			P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			P.ObjectFlags |= RF_Transient;
+			StarLight = World->SpawnActor<ADirectionalLight>(ADirectionalLight::StaticClass(), FTransform::Identity, P);
+			if (StarLight && StarLight->GetLightComponent())
+			{
+				StarLight->GetLightComponent()->SetMobility(EComponentMobility::Movable);
+				StarLight->GetLightComponent()->SetIntensity(4.f);
+			}
+		}
+	}
 }
+
+void AHDPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	if (StarLight)
+	{
+		if (const AHDShipPawn* Ship = Cast<AHDShipPawn>(GetPawn()))
+		{
+			const FVector Dir = (Ship->GetActorLocation() - Ship->SystemOrigin).GetSafeNormal();
+			if (!Dir.IsNearlyZero()) { StarLight->SetActorRotation(Dir.Rotation()); }
+		}
+	}
+	const float Now = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.f;
+	while (MessageTimes.Num() > 0 && (Now - MessageTimes[0] > 8.f || MessageTimes.Num() > 6))
+	{
+		MessageTimes.RemoveAt(0);
+		if (Messages.Num() > 0) Messages.RemoveAt(0);
+	}
+}
+
+void AHDPlayerController::Cmd(const FString& Verb, const FString& Arg, AActor* Target)
+{
+	ServerCommand(Verb, Arg, Target);
+}
+
+void AHDPlayerController::ServerCommand_Implementation(const FString& Verb, const FString& Arg, AActor* Target)
+{
+	if (Verb.Len() > 32 || Arg.Len() > 256) return;
+	HandleCommand(Verb.ToLower(), Arg, Target);
+}
+
+void AHDPlayerController::ClientNotify_Implementation(const FString& Msg)
+{
+	Messages.Add(Msg);
+	MessageTimes.Add(GetWorld() ? GetWorld()->GetTimeSeconds() : 0.f);
+	UE_LOG(LogTemp, Display, TEXT("[Nullpoint] %s"), *Msg);
+}
+
+void AHDPlayerController::Notify(const FString& Msg)
+{
+	ClientNotify(Msg); // on a listen-server host this runs locally
+}
+
+void AHDPlayerController::HDGoto(const FString& System) { Cmd(TEXT("goto"), System); }
+void AHDPlayerController::HDSystemInfo() { Cmd(TEXT("systeminfo")); }
+void AHDPlayerController::HDGalaxy(const FString& RadiusLy) { Cmd(TEXT("galaxy"), RadiusLy); }
+void AHDPlayerController::HDFind(const FString& Name) { Cmd(TEXT("find"), Name); }
+void AHDPlayerController::HDWeek(const FString& Week) { Cmd(TEXT("week"), Week); }
+void AHDPlayerController::HDRevealAll() { Cmd(TEXT("revealall")); }
+void AHDPlayerController::HDGas() { Cmd(TEXT("gas")); }
+void AHDPlayerController::HDCmd(const FString& Verb, const FString& Arg) { Cmd(Verb, Arg); }
 
 void AHDPlayerController::HDStickSensitivity(float Value)
 {

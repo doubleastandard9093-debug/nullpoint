@@ -21,6 +21,7 @@ AHDShipPawn::AHDShipPawn()
 	PrimaryActorTick.bCanEverTick = false;
 	bReplicates = true;
 	SetReplicateMovement(false); // UHDShipMovementComponent replicates its own state
+	SetNetCullDistanceSquared(2.0e7f * 2.0e7f); // ships are relevant out to 200 km (systems sit in far-apart slots)
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
@@ -88,6 +89,8 @@ void AHDShipPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AHDShipPawn, HullHP);
+	DOREPLIFETIME(AHDShipPawn, SystemIndex);
+	DOREPLIFETIME(AHDShipPawn, SystemOrigin);
 }
 
 float AHDShipPawn::TakeDamage(float Damage, FDamageEvent const& Event, AController* Inst, AActor* Causer)

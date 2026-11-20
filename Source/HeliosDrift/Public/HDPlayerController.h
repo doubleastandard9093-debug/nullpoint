@@ -5,6 +5,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class ADirectionalLight;
 
 /** Runtime-built Enhanced Input actions (no .uasset needed). */
 USTRUCT()
@@ -75,8 +76,51 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI") void ToggleMenu() { bMenuOpen = !bMenuOpen; }
 	UFUNCTION(BlueprintPure, Category = "UI") bool IsMenuOpen() const { return bMenuOpen; }
 
+	// ---- Server command channel: every gameplay request from input or console goes through here ----
+	/** Client -> server. Cmd is a verb ("goto", "dock", "buy"...), Arg its free-form argument, Target an optional replicated actor. */
+	UFUNCTION(Server, Reliable) void ServerCommand(const FString& Cmd, const FString& Arg, AActor* Target);
+	/** Server -> owning client: on-screen message. */
+	UFUNCTION(Client, Reliable) void ClientNotify(const FString& Msg);
+	/** Server-side helper: message this pilot (works for listen-server hosts too). */
+	void Notify(const FString& Msg);
+	/** Local: send a command (runs ServerCommand). */
+	void Cmd(const FString& Verb, const FString& Arg = FString(), AActor* Target = nullptr);
+
+	/** Recent messages for the HUD (local only). */
+	TArray<FString> Messages;
+	TArray<float> MessageTimes;
+
+	// ---- Console commands (` key). See docs/WORLD-TESTING.md ----
+	/** HDGoto <system id, number or name>: teleport your ship to a system's arrival point. */
+	UFUNCTION(Exec) void HDGoto(const FString& System);
+	/** HDSystemInfo: print the current system (bodies, stations, links, sites, lanes, fields). */
+	UFUNCTION(Exec) void HDSystemInfo();
+	/** HDGalaxy <radius ly>: list systems near you. */
+	UFUNCTION(Exec) void HDGalaxy(const FString& RadiusLy);
+	/** HDFind <name>: find a system by name or id. */
+	UFUNCTION(Exec) void HDFind(const FString& Name);
+	/** HDWeek <n|live>: override the week index (gas-giant and wormhole re-rolls). */
+	UFUNCTION(Exec) void HDWeek(const FString& Week);
+	/** HDRevealAll: reveal every hidden signature in this system (testing). */
+	UFUNCTION(Exec) void HDRevealAll();
+	/** HDGas: list gas giants here with this week's density and the next 4 weeks' rolls. */
+	UFUNCTION(Exec) void HDGas();
+	/** HDCmd <verb> <arg>: send any server command directly. */
+	UFUNCTION(Exec) void HDCmd(const FString& Verb, const FString& Arg);
+
+	/** Server: handle one command. Implemented in HDCommands.cpp. */
+	void HandleCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** Travel verbs (HDTravelCommands.cpp). Returns true if handled. */
+	bool HandleTravelCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** Ships, economy, NPCs, territory verbs (HDGameplayCommands.cpp). Returns true if handled. */
+	bool HandleGameplayCommand(const FString& Verb, const FString& Arg, AActor* Target);
+
 protected:
 	virtual void BeginPlay() override;
+	virtual void PlayerTick(float DeltaTime) override;
+
+	/** Local-only key light pointing from the current system's star (no level lighting needed). */
+	UPROPERTY(Transient) TObjectPtr<ADirectionalLight> StarLight;
 
 	/** Optional: assign an asset-based context in a BP subclass to add on top of / replace the runtime one. */
 	UPROPERTY(EditDefaultsOnly, Category = "Input")

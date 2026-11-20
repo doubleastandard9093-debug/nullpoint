@@ -52,6 +52,15 @@ public:
 	virtual void NotifyControllerChanged() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	/** Universe system this ship is in (-1 = none yet). Set by the system director. */
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Universe") int32 SystemIndex = -1;
+	/** World position of that system's star (systems share the world in slots). */
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Universe") FVector SystemOrigin = FVector::ZeroVector;
+	/** Server: move bookkeeping to a new system (the director positions the ship). */
+	void SetSystem(int32 InSystem, const FVector& InOrigin) { SystemIndex = InSystem; SystemOrigin = InOrigin; }
+	/** Position relative to the current system's star. */
+	FVector GetLocalPosition() const { return GetActorLocation() - SystemOrigin; }
+
 private:
 	void OnThrust(const FInputActionValue& V);
 	void OnStrafe(const FInputActionValue& V);

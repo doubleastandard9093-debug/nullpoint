@@ -4,6 +4,7 @@
 #include "HDShipPowerComponent.h"
 #include "HDPlayerController.h"
 #include "Engine/Canvas.h"
+#include "HDUniverseSubsystem.h"
 
 void AHDHUD::DrawHUD()
 {
@@ -27,6 +28,14 @@ void AHDHUD::DrawHUD()
 	Lines.Add(FString::Printf(TEXT("SHIELDS  F %.0f  A %.0f  P %.0f  S %.0f"),
 		S->GetFacing(EHDShieldFacing::Fore), S->GetFacing(EHDShieldFacing::Aft), S->GetFacing(EHDShieldFacing::Port), S->GetFacing(EHDShieldFacing::Starboard)));
 	Lines.Add(FString::Printf(TEXT("HULL %.0f"), Ship->HullHP));
+	if (UHDUniverseSubsystem* U = UHDUniverseSubsystem::Get(this))
+	{
+		if (U->IsValidSystem(Ship->SystemIndex))
+		{
+			const FHDStarSystem& Sys = U->GetSystemSkeleton(Ship->SystemIndex);
+			Lines.Insert(FString::Printf(TEXT("%s  %s  [%s]"), *Sys.Id.ToString(), *Sys.Name, HDUniverse::BandName(Sys.Band)), 0);
+		}
+	}
 
 	float Y = 40.f;
 	for (const FString& L : Lines)
@@ -53,6 +62,13 @@ void AHDHUD::DrawHUD()
 			DrawText(FString(L), FLinearColor(1.f, 0.85f, 0.4f), 40.f, Y);
 			Y += 20.f;
 		}
+	}
+
+	// Messages from the server (bottom left)
+	if (PC)
+	{
+		float MY = Canvas->ClipY - 40.f - 20.f * PC->Messages.Num();
+		for (const FString& M : PC->Messages) { DrawText(M, FLinearColor(0.9f, 0.9f, 0.6f), 40.f, MY); MY += 20.f; }
 	}
 
 	// crosshair
