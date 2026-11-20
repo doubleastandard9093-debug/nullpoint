@@ -3,6 +3,9 @@
 #include "HDShipMovementComponent.h"
 #include "HDLaserComponent.h"
 #include "HDNavComponent.h"
+#include "HDFittingComponent.h"
+#include "HDCargoComponent.h"
+#include "HDCatalog.h"
 #include "HDPlayerController.h"
 #include "HeliosDrift.h"
 #include "Components/BoxComponent.h"
@@ -47,6 +50,8 @@ AHDShipPawn::AHDShipPawn()
 	Movement = CreateDefaultSubobject<UHDShipMovementComponent>(TEXT("Movement"));
 	Laser = CreateDefaultSubobject<UHDLaserComponent>(TEXT("Laser"));
 	Nav = CreateDefaultSubobject<UHDNavComponent>(TEXT("Nav"));
+	Fitting = CreateDefaultSubobject<UHDFittingComponent>(TEXT("Fitting"));
+	Cargo = CreateDefaultSubobject<UHDCargoComponent>(TEXT("Cargo"));
 
 	CockpitRoot = CreateDefaultSubobject<USceneComponent>(TEXT("CockpitRoot"));
 	CockpitRoot->SetupAttachment(Collision);
@@ -60,7 +65,22 @@ AHDShipPawn::AHDShipPawn()
 void AHDShipPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	if (HasAuthority()) { HullHP = MaxHullHP; }
+	if (HasAuthority())
+	{
+		// Every new ship starts as the catalog's starter fit unless someone (hangar, NPC spawner, backend) set a hull already.
+		UHDCatalogSubsystem* Cat = UHDCatalogSubsystem::Get(this);
+		if (Fitting && Cat && Fitting->HullId.IsNone())
+		{
+			FString Err;
+			if (!Fitting->SetFitAuthority(Cat->StarterHull, Cat->StarterModules, Err))
+			{
+				UE_LOG(LogHelios, Warning, TEXT("Starter fit invalid (%s); using bare hull"), *Err);
+				Fitting->SetFitAuthority(Cat->StarterHull, TArray<FName>(), Err);
+			}
+		}
+		HullHP = MaxHullHP;
+		if (Nav) { Nav->ShipFuel = Nav->MaxShipFuel; Nav->JumpFuel = Nav->MaxJumpFuel; }
+	}
 }
 
 FVector AHDShipPawn::GetVelocity() const

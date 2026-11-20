@@ -19,6 +19,46 @@ void AHDPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME_CONDITION(AHDPlayerState, Revealed, COND_OwnerOnly);
 	DOREPLIFETIME_CONDITION(AHDPlayerState, Standings, COND_OwnerOnly);
 	DOREPLIFETIME_CONDITION(AHDPlayerState, Skills, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AHDPlayerState, Storage, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AHDPlayerState, Hangar, COND_OwnerOnly);
+}
+
+int32 AHDPlayerState::StorageCount(const FName& Station, const FName& Item) const
+{
+	int32 N = 0;
+	for (const FHDStoredStack& S : Storage) { if (S.Station == Station && S.Item == Item) N += S.Qty; }
+	return N;
+}
+
+void AHDPlayerState::AddStorage(const FName& Station, const FName& Item, int32 Qty, uint8 Flags)
+{
+	if (Item.IsNone() || Qty <= 0) return;
+	for (FHDStoredStack& S : Storage)
+	{
+		if (S.Station == Station && S.Item == Item && S.Flags == Flags) { S.Qty += Qty; return; }
+	}
+	FHDStoredStack S;
+	S.Station = Station;
+	S.Item = Item;
+	S.Qty = Qty;
+	S.Flags = Flags;
+	Storage.Add(S);
+}
+
+int32 AHDPlayerState::RemoveStorage(const FName& Station, const FName& Item, int32 Qty, uint8* OutFlags)
+{
+	int32 Left = Qty;
+	for (int32 I = Storage.Num() - 1; I >= 0 && Left > 0; --I)
+	{
+		FHDStoredStack& S = Storage[I];
+		if (S.Station != Station || S.Item != Item) continue;
+		const int32 Take = FMath::Min(Left, S.Qty);
+		S.Qty -= Take;
+		Left -= Take;
+		if (OutFlags) *OutFlags |= S.Flags;
+		if (S.Qty <= 0) Storage.RemoveAt(I);
+	}
+	return Qty - Left;
 }
 
 float AHDPlayerState::GetStanding(const FName& Faction) const

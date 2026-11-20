@@ -7,6 +7,8 @@
 #include "HDUniverseSubsystem.h"
 #include "HDPlayerState.h"
 #include "HDPlayerController.h"
+#include "HDCatalog.h"
+#include "HDFittingComponent.h"
 #include "HeliosDrift.h"
 #include "Net/UnrealNetwork.h"
 #include "Engine/World.h"
@@ -94,6 +96,7 @@ float UHDNavComponent::GetJumpRangeLy() const
 	if (!S) return 0.f;
 	const AHDPlayerState* PS = S->GetPlayerState<AHDPlayerState>();
 	const int32 Lvl = PS ? PS->GetSkill(TEXT("jump_range")) : 0;
+	if (S->Fitting && !S->Fitting->HullId.IsNone() && !S->Fitting->Stats.bJumpDrive) return 0.f; // capital without a jump drive module
 	// +20% per level, five levels: doubles base range (doc 13).
 	return HDShips::BaseJumpRangeLy(S->HullClass) * (1.f + 0.2f * Lvl);
 }
@@ -254,6 +257,14 @@ void UHDNavComponent::RequestDock(AActor* Target)
 	if (St->Info.bShipyard) Services += TEXT(", shipyard");
 	if (St->Info.bFuelStation) Services += TEXT(", jump fuel");
 	Notify(FString::Printf(TEXT("Docked at %s (%s). Services: %s"), *St->DisplayName, *St->GetKindLabel(), *Services));
+	AHDPlayerState* PS = S->GetPlayerState<AHDPlayerState>();
+	UHDCatalogSubsystem* Cat = UHDCatalogSubsystem::Get(this);
+	if (PS && Cat && !PS->bStarterGiven)
+	{
+		PS->bStarterGiven = true;
+		for (const TPair<FName, int32>& P : Cat->StarterStorage) { PS->AddStorage(St->ObjectId, P.Key, P.Value); }
+		Notify(TEXT("Starter kit delivered to station storage here (HDCmd storage, HDCmd fit <slot> <module>)."));
+	}
 }
 
 void UHDNavComponent::RequestLand()
@@ -391,6 +402,7 @@ void UHDNavComponent::RequestJump(AActor* Target)
 		return;
 	}
 	// Capital self-jump (doc 13).
+	if (GetJumpRangeLy() <= 0.f) { Notify(TEXT("No jump drive fitted.")); return; }
 	if (!U->IsValidSystem(JumpTarget) || JumpTarget == S->SystemIndex) { Notify(TEXT("Set a jump target on the galaxy map (M) first.")); return; }
 	const float Ly = U->DistanceLy(S->SystemIndex, JumpTarget);
 	const float Range = GetJumpRangeLy();

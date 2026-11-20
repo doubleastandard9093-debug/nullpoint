@@ -4,6 +4,8 @@
 #include "HDShipMovementComponent.h"
 #include "HDShipPowerComponent.h"
 #include "HDNavComponent.h"
+#include "HDFittingComponent.h"
+#include "HDCargoComponent.h"
 #include "HDPlayerController.h"
 #include "HDPlayerState.h"
 #include "HDWorldActors.h"
@@ -78,7 +80,21 @@ void AHDHUD::DrawHUD()
 		P->GetPower(EHDSubsystem::Weapons), P->GetPower(EHDSubsystem::Shields), P->GetPower(EHDSubsystem::Engines), P->GetPower(EHDSubsystem::Auxiliary)), Cyan);
 	Add(FString::Printf(TEXT("SHIELDS  F %.0f  A %.0f  P %.0f  S %.0f"),
 		S->GetFacing(EHDShieldFacing::Fore), S->GetFacing(EHDShieldFacing::Aft), S->GetFacing(EHDShieldFacing::Port), S->GetFacing(EHDShieldFacing::Starboard)), Cyan);
-	Add(FString::Printf(TEXT("HULL %.0f"), Ship->HullHP), Ship->HullHP < Ship->MaxHullHP * 0.3f ? Warn : Cyan);
+	Add(FString::Printf(TEXT("HULL %.0f / %.0f"), Ship->HullHP, Ship->MaxHullHP), Ship->HullHP < Ship->MaxHullHP * 0.3f ? Warn : Cyan);
+	if (const UHDFittingComponent* F = Ship->Fitting)
+	{
+		if (const FHDHullDef* H = F->GetHullDef())
+		{
+			Add(FString::Printf(TEXT("SHIP %s  power %.0f/%.0f MW  stability %.0f/%.0f%s"), *H->Name, F->Stats.PowerUsed, F->Stats.PowerMax, F->Stats.Stability, F->Stats.StabilityMax,
+				F->bRecovered ? TEXT("  [recovered]") : TEXT("")), Cyan);
+		}
+	}
+	if (const UHDCargoComponent* C = Ship->Cargo)
+	{
+		float G = 0.f, O = 0.f;
+		C->GetUsed(G, O);
+		Add(FString::Printf(TEXT("CARGO %.0f/%.0f m3%s"), G, C->Capacity, C->OreCapacity > 0.f ? *FString::Printf(TEXT("  ore %.0f/%.0f m3"), O, C->OreCapacity) : TEXT("")), Cyan);
+	}
 	if (const AHDPlayerState* PS = PC ? PC->GetPlayerState<AHDPlayerState>() : nullptr)
 	{
 		Add(FString::Printf(TEXT("CREDITS %lld%s"), PS->Credits, PS->IsCriminal() ? TEXT("   [CRIMINAL]") : TEXT("")), PS->IsCriminal() ? Warn : Cyan);

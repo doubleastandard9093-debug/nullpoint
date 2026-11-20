@@ -19,6 +19,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Weapon") float Damage = 40.f;        // at 50 weapons power
 	UPROPERTY(EditAnywhere, Category = "Weapon") float FireInterval = 0.15f;
 	UPROPERTY(EditAnywhere, Category = "Weapon") float MuzzleOffset = 500.f;
+	/** Mining / salvage tool rates (units per second) from the fit (doc 16). Tools fire with the same trigger. */
+	UPROPERTY(EditAnywhere, Category = "Weapon") float MiningRate = 0.f;
+	UPROPERTY(EditAnywhere, Category = "Weapon") float SalvageRate = 0.f;
+	UPROPERTY(EditAnywhere, Category = "Weapon") float ToolRange = 300000.f; // 3 km
 	/** Damage multiplier = PowerScaleBase + WeaponsPower / PowerScaleDivisor (1.0 at 50 power). */
 	UPROPERTY(EditAnywhere, Category = "Weapon") float PowerScaleBase = 0.5f;
 	UPROPERTY(EditAnywhere, Category = "Weapon", meta = (ClampMin = "1")) float PowerScaleDivisor = 100.f;

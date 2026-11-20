@@ -1,0 +1,1577 @@
+{
+ "recipes": [
+  {
+   "id": "refine_ferrite",
+   "output": "ferrite_ingot",
+   "qty": 10,
+   "inputs": {
+    "ore_ferrite": 30
+   },
+   "seconds": 10,
+   "facility": "refinery"
+  },
+  {
+   "id": "refine_silicate",
+   "output": "silicon_wafer",
+   "qty": 10,
+   "inputs": {
+    "ore_silicate": 30
+   },
+   "seconds": 10,
+   "facility": "refinery"
+  },
+  {
+   "id": "refine_crystal",
+   "output": "crystal_lattice",
+   "qty": 10,
+   "inputs": {
+    "ore_crystal": 30
+   },
+   "seconds": 15,
+   "facility": "refinery"
+  },
+  {
+   "id": "refine_exotic",
+   "output": "exotic_matter",
+   "qty": 5,
+   "inputs": {
+    "ore_exotic": 30
+   },
+   "seconds": 30,
+   "facility": "refinery"
+  },
+  {
+   "id": "melt_ice",
+   "output": "water",
+   "qty": 10,
+   "inputs": {
+    "ice_water": 20
+   },
+   "seconds": 8,
+   "facility": "refinery"
+  },
+  {
+   "id": "crack_volatile_ice",
+   "output": "volatiles",
+   "qty": 10,
+   "inputs": {
+    "ice_volatile": 20
+   },
+   "seconds": 12,
+   "facility": "refinery"
+  },
+  {
+   "id": "crack_gas",
+   "output": "volatiles",
+   "qty": 10,
+   "inputs": {
+    "gas_volatile": 25
+   },
+   "seconds": 12,
+   "facility": "refinery"
+  },
+  {
+   "id": "jump_fuel",
+   "output": "jump_fuel",
+   "qty": 20,
+   "inputs": {
+    "gas_nebular": 25
+   },
+   "seconds": 10,
+   "facility": "refinery"
+  },
+  {
+   "id": "recycle_scrap",
+   "output": "ferrite_ingot",
+   "qty": 6,
+   "inputs": {
+    "salvage_scrap": 10
+   },
+   "seconds": 6,
+   "facility": "refinery"
+  },
+  {
+   "id": "recycle_alloy",
+   "output": "ferrite_ingot",
+   "qty": 10,
+   "inputs": {
+    "salvage_alloy": 5
+   },
+   "seconds": 6,
+   "facility": "refinery"
+  },
+  {
+   "id": "structural_frame",
+   "output": "structural_frame",
+   "qty": 1,
+   "inputs": {
+    "ferrite_ingot": 12
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "power_cell",
+   "output": "power_cell",
+   "qty": 1,
+   "inputs": {
+    "crystal_lattice": 4,
+    "volatiles": 2
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "circuit_board",
+   "output": "circuit_board",
+   "qty": 1,
+   "inputs": {
+    "silicon_wafer": 8,
+    "ferrite_ingot": 2
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "circuit_from_salvage",
+   "output": "circuit_board",
+   "qty": 1,
+   "inputs": {
+    "salvage_electronics": 2
+   },
+   "seconds": 6,
+   "facility": "factory"
+  },
+  {
+   "id": "focusing_lens",
+   "output": "focusing_lens",
+   "qty": 1,
+   "inputs": {
+    "crystal_lattice": 6
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "drive_coil",
+   "output": "drive_coil",
+   "qty": 1,
+   "inputs": {
+    "ferrite_ingot": 10,
+    "crystal_lattice": 2,
+    "volatiles": 2
+   },
+   "seconds": 12,
+   "facility": "factory"
+  },
+  {
+   "id": "shield_emitter",
+   "output": "shield_emitter",
+   "qty": 1,
+   "inputs": {
+    "crystal_lattice": 4,
+    "circuit_board": 1
+   },
+   "seconds": 12,
+   "facility": "factory"
+  },
+  {
+   "id": "sensor_array",
+   "output": "sensor_array",
+   "qty": 1,
+   "inputs": {
+    "silicon_wafer": 6,
+    "crystal_lattice": 2
+   },
+   "seconds": 12,
+   "facility": "factory"
+  },
+  {
+   "id": "jump_core",
+   "output": "jump_core",
+   "qty": 1,
+   "inputs": {
+    "exotic_matter": 40,
+    "drive_coil": 20,
+    "power_cell": 20
+   },
+   "seconds": 120,
+   "facility": "shipyard"
+  },
+  {
+   "id": "habitat_block",
+   "output": "habitat_block",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 20,
+    "water": 50,
+    "circuit_board": 4
+   },
+   "seconds": 60,
+   "facility": "shipyard"
+  },
+  {
+   "id": "dock_section",
+   "output": "dock_section",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 40,
+    "power_cell": 6
+   },
+   "seconds": 60,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_pulse_laser_s",
+   "output": "pulse_laser_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "focusing_lens": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_autocannon_s",
+   "output": "autocannon_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "focusing_lens": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_railgun_s",
+   "output": "railgun_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "focusing_lens": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_mining_laser_s",
+   "output": "mining_laser_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "focusing_lens": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_salvager_s",
+   "output": "salvager_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "focusing_lens": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_gas_siphon_s",
+   "output": "gas_siphon_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "sensor_array": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_shield_extender_s",
+   "output": "shield_extender_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "shield_emitter": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_armor_plate_s",
+   "output": "armor_plate_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "shield_emitter": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_cargo_expander_s",
+   "output": "cargo_expander_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "shield_emitter": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_reactor_s",
+   "output": "reactor_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "shield_emitter": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_fuel_tank_s",
+   "output": "fuel_tank_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "shield_emitter": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_drive_s",
+   "output": "drive_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "drive_coil": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_sprint_drive_s",
+   "output": "sprint_drive_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "drive_coil": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_ore_hold_s",
+   "output": "ore_hold_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_freight_hold_s",
+   "output": "freight_hold_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_salvage_bay_s",
+   "output": "salvage_bay_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_pulse_laser_m",
+   "output": "pulse_laser_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "focusing_lens": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_autocannon_m",
+   "output": "autocannon_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "focusing_lens": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_railgun_m",
+   "output": "railgun_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "focusing_lens": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_mining_laser_m",
+   "output": "mining_laser_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "focusing_lens": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_salvager_m",
+   "output": "salvager_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "focusing_lens": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_gas_siphon_m",
+   "output": "gas_siphon_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "sensor_array": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_shield_extender_m",
+   "output": "shield_extender_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "shield_emitter": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_armor_plate_m",
+   "output": "armor_plate_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "shield_emitter": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_cargo_expander_m",
+   "output": "cargo_expander_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "shield_emitter": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_reactor_m",
+   "output": "reactor_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "shield_emitter": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_fuel_tank_m",
+   "output": "fuel_tank_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "shield_emitter": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_drive_m",
+   "output": "drive_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "drive_coil": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_sprint_drive_m",
+   "output": "sprint_drive_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "drive_coil": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_ore_hold_m",
+   "output": "ore_hold_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_freight_hold_m",
+   "output": "freight_hold_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_salvage_bay_m",
+   "output": "salvage_bay_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_pulse_laser_l",
+   "output": "pulse_laser_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "focusing_lens": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_autocannon_l",
+   "output": "autocannon_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "focusing_lens": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_railgun_l",
+   "output": "railgun_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "focusing_lens": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_mining_laser_l",
+   "output": "mining_laser_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "focusing_lens": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_salvager_l",
+   "output": "salvager_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "focusing_lens": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_gas_siphon_l",
+   "output": "gas_siphon_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "sensor_array": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_shield_extender_l",
+   "output": "shield_extender_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "shield_emitter": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_armor_plate_l",
+   "output": "armor_plate_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "shield_emitter": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_cargo_expander_l",
+   "output": "cargo_expander_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "shield_emitter": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_reactor_l",
+   "output": "reactor_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "shield_emitter": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_fuel_tank_l",
+   "output": "fuel_tank_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "shield_emitter": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_drive_l",
+   "output": "drive_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "drive_coil": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_sprint_drive_l",
+   "output": "sprint_drive_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "drive_coil": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_ore_hold_l",
+   "output": "ore_hold_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_freight_hold_l",
+   "output": "freight_hold_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_salvage_bay_l",
+   "output": "salvage_bay_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_pulse_laser_capital",
+   "output": "pulse_laser_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_autocannon_capital",
+   "output": "autocannon_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_railgun_capital",
+   "output": "railgun_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_mining_laser_capital",
+   "output": "mining_laser_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_salvager_capital",
+   "output": "salvager_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_gas_siphon_capital",
+   "output": "gas_siphon_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "sensor_array": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_shield_extender_capital",
+   "output": "shield_extender_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_armor_plate_capital",
+   "output": "armor_plate_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_cargo_expander_capital",
+   "output": "cargo_expander_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_reactor_capital",
+   "output": "reactor_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_fuel_tank_capital",
+   "output": "fuel_tank_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_drive_capital",
+   "output": "drive_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "drive_coil": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_sprint_drive_capital",
+   "output": "sprint_drive_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "drive_coil": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_ore_hold_capital",
+   "output": "ore_hold_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_freight_hold_capital",
+   "output": "freight_hold_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_salvage_bay_capital",
+   "output": "salvage_bay_capital",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_scanner_array_s",
+   "output": "scanner_array_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "sensor_array": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_tractor_beam_s",
+   "output": "tractor_beam_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "sensor_array": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_scanner_array_m",
+   "output": "scanner_array_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "sensor_array": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_tractor_beam_m",
+   "output": "tractor_beam_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "sensor_array": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_scanner_array_l",
+   "output": "scanner_array_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "sensor_array": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_tractor_beam_l",
+   "output": "tractor_beam_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "sensor_array": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_interdiction_field",
+   "output": "interdiction_field",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "sensor_array": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_cloak_s",
+   "output": "cloak_s",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 1,
+    "circuit_board": 1,
+    "sensor_array": 1
+   },
+   "seconds": 10,
+   "facility": "factory"
+  },
+  {
+   "id": "build_command_burst_m",
+   "output": "command_burst_m",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 3,
+    "circuit_board": 1,
+    "sensor_array": 3
+   },
+   "seconds": 20,
+   "facility": "factory"
+  },
+  {
+   "id": "build_command_burst_l",
+   "output": "command_burst_l",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 4,
+    "sensor_array": 8
+   },
+   "seconds": 30,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_jump_drive",
+   "output": "jump_drive",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10,
+    "jump_core": 1
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_jump_fuel_bay",
+   "output": "jump_fuel_bay",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_fighter_hangar",
+   "output": "fighter_hangar",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "shield_emitter": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_siege_cannon",
+   "output": "siege_cannon",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 30,
+    "circuit_board": 15,
+    "focusing_lens": 30,
+    "exotic_matter": 10
+   },
+   "seconds": 40,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_wasp",
+   "output": "hull_wasp",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 4,
+    "circuit_board": 2,
+    "power_cell": 2,
+    "drive_coil": 1
+   },
+   "seconds": 34,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_skiff",
+   "output": "hull_skiff",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 3,
+    "power_cell": 3,
+    "drive_coil": 2
+   },
+   "seconds": 38,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_pick",
+   "output": "hull_pick",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 3,
+    "power_cell": 3,
+    "drive_coil": 2
+   },
+   "seconds": 38,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_mule",
+   "output": "hull_mule",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 8,
+    "circuit_board": 3,
+    "power_cell": 3,
+    "drive_coil": 2
+   },
+   "seconds": 38,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_lance",
+   "output": "hull_lance",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_burrow",
+   "output": "hull_burrow",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_satchel",
+   "output": "hull_satchel",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_gleaner",
+   "output": "hull_gleaner",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_lookout",
+   "output": "hull_lookout",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_quarry",
+   "output": "hull_quarry",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_drayman",
+   "output": "hull_drayman",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_siphon",
+   "output": "hull_siphon",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_cartographer",
+   "output": "hull_cartographer",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_bulwark",
+   "output": "hull_bulwark",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 83,
+    "circuit_board": 28,
+    "power_cell": 21,
+    "drive_coil": 14
+   },
+   "seconds": 113,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_outrider",
+   "output": "hull_outrider",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 83,
+    "circuit_board": 28,
+    "power_cell": 21,
+    "drive_coil": 14
+   },
+   "seconds": 113,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_concord",
+   "output": "hull_concord",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 83,
+    "circuit_board": 28,
+    "power_cell": 21,
+    "drive_coil": 14
+   },
+   "seconds": 113,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_hammerline",
+   "output": "hull_hammerline",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 83,
+    "circuit_board": 28,
+    "power_cell": 21,
+    "drive_coil": 14
+   },
+   "seconds": 113,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_harrier",
+   "output": "hull_harrier",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 23,
+    "circuit_board": 8,
+    "power_cell": 6,
+    "drive_coil": 4
+   },
+   "seconds": 53,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_snare",
+   "output": "hull_snare",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 23,
+    "circuit_board": 8,
+    "power_cell": 6,
+    "drive_coil": 4
+   },
+   "seconds": 53,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_whisper",
+   "output": "hull_whisper",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 13,
+    "circuit_board": 5,
+    "power_cell": 4,
+    "drive_coil": 3
+   },
+   "seconds": 43,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_sentry",
+   "output": "hull_sentry",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_reclaimer",
+   "output": "hull_reclaimer",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_pathfinder",
+   "output": "hull_pathfinder",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 50,
+    "circuit_board": 17,
+    "power_cell": 13,
+    "drive_coil": 9
+   },
+   "seconds": 80,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_foreman",
+   "output": "hull_foreman",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 83,
+    "circuit_board": 28,
+    "power_cell": 21,
+    "drive_coil": 14
+   },
+   "seconds": 113,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_citadel",
+   "output": "hull_citadel",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 116,
+    "circuit_board": 39,
+    "power_cell": 30,
+    "drive_coil": 20,
+    "exotic_matter": 29,
+    "shield_emitter": 23
+   },
+   "seconds": 146,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_bastion",
+   "output": "hull_bastion",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 266,
+    "circuit_board": 89,
+    "power_cell": 67,
+    "drive_coil": 45,
+    "exotic_matter": 66,
+    "shield_emitter": 53,
+    "jump_core": 1
+   },
+   "seconds": 296,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_monolith",
+   "output": "hull_monolith",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 266,
+    "circuit_board": 89,
+    "power_cell": 67,
+    "drive_coil": 45,
+    "exotic_matter": 66,
+    "shield_emitter": 53,
+    "jump_core": 1
+   },
+   "seconds": 296,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_sovereign",
+   "output": "hull_sovereign",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 500,
+    "circuit_board": 167,
+    "power_cell": 126,
+    "drive_coil": 84,
+    "exotic_matter": 125,
+    "shield_emitter": 100,
+    "jump_core": 2
+   },
+   "seconds": 530,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_longhaul",
+   "output": "hull_longhaul",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 200,
+    "circuit_board": 67,
+    "power_cell": 51,
+    "drive_coil": 34,
+    "exotic_matter": 50,
+    "shield_emitter": 40,
+    "jump_core": 1
+   },
+   "seconds": 230,
+   "facility": "shipyard"
+  },
+  {
+   "id": "build_hull_hearthforge",
+   "output": "hull_hearthforge",
+   "qty": 1,
+   "inputs": {
+    "structural_frame": 233,
+    "circuit_board": 78,
+    "power_cell": 59,
+    "drive_coil": 39,
+    "exotic_matter": 58,
+    "shield_emitter": 46,
+    "jump_core": 1
+   },
+   "seconds": 263,
+   "facility": "shipyard"
+  }
+ ]
+}

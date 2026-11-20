@@ -11,6 +11,8 @@ class UHDShieldComponent;
 class UHDShipMovementComponent;
 class UHDLaserComponent;
 class UHDNavComponent;
+class UHDFittingComponent;
+class UHDCargoComponent;
 class AHDPlayerController;
 class USceneComponent;
 class UCameraComponent;
@@ -36,6 +38,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDLaserComponent> Laser;
 	/** Fuel, docking, landing, lanes, jumps, scanning (M2). */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDNavComponent> Nav;
+	/** Hull + modules (M3). */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDFittingComponent> Fitting;
+	/** Hold (M3/M4). */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDCargoComponent> Cargo;
 	/** Hull size class: decides gates vs. jump drive (doc 13/14). Set by fitting / hull swap. */
 	UPROPERTY(EditDefaultsOnly, Replicated, BlueprintReadOnly, Category = "Ship") EHDHullClass HullClass = EHDHullClass::Frigate;
 	UPROPERTY(EditDefaultsOnly, Replicated, BlueprintReadOnly, Category = "Ship") float HullHP = 1000.f;

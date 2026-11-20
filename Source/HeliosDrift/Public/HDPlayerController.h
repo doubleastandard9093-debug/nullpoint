@@ -169,6 +169,16 @@ public:
 	bool HandleTravelCommand(const FString& Verb, const FString& Arg, AActor* Target);
 	/** Ships, economy, NPCs, territory verbs (HDGameplayCommands.cpp). Returns true if handled. */
 	bool HandleGameplayCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** M3 fitting / hangar verbs (HDShipCommands.cpp). */
+	bool HandleShipCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** M4 economy verbs (HDEconomyCommands.cpp). */
+	bool HandleEconomyCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** M5 NPC / law verbs (HDNpcCommands.cpp). */
+	bool HandleNpcCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** M6 territory / building verbs (HDTerritoryCommands.cpp). */
+	bool HandleTerritoryCommand(const FString& Verb, const FString& Arg, AActor* Target);
+	/** Multi-line helper. */
+	void NotifyLines(const FString& Text);
 
 protected:
 	virtual void BeginPlay() override;

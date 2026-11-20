@@ -1,0 +1,1282 @@
+{
+ "items": [
+  {
+   "id": "ore_ferrite",
+   "name": "Ferrite Ore",
+   "category": "Ore",
+   "volume": 0.1,
+   "price": 12,
+   "legal": true
+  },
+  {
+   "id": "ore_silicate",
+   "name": "Silicate Ore",
+   "category": "Ore",
+   "volume": 0.1,
+   "price": 10,
+   "legal": true
+  },
+  {
+   "id": "ore_crystal",
+   "name": "Crystal Ore",
+   "category": "Ore",
+   "volume": 0.15,
+   "price": 45,
+   "legal": true
+  },
+  {
+   "id": "ore_exotic",
+   "name": "Exotic Ore",
+   "category": "Ore",
+   "volume": 0.2,
+   "price": 320,
+   "legal": true
+  },
+  {
+   "id": "ice_water",
+   "name": "Water Ice",
+   "category": "Ice",
+   "volume": 0.2,
+   "price": 18,
+   "legal": true
+  },
+  {
+   "id": "ice_volatile",
+   "name": "Volatile Ice",
+   "category": "Ice",
+   "volume": 0.2,
+   "price": 60,
+   "legal": true
+  },
+  {
+   "id": "gas_nebular",
+   "name": "Nebular Gas",
+   "category": "Gas",
+   "volume": 0.25,
+   "price": 30,
+   "legal": true
+  },
+  {
+   "id": "gas_volatile",
+   "name": "Volatile Gas",
+   "category": "Gas",
+   "volume": 0.25,
+   "price": 90,
+   "legal": true
+  },
+  {
+   "id": "ferrite_ingot",
+   "name": "Ferrite Ingot",
+   "category": "Refined",
+   "volume": 0.05,
+   "price": 60,
+   "legal": true
+  },
+  {
+   "id": "silicon_wafer",
+   "name": "Silicon Wafer",
+   "category": "Refined",
+   "volume": 0.05,
+   "price": 55,
+   "legal": true
+  },
+  {
+   "id": "crystal_lattice",
+   "name": "Crystal Lattice",
+   "category": "Refined",
+   "volume": 0.05,
+   "price": 240,
+   "legal": true
+  },
+  {
+   "id": "exotic_matter",
+   "name": "Exotic Matter",
+   "category": "Refined",
+   "volume": 0.05,
+   "price": 1800,
+   "legal": true
+  },
+  {
+   "id": "water",
+   "name": "Water",
+   "category": "Refined",
+   "volume": 0.1,
+   "price": 40,
+   "legal": true
+  },
+  {
+   "id": "volatiles",
+   "name": "Refined Volatiles",
+   "category": "Refined",
+   "volume": 0.1,
+   "price": 160,
+   "legal": true
+  },
+  {
+   "id": "jump_fuel",
+   "name": "Jump Fuel",
+   "category": "Refined",
+   "volume": 0.1,
+   "price": 120,
+   "legal": true
+  },
+  {
+   "id": "structural_frame",
+   "name": "Structural Frame",
+   "category": "Component",
+   "volume": 1,
+   "price": 900,
+   "legal": true
+  },
+  {
+   "id": "power_cell",
+   "name": "Power Cell",
+   "category": "Component",
+   "volume": 0.5,
+   "price": 1400,
+   "legal": true
+  },
+  {
+   "id": "circuit_board",
+   "name": "Circuit Board",
+   "category": "Component",
+   "volume": 0.2,
+   "price": 1200,
+   "legal": true
+  },
+  {
+   "id": "focusing_lens",
+   "name": "Focusing Lens",
+   "category": "Component",
+   "volume": 0.2,
+   "price": 1600,
+   "legal": true
+  },
+  {
+   "id": "drive_coil",
+   "name": "Drive Coil",
+   "category": "Component",
+   "volume": 1,
+   "price": 2200,
+   "legal": true
+  },
+  {
+   "id": "shield_emitter",
+   "name": "Shield Emitter",
+   "category": "Component",
+   "volume": 0.5,
+   "price": 2000,
+   "legal": true
+  },
+  {
+   "id": "sensor_array",
+   "name": "Sensor Array",
+   "category": "Component",
+   "volume": 0.5,
+   "price": 1800,
+   "legal": true
+  },
+  {
+   "id": "jump_core",
+   "name": "Jump Core",
+   "category": "Component",
+   "volume": 20,
+   "price": 250000,
+   "legal": true
+  },
+  {
+   "id": "habitat_block",
+   "name": "Habitat Block",
+   "category": "Component",
+   "volume": 50,
+   "price": 30000,
+   "legal": true
+  },
+  {
+   "id": "dock_section",
+   "name": "Dock Section",
+   "category": "Component",
+   "volume": 80,
+   "price": 45000,
+   "legal": true
+  },
+  {
+   "id": "salvage_scrap",
+   "name": "Salvaged Scrap",
+   "category": "Salvage",
+   "volume": 0.5,
+   "price": 40,
+   "legal": true
+  },
+  {
+   "id": "salvage_alloy",
+   "name": "Salvaged Alloy",
+   "category": "Salvage",
+   "volume": 0.5,
+   "price": 220,
+   "legal": true
+  },
+  {
+   "id": "salvage_electronics",
+   "name": "Salvaged Electronics",
+   "category": "Salvage",
+   "volume": 0.2,
+   "price": 600,
+   "legal": true
+  },
+  {
+   "id": "ancient_relic",
+   "name": "Ancient Relic",
+   "category": "Salvage",
+   "volume": 1,
+   "price": 15000,
+   "legal": true
+  },
+  {
+   "id": "food_rations",
+   "name": "Food Rations",
+   "category": "Trade",
+   "volume": 0.5,
+   "price": 50,
+   "legal": true
+  },
+  {
+   "id": "medical_supplies",
+   "name": "Medical Supplies",
+   "category": "Trade",
+   "volume": 0.3,
+   "price": 300,
+   "legal": true
+  },
+  {
+   "id": "consumer_goods",
+   "name": "Consumer Goods",
+   "category": "Trade",
+   "volume": 0.5,
+   "price": 180,
+   "legal": true
+  },
+  {
+   "id": "machinery",
+   "name": "Machinery",
+   "category": "Trade",
+   "volume": 2,
+   "price": 900,
+   "legal": true
+  },
+  {
+   "id": "luxury_goods",
+   "name": "Luxury Goods",
+   "category": "Trade",
+   "volume": 0.3,
+   "price": 1500,
+   "legal": true
+  },
+  {
+   "id": "colonists",
+   "name": "Colonist Pods",
+   "category": "Trade",
+   "volume": 2,
+   "price": 500,
+   "legal": true
+  },
+  {
+   "id": "contraband_narcotics",
+   "name": "Glimmer Dust",
+   "category": "Contraband",
+   "volume": 0.2,
+   "price": 2500,
+   "legal": false
+  },
+  {
+   "id": "contraband_weapons",
+   "name": "Unregistered Arms",
+   "category": "Contraband",
+   "volume": 1,
+   "price": 4000,
+   "legal": false
+  },
+  {
+   "id": "pirate_tags",
+   "name": "Pirate Ident Tags",
+   "category": "Bounty",
+   "volume": 0.01,
+   "price": 1500,
+   "legal": true
+  },
+  {
+   "id": "pulse_laser_s",
+   "name": "Pulse Laser S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 8000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "autocannon_s",
+   "name": "Autocannon S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 7000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "railgun_s",
+   "name": "Railgun S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 12000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "mining_laser_s",
+   "name": "Mining Laser S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 6000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "salvager_s",
+   "name": "Salvager S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 6500,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "gas_siphon_s",
+   "name": "Gas Siphon S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 6000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "shield_extender_s",
+   "name": "Shield Extender S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 9000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "armor_plate_s",
+   "name": "Armor Plate S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 7000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "cargo_expander_s",
+   "name": "Cargo Expander S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 5000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "reactor_s",
+   "name": "Auxiliary Reactor S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 11000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "fuel_tank_s",
+   "name": "Fuel Tank S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 4000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "drive_s",
+   "name": "Drive S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 9000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "sprint_drive_s",
+   "name": "Sprint Drive S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 16000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "ore_hold_s",
+   "name": "Ore Hold S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 8000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "freight_hold_s",
+   "name": "Freight Hold S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 9000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "salvage_bay_s",
+   "name": "Salvage Bay S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 9000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "pulse_laser_m",
+   "name": "Pulse Laser M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 46080,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "autocannon_m",
+   "name": "Autocannon M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 40320,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "railgun_m",
+   "name": "Railgun M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 69120,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "mining_laser_m",
+   "name": "Mining Laser M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 34560,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "salvager_m",
+   "name": "Salvager M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 37440,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "gas_siphon_m",
+   "name": "Gas Siphon M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 34560,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "shield_extender_m",
+   "name": "Shield Extender M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 51840,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "armor_plate_m",
+   "name": "Armor Plate M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 40320,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "cargo_expander_m",
+   "name": "Cargo Expander M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 28800,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "reactor_m",
+   "name": "Auxiliary Reactor M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 63360,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "fuel_tank_m",
+   "name": "Fuel Tank M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 23040,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "drive_m",
+   "name": "Drive M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 51840,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "sprint_drive_m",
+   "name": "Sprint Drive M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 92160,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "ore_hold_m",
+   "name": "Ore Hold M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 46080,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "freight_hold_m",
+   "name": "Freight Hold M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 51840,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "salvage_bay_m",
+   "name": "Salvage Bay M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 51840,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "pulse_laser_l",
+   "name": "Pulse Laser L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 200000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "autocannon_l",
+   "name": "Autocannon L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 175000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "railgun_l",
+   "name": "Railgun L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 300000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "mining_laser_l",
+   "name": "Mining Laser L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 150000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "salvager_l",
+   "name": "Salvager L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 162500,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "gas_siphon_l",
+   "name": "Gas Siphon L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 150000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "shield_extender_l",
+   "name": "Shield Extender L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 225000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "armor_plate_l",
+   "name": "Armor Plate L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 175000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "cargo_expander_l",
+   "name": "Cargo Expander L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 125000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "reactor_l",
+   "name": "Auxiliary Reactor L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 275000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "fuel_tank_l",
+   "name": "Fuel Tank L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 100000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "drive_l",
+   "name": "Drive L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 225000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "sprint_drive_l",
+   "name": "Sprint Drive L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 400000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "ore_hold_l",
+   "name": "Ore Hold L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 200000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "freight_hold_l",
+   "name": "Freight Hold L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 225000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "salvage_bay_l",
+   "name": "Salvage Bay L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 225000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "pulse_laser_capital",
+   "name": "Pulse Laser Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1568000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "autocannon_capital",
+   "name": "Autocannon Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1372000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "railgun_capital",
+   "name": "Railgun Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 2352000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "mining_laser_capital",
+   "name": "Mining Laser Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1176000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "salvager_capital",
+   "name": "Salvager Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1274000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "gas_siphon_capital",
+   "name": "Gas Siphon Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1176000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "shield_extender_capital",
+   "name": "Shield Extender Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1764000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "armor_plate_capital",
+   "name": "Armor Plate Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1372000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "cargo_expander_capital",
+   "name": "Cargo Expander Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 980000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "reactor_capital",
+   "name": "Auxiliary Reactor Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 2156000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "fuel_tank_capital",
+   "name": "Fuel Tank Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 784000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "drive_capital",
+   "name": "Drive Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1764000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "sprint_drive_capital",
+   "name": "Sprint Drive Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 3136000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "ore_hold_capital",
+   "name": "Ore Hold Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1568000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "freight_hold_capital",
+   "name": "Freight Hold Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1764000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "salvage_bay_capital",
+   "name": "Salvage Bay Capital",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 1764000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "scanner_array_s",
+   "name": "Scanner Array S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 10000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "tractor_beam_s",
+   "name": "Tractor Beam S",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 9000,
+   "legal": true,
+   "tier": 1
+  },
+  {
+   "id": "scanner_array_m",
+   "name": "Scanner Array M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 57600,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "tractor_beam_m",
+   "name": "Tractor Beam M",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 51840,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "scanner_array_l",
+   "name": "Scanner Array L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 250000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "tractor_beam_l",
+   "name": "Tractor Beam L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 225000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "interdiction_field",
+   "name": "Interdiction Field",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 180000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "cloak_s",
+   "name": "Cloaking Device",
+   "category": "Module",
+   "volume": 2.0,
+   "price": 220000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "command_burst_m",
+   "name": "Mining Command Burst",
+   "category": "Module",
+   "volume": 8.0,
+   "price": 260000,
+   "legal": true,
+   "tier": 2
+  },
+  {
+   "id": "command_burst_l",
+   "name": "Mining Command Burst L",
+   "category": "Module",
+   "volume": 18.0,
+   "price": 900000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "jump_drive",
+   "name": "Jump Drive",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 4000000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "jump_fuel_bay",
+   "name": "Jump Fuel Bay",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 600000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "fighter_hangar",
+   "name": "Fighter Hangar",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 3000000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "siege_cannon",
+   "name": "Siege Cannon",
+   "category": "Module",
+   "volume": 32.0,
+   "price": 6000000,
+   "legal": true,
+   "tier": 3
+  },
+  {
+   "id": "hull_wasp",
+   "name": "Wasp (packaged hull)",
+   "category": "Hull",
+   "volume": 24.0,
+   "price": 9000,
+   "legal": true
+  },
+  {
+   "id": "hull_skiff",
+   "name": "Skiff (packaged hull)",
+   "category": "Hull",
+   "volume": 50.0,
+   "price": 18000,
+   "legal": true
+  },
+  {
+   "id": "hull_pick",
+   "name": "Pick (packaged hull)",
+   "category": "Hull",
+   "volume": 50.0,
+   "price": 16000,
+   "legal": true
+  },
+  {
+   "id": "hull_mule",
+   "name": "Mule (packaged hull)",
+   "category": "Hull",
+   "volume": 50.0,
+   "price": 15000,
+   "legal": true
+  },
+  {
+   "id": "hull_lance",
+   "name": "Lance (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 40000,
+   "legal": true
+  },
+  {
+   "id": "hull_burrow",
+   "name": "Burrow (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 38000,
+   "legal": true
+  },
+  {
+   "id": "hull_satchel",
+   "name": "Satchel (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 36000,
+   "legal": true
+  },
+  {
+   "id": "hull_gleaner",
+   "name": "Gleaner (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 42000,
+   "legal": true
+  },
+  {
+   "id": "hull_lookout",
+   "name": "Lookout (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 45000,
+   "legal": true
+  },
+  {
+   "id": "hull_quarry",
+   "name": "Quarry (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 220000,
+   "legal": true
+  },
+  {
+   "id": "hull_drayman",
+   "name": "Drayman (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 200000,
+   "legal": true
+  },
+  {
+   "id": "hull_siphon",
+   "name": "Siphon (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 210000,
+   "legal": true
+  },
+  {
+   "id": "hull_cartographer",
+   "name": "Cartographer (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 240000,
+   "legal": true
+  },
+  {
+   "id": "hull_bulwark",
+   "name": "Bulwark (packaged hull)",
+   "category": "Hull",
+   "volume": 500.0,
+   "price": 900000,
+   "legal": true
+  },
+  {
+   "id": "hull_outrider",
+   "name": "Outrider (packaged hull)",
+   "category": "Hull",
+   "volume": 500.0,
+   "price": 880000,
+   "legal": true
+  },
+  {
+   "id": "hull_concord",
+   "name": "Concord (packaged hull)",
+   "category": "Hull",
+   "volume": 500.0,
+   "price": 920000,
+   "legal": true
+  },
+  {
+   "id": "hull_hammerline",
+   "name": "Hammerline (packaged hull)",
+   "category": "Hull",
+   "volume": 500.0,
+   "price": 870000,
+   "legal": true
+  },
+  {
+   "id": "hull_ironvale",
+   "name": "Ironvale (packaged hull)",
+   "category": "Hull",
+   "volume": 140.0,
+   "price": 260000,
+   "legal": true
+  },
+  {
+   "id": "hull_wildcard",
+   "name": "Wildcard (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 520000,
+   "legal": true
+  },
+  {
+   "id": "hull_verdict",
+   "name": "Verdict (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 560000,
+   "legal": true
+  },
+  {
+   "id": "hull_tunneler",
+   "name": "Tunneler (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 480000,
+   "legal": true
+  },
+  {
+   "id": "hull_harrier",
+   "name": "Harrier (packaged hull)",
+   "category": "Hull",
+   "volume": 140.0,
+   "price": 300000,
+   "legal": true
+  },
+  {
+   "id": "hull_snare",
+   "name": "Snare (packaged hull)",
+   "category": "Hull",
+   "volume": 140.0,
+   "price": 340000,
+   "legal": true
+  },
+  {
+   "id": "hull_whisper",
+   "name": "Whisper (packaged hull)",
+   "category": "Hull",
+   "volume": 80.0,
+   "price": 180000,
+   "legal": true
+  },
+  {
+   "id": "hull_sentry",
+   "name": "Sentry (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 600000,
+   "legal": true
+  },
+  {
+   "id": "hull_reclaimer",
+   "name": "Reclaimer (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 450000,
+   "legal": true
+  },
+  {
+   "id": "hull_pathfinder",
+   "name": "Pathfinder (packaged hull)",
+   "category": "Hull",
+   "volume": 300.0,
+   "price": 500000,
+   "legal": true
+  },
+  {
+   "id": "hull_foreman",
+   "name": "Foreman (packaged hull)",
+   "category": "Hull",
+   "volume": 500.0,
+   "price": 1400000,
+   "legal": true
+  },
+  {
+   "id": "hull_citadel",
+   "name": "Citadel (packaged hull)",
+   "category": "Hull",
+   "volume": 700.0,
+   "price": 2500000,
+   "legal": true
+  },
+  {
+   "id": "hull_bastion",
+   "name": "Bastion (packaged hull)",
+   "category": "Hull",
+   "volume": 1600.0,
+   "price": 18000000,
+   "legal": true
+  },
+  {
+   "id": "hull_monolith",
+   "name": "Monolith (packaged hull)",
+   "category": "Hull",
+   "volume": 1600.0,
+   "price": 20000000,
+   "legal": true
+  },
+  {
+   "id": "hull_sovereign",
+   "name": "Sovereign (packaged hull)",
+   "category": "Hull",
+   "volume": 3000.0,
+   "price": 90000000,
+   "legal": true
+  },
+  {
+   "id": "hull_longhaul",
+   "name": "Longhaul (packaged hull)",
+   "category": "Hull",
+   "volume": 1200.0,
+   "price": 14000000,
+   "legal": true
+  },
+  {
+   "id": "hull_hearthforge",
+   "name": "Hearthforge (packaged hull)",
+   "category": "Hull",
+   "volume": 1400.0,
+   "price": 16000000,
+   "legal": true
+  }
+ ]
+}

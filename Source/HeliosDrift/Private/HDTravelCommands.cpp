@@ -8,6 +8,8 @@
 #include "HDSystemDirector.h"
 #include "HDUniverseSubsystem.h"
 #include "HDWorldActors.h"
+#include "HDCatalog.h"
+#include "HDFittingComponent.h"
 #include "Engine/World.h"
 
 #if !UE_BUILD_SHIPPING
@@ -29,21 +31,26 @@ namespace
 	}
 }
 
-/** Server: apply a hull class and its default fuel tanks (M3 fitting overrides these). */
-static void ApplyHullClassDefaults(AHDShipPawn* Ship, EHDHullClass C)
+/** Server: switch to a catalog hull (by id, or the first hull of a class) with its suggested fit and full tanks. */
+static bool ApplyTestHull(AHDShipPawn* Ship, const FString& Arg, FString& OutMsg)
 {
-	Ship->HullClass = C;
-	if (!Ship->Nav) return;
-	switch (C)
+	UHDCatalogSubsystem* Cat = UHDCatalogSubsystem::Get(Ship);
+	if (!Cat || !Ship->Fitting) { OutMsg = TEXT("No catalog"); return false; }
+	FName HullId(*Arg.ToLower());
+	if (!Cat->FindHull(HullId))
 	{
-	case EHDHullClass::Capital: Ship->Nav->MaxJumpFuel = 2000.f; break;
-	case EHDHullClass::Supercapital: Ship->Nav->MaxJumpFuel = 3000.f; break;
-	case EHDHullClass::JumpFreighter: case EHDHullClass::CapitalIndustrial: Ship->Nav->MaxJumpFuel = 4000.f; break;
-	default: Ship->Nav->MaxJumpFuel = 0.f; break;
+		EHDHullClass C;
+		if (!ParseHullClass(Arg, C)) { OutMsg = TEXT("hull <hull id | class>, e.g. hull longhaul, hull Capital"); return false; }
+		HullId = NAME_None;
+		for (const TPair<FName, FHDHullDef>& P : Cat->GetHulls()) { if (P.Value.Class == C) { HullId = P.Key; break; } }
+		if (HullId.IsNone()) { OutMsg = TEXT("No hull of that class in the catalog"); return false; }
 	}
-	Ship->Nav->JumpFuel = Ship->Nav->MaxJumpFuel;
-	Ship->Nav->MaxShipFuel = HDShips::IsCapitalSize(C) ? 400.f : 60.f;
-	Ship->Nav->ShipFuel = Ship->Nav->MaxShipFuel;
+	FString Err;
+	if (!Ship->Fitting->SetFitAuthority(HullId, UHDFittingComponent::SuggestFit(Cat, HullId), Err)) { OutMsg = Err; return false; }
+	Ship->HullHP = Ship->MaxHullHP;
+	if (Ship->Nav) { Ship->Nav->ShipFuel = Ship->Nav->MaxShipFuel; Ship->Nav->JumpFuel = Ship->Nav->MaxJumpFuel; }
+	OutMsg = Ship->Fitting->DescribeFit();
+	return true;
 }
 #endif
 
@@ -96,12 +103,11 @@ bool AHDPlayerController::HandleTravelCommand(const FString& Verb, const FString
 	if (Verb == TEXT("hull"))
 	{
 		if (!Ship) return true;
-		EHDHullClass C;
-		if (!ParseHullClass(Arg, C)) { Notify(TEXT("hull <Fighter|Corvette|Frigate|Destroyer|Cruiser|Battlecruiser|Battleship|Capital|Supercapital|JumpFreighter|CapitalIndustrial>")); return true; }
-		ApplyHullClassDefaults(Ship, C);
-		Notify(FString::Printf(TEXT("Hull class: %s. %s"), HDShips::ClassName(C), HDShips::IsCapitalSize(C)
-			? *FString::Printf(TEXT("Jump drive %.1f ly, %.0f t jump fuel."), Nav ? Nav->GetJumpRangeLy() : 0.f, Nav ? Nav->JumpFuel : 0.f)
-			: TEXT("Gate-bound.")));
+		FString Msg;
+		ApplyTestHull(Ship, Arg, Msg);
+		TArray<FString> Lines;
+		Msg.ParseIntoArrayLines(Lines);
+		for (const FString& L : Lines) Notify(L);
 		return true;
 	}
 	if (Verb == TEXT("fuel"))

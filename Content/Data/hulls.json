@@ -1,0 +1,1397 @@
+{
+ "hulls": [
+  {
+   "id": "wasp",
+   "name": "Wasp",
+   "cls": "Fighter",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 9000,
+   "quirk": "",
+   "speed": 450,
+   "accel": 220,
+   "turn": 90,
+   "size": [
+    12,
+    8,
+    3
+   ],
+   "hp": 300,
+   "shield": 150,
+   "power": 40,
+   "stability": 60,
+   "cargo": 2,
+   "slots": {
+    "weapon": 2,
+    "utility": 0,
+    "support": 0,
+    "engine": 1,
+    "hold": 0
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 20,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "skiff",
+   "name": "Skiff",
+   "cls": "Corvette",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 18000,
+   "quirk": "",
+   "speed": 380,
+   "accel": 170,
+   "turn": 70,
+   "size": [
+    25,
+    12,
+    6
+   ],
+   "hp": 600,
+   "shield": 300,
+   "power": 70,
+   "stability": 80,
+   "cargo": 20,
+   "slots": {
+    "weapon": 2,
+    "utility": 1,
+    "support": 1,
+    "engine": 1,
+    "hold": 0
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 40,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "pick",
+   "name": "Pick",
+   "cls": "Corvette",
+   "role": "Miner",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 16000,
+   "quirk": "",
+   "speed": 380,
+   "accel": 170,
+   "turn": 70,
+   "size": [
+    25,
+    12,
+    6
+   ],
+   "hp": 600,
+   "shield": 300,
+   "power": 70,
+   "stability": 80,
+   "cargo": 20,
+   "slots": {
+    "weapon": 2,
+    "utility": 1,
+    "support": 1,
+    "engine": 1,
+    "hold": 0
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 40,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "mining": 1.1
+  },
+  {
+   "id": "mule",
+   "name": "Mule",
+   "cls": "Corvette",
+   "role": "Hauler",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 15000,
+   "quirk": "",
+   "speed": 380,
+   "accel": 170,
+   "turn": 70,
+   "size": [
+    25,
+    12,
+    6
+   ],
+   "hp": 600,
+   "shield": 300,
+   "power": 70,
+   "stability": 80,
+   "cargo": 120,
+   "slots": {
+    "weapon": 2,
+    "utility": 1,
+    "support": 1,
+    "engine": 1,
+    "hold": 0
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 40,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "lance",
+   "name": "Lance",
+   "cls": "Frigate",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 40000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 60,
+   "slots": {
+    "weapon": 3,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "burrow",
+   "name": "Burrow",
+   "cls": "Frigate",
+   "role": "Miner",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 38000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 150,
+   "slots": {
+    "weapon": 3,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "mining": 1.2
+  },
+  {
+   "id": "satchel",
+   "name": "Satchel",
+   "cls": "Frigate",
+   "role": "Hauler",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 36000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 500,
+   "slots": {
+    "weapon": 1,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "gleaner",
+   "name": "Gleaner",
+   "cls": "Frigate",
+   "role": "Salvager",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 42000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 60,
+   "slots": {
+    "weapon": 3,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "salvage": 1.25
+  },
+  {
+   "id": "lookout",
+   "name": "Lookout",
+   "cls": "Frigate",
+   "role": "Surveyor",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 45000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 60,
+   "slots": {
+    "weapon": 3,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "scan": 1.5
+  },
+  {
+   "id": "quarry",
+   "name": "Quarry",
+   "cls": "Cruiser",
+   "role": "Miner",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 220000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 1200,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "mining": 1.3
+  },
+  {
+   "id": "drayman",
+   "name": "Drayman",
+   "cls": "Cruiser",
+   "role": "Hauler",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 200000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 6000,
+   "slots": {
+    "weapon": 2,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "siphon",
+   "name": "Siphon",
+   "cls": "Cruiser",
+   "role": "Extractor",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 210000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 1500,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "gas": 1.5
+  },
+  {
+   "id": "cartographer",
+   "name": "Cartographer",
+   "cls": "Cruiser",
+   "role": "Surveyor",
+   "supply": "Baseline",
+   "tier": 1,
+   "faction": "",
+   "price": 240000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 400,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "scan": 2.0
+  },
+  {
+   "id": "bulwark",
+   "name": "Bulwark",
+   "cls": "Battlecruiser",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 2,
+   "faction": "halvar_combine",
+   "price": 900000,
+   "quirk": "",
+   "speed": 190,
+   "accel": 70,
+   "turn": 20,
+   "size": [
+    250,
+    80,
+    40
+   ],
+   "hp": 6000,
+   "shield": 2800,
+   "power": 380,
+   "stability": 260,
+   "cargo": 600,
+   "slots": {
+    "weapon": 7,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 200,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "outrider",
+   "name": "Outrider",
+   "cls": "Battlecruiser",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 2,
+   "faction": "tessaly_freehold",
+   "price": 880000,
+   "quirk": "",
+   "speed": 190,
+   "accel": 70,
+   "turn": 20,
+   "size": [
+    250,
+    80,
+    40
+   ],
+   "hp": 6000,
+   "shield": 2800,
+   "power": 380,
+   "stability": 260,
+   "cargo": 600,
+   "slots": {
+    "weapon": 7,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 200,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "concord",
+   "name": "Concord",
+   "cls": "Battlecruiser",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 2,
+   "faction": "meridian_compact",
+   "price": 920000,
+   "quirk": "",
+   "speed": 190,
+   "accel": 70,
+   "turn": 20,
+   "size": [
+    250,
+    80,
+    40
+   ],
+   "hp": 6000,
+   "shield": 2800,
+   "power": 380,
+   "stability": 260,
+   "cargo": 600,
+   "slots": {
+    "weapon": 7,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 200,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "hammerline",
+   "name": "Hammerline",
+   "cls": "Battlecruiser",
+   "role": "Combat",
+   "supply": "Baseline",
+   "tier": 2,
+   "faction": "orrin_union",
+   "price": 870000,
+   "quirk": "",
+   "speed": 190,
+   "accel": 70,
+   "turn": 20,
+   "size": [
+    250,
+    80,
+    40
+   ],
+   "hp": 6000,
+   "shield": 2800,
+   "power": 380,
+   "stability": 260,
+   "cargo": 600,
+   "slots": {
+    "weapon": 7,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 200,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "ironvale",
+   "name": "Ironvale",
+   "cls": "Destroyer",
+   "role": "Combat",
+   "supply": "Faction",
+   "tier": 2,
+   "faction": "halvar_combine",
+   "price": 260000,
+   "quirk": "+40% hull, -15% speed",
+   "speed": 220,
+   "accel": 120,
+   "turn": 35,
+   "size": [
+    70,
+    26,
+    12
+   ],
+   "hp": 2520,
+   "shield": 900,
+   "power": 160,
+   "stability": 140,
+   "cargo": 120,
+   "slots": {
+    "weapon": 5,
+    "utility": 2,
+    "support": 3,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 90,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "wildcard",
+   "name": "Wildcard",
+   "cls": "Cruiser",
+   "role": "Combat",
+   "supply": "Faction",
+   "tier": 2,
+   "faction": "tessaly_freehold",
+   "price": 520000,
+   "quirk": "+30% speed and turn, -25% shields",
+   "speed": 286,
+   "accel": 90,
+   "turn": 33,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1200,
+   "power": 260,
+   "stability": 200,
+   "cargo": 400,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "verdict",
+   "name": "Verdict",
+   "cls": "Cruiser",
+   "role": "Combat",
+   "supply": "Faction",
+   "tier": 2,
+   "faction": "meridian_compact",
+   "price": 560000,
+   "quirk": "+35% shields, one fewer weapon",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 2160,
+   "power": 260,
+   "stability": 200,
+   "cargo": 400,
+   "slots": {
+    "weapon": 4,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "tunneler",
+   "name": "Tunneler",
+   "cls": "Cruiser",
+   "role": "Miner",
+   "supply": "Faction",
+   "tier": 2,
+   "faction": "orrin_union",
+   "price": 480000,
+   "quirk": "+50% mining yield, no hold upgrades",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 1600,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "mining": 1.95
+  },
+  {
+   "id": "harrier",
+   "name": "Harrier",
+   "cls": "Destroyer",
+   "role": "Combat",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 300000,
+   "quirk": "",
+   "speed": 260,
+   "accel": 120,
+   "turn": 35,
+   "size": [
+    70,
+    26,
+    12
+   ],
+   "hp": 1800,
+   "shield": 900,
+   "power": 160,
+   "stability": 140,
+   "cargo": 120,
+   "slots": {
+    "weapon": 5,
+    "utility": 2,
+    "support": 3,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 90,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "snare",
+   "name": "Snare",
+   "cls": "Destroyer",
+   "role": "Interdictor",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 340000,
+   "quirk": "",
+   "speed": 260,
+   "accel": 120,
+   "turn": 35,
+   "size": [
+    70,
+    26,
+    12
+   ],
+   "hp": 1800,
+   "shield": 900,
+   "power": 160,
+   "stability": 140,
+   "cargo": 120,
+   "slots": {
+    "weapon": 5,
+    "utility": 2,
+    "support": 3,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 90,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "whisper",
+   "name": "Whisper",
+   "cls": "Frigate",
+   "role": "CovertOps",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 180000,
+   "quirk": "",
+   "speed": 300,
+   "accel": 150,
+   "turn": 45,
+   "size": [
+    40,
+    18,
+    8
+   ],
+   "hp": 1000,
+   "shield": 500,
+   "power": 100,
+   "stability": 100,
+   "cargo": 60,
+   "slots": {
+    "weapon": 3,
+    "utility": 2,
+    "support": 2,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 1,
+   "shipFuel": 60,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "scan": 1.4
+  },
+  {
+   "id": "sentry",
+   "name": "Sentry",
+   "cls": "Cruiser",
+   "role": "Combat",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 600000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 400,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "reclaimer",
+   "name": "Reclaimer",
+   "cls": "Cruiser",
+   "role": "Salvager",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 450000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 1500,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 150,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "salvage": 1.6
+  },
+  {
+   "id": "pathfinder",
+   "name": "Pathfinder",
+   "cls": "Cruiser",
+   "role": "Explorer",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 500000,
+   "quirk": "",
+   "speed": 220,
+   "accel": 90,
+   "turn": 25,
+   "size": [
+    150,
+    50,
+    25
+   ],
+   "hp": 3500,
+   "shield": 1600,
+   "power": 260,
+   "stability": 200,
+   "cargo": 400,
+   "slots": {
+    "weapon": 5,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 2,
+   "shipFuel": 300,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "scan": 2.5
+  },
+  {
+   "id": "foreman",
+   "name": "Foreman",
+   "cls": "Battlecruiser",
+   "role": "IndustrialCommand",
+   "supply": "Advanced",
+   "tier": 2,
+   "faction": "",
+   "price": 1400000,
+   "quirk": "",
+   "speed": 190,
+   "accel": 70,
+   "turn": 20,
+   "size": [
+    250,
+    80,
+    40
+   ],
+   "hp": 6000,
+   "shield": 2800,
+   "power": 380,
+   "stability": 260,
+   "cargo": 2500,
+   "slots": {
+    "weapon": 7,
+    "utility": 3,
+    "support": 4,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 200,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "citadel",
+   "name": "Citadel",
+   "cls": "Battleship",
+   "role": "Combat",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 2500000,
+   "quirk": "",
+   "speed": 160,
+   "accel": 50,
+   "turn": 15,
+   "size": [
+    350,
+    110,
+    60
+   ],
+   "hp": 10000,
+   "shield": 4500,
+   "power": 520,
+   "stability": 320,
+   "cargo": 800,
+   "slots": {
+    "weapon": 9,
+    "utility": 4,
+    "support": 6,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 3,
+   "shipFuel": 260,
+   "jumpFuel": 0,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "bastion",
+   "name": "Bastion",
+   "cls": "Capital",
+   "role": "Carrier",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 18000000,
+   "quirk": "",
+   "speed": 110,
+   "accel": 25,
+   "turn": 7,
+   "size": [
+    800,
+    250,
+    140
+   ],
+   "hp": 40000,
+   "shield": 15000,
+   "power": 1500,
+   "stability": 800,
+   "cargo": 3000,
+   "slots": {
+    "weapon": 10,
+    "utility": 5,
+    "support": 8,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 4,
+   "shipFuel": 400,
+   "jumpFuel": 2000,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "monolith",
+   "name": "Monolith",
+   "cls": "Capital",
+   "role": "Dreadnought",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 20000000,
+   "quirk": "",
+   "speed": 110,
+   "accel": 25,
+   "turn": 7,
+   "size": [
+    800,
+    250,
+    140
+   ],
+   "hp": 40000,
+   "shield": 15000,
+   "power": 1500,
+   "stability": 800,
+   "cargo": 3000,
+   "slots": {
+    "weapon": 10,
+    "utility": 5,
+    "support": 8,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 4,
+   "shipFuel": 400,
+   "jumpFuel": 2000,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "sovereign",
+   "name": "Sovereign",
+   "cls": "Supercapital",
+   "role": "Carrier",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 90000000,
+   "quirk": "",
+   "speed": 90,
+   "accel": 15,
+   "turn": 5,
+   "size": [
+    1500,
+    450,
+    250
+   ],
+   "hp": 90000,
+   "shield": 35000,
+   "power": 3000,
+   "stability": 1400,
+   "cargo": 6000,
+   "slots": {
+    "weapon": 14,
+    "utility": 6,
+    "support": 10,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 4,
+   "shipFuel": 400,
+   "jumpFuel": 3000,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "longhaul",
+   "name": "Longhaul",
+   "cls": "JumpFreighter",
+   "role": "Freighter",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 14000000,
+   "quirk": "",
+   "speed": 100,
+   "accel": 20,
+   "turn": 6,
+   "size": [
+    600,
+    180,
+    120
+   ],
+   "hp": 25000,
+   "shield": 8000,
+   "power": 900,
+   "stability": 600,
+   "cargo": 60000,
+   "slots": {
+    "weapon": 2,
+    "utility": 3,
+    "support": 6,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 4,
+   "shipFuel": 400,
+   "jumpFuel": 4000,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ]
+  },
+  {
+   "id": "hearthforge",
+   "name": "Hearthforge",
+   "cls": "CapitalIndustrial",
+   "role": "IndustrialCommand",
+   "supply": "Advanced",
+   "tier": 3,
+   "faction": "",
+   "price": 16000000,
+   "quirk": "",
+   "speed": 90,
+   "accel": 18,
+   "turn": 6,
+   "size": [
+    700,
+    260,
+    150
+   ],
+   "hp": 30000,
+   "shield": 12000,
+   "power": 1100,
+   "stability": 700,
+   "cargo": 40000,
+   "slots": {
+    "weapon": 4,
+    "utility": 5,
+    "support": 6,
+    "engine": 1,
+    "hold": 1
+   },
+   "maxModuleSize": 4,
+   "shipFuel": 400,
+   "jumpFuel": 4000,
+   "buildable": true,
+   "color": [
+    0.55,
+    0.58,
+    0.62
+   ],
+   "mining": 1.5
+  }
+ ],
+ "starter": {
+  "hull": "lance",
+  "modules": [
+   "pulse_laser_s",
+   "mining_laser_s",
+   "",
+   "scanner_array_s",
+   "",
+   "shield_extender_s",
+   "",
+   "drive_s",
+   "ore_hold_s"
+  ],
+  "storage": {
+   "pulse_laser_s": 1,
+   "autocannon_s": 1,
+   "cargo_expander_s": 1,
+   "salvager_s": 1,
+   "armor_plate_s": 1
+  }
+ }
+}

@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "GameFramework/GameStateBase.h"
+#include "HDItemTypes.h"
 #include "HDPlayerState.generated.h"
 
 /** Standing with one NPC faction (-10..10). */
@@ -59,6 +60,16 @@ public:
 	void AddCredits(int64 Amount) { Credits = FMath::Max<int64>(0, Credits + Amount); }
 
 	static double NowUnix();
+
+	// ---- Station storage and hangar (M3). Owner only. ----
+	UPROPERTY(Replicated) TArray<FHDStoredStack> Storage;
+	UPROPERTY(Replicated) TArray<FHDStoredShip> Hangar;
+	/** Starter kit is delivered to the first station you dock at. */
+	UPROPERTY() bool bStarterGiven = false;
+	int32 StorageCount(const FName& Station, const FName& Item) const;
+	void AddStorage(const FName& Station, const FName& Item, int32 Qty, uint8 Flags = 0);
+	/** Returns the number removed. */
+	int32 RemoveStorage(const FName& Station, const FName& Item, int32 Qty, uint8* OutFlags = nullptr);
 };
 
 /** Company wars (Restricted PVP needs a declared war with 48 h notice, doc 15). */

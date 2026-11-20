@@ -1,0 +1,2098 @@
+{
+ "modules": [
+  {
+   "id": "pulse_laser_s",
+   "name": "Pulse Laser S",
+   "slot": "Weapon",
+   "size": 1,
+   "tier": 1,
+   "power": 8,
+   "stability": 6,
+   "price": 8000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.4,
+     0.4,
+     2.0
+    ],
+    "color": [
+     1,
+     0.4,
+     0.3
+    ]
+   },
+   "effects": {
+    "damage": 40,
+    "range": 5000.0,
+    "interval": 0.15
+   }
+  },
+  {
+   "id": "autocannon_s",
+   "name": "Autocannon S",
+   "slot": "Weapon",
+   "size": 1,
+   "tier": 1,
+   "power": 5,
+   "stability": 8,
+   "price": 7000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.5,
+     0.5,
+     1.6
+    ],
+    "color": [
+     0.7,
+     0.7,
+     0.6
+    ]
+   },
+   "effects": {
+    "damage": 22,
+    "range": 3500.0,
+    "interval": 0.08
+   }
+  },
+  {
+   "id": "railgun_s",
+   "name": "Railgun S",
+   "slot": "Weapon",
+   "size": 1,
+   "tier": 1,
+   "power": 14,
+   "stability": 10,
+   "price": 12000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.35,
+     0.35,
+     3.2
+    ],
+    "color": [
+     0.4,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "damage": 160,
+    "range": 12000.0,
+    "interval": 0.9
+   }
+  },
+  {
+   "id": "mining_laser_s",
+   "name": "Mining Laser S",
+   "slot": "Weapon",
+   "size": 1,
+   "tier": 1,
+   "power": 6,
+   "stability": 5,
+   "price": 6000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     0.5,
+     0.5,
+     1.4
+    ],
+    "color": [
+     0.3,
+     1,
+     0.5
+    ]
+   },
+   "effects": {
+    "mining": 2,
+    "range": 3000,
+    "interval": 0.25
+   }
+  },
+  {
+   "id": "salvager_s",
+   "name": "Salvager S",
+   "slot": "Weapon",
+   "size": 1,
+   "tier": 1,
+   "power": 5,
+   "stability": 4,
+   "price": 6500,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     0.5,
+     0.5,
+     1.2
+    ],
+    "color": [
+     1,
+     0.8,
+     0.3
+    ]
+   },
+   "effects": {
+    "salvage": 1,
+    "range": 2500,
+    "interval": 0.5
+   }
+  },
+  {
+   "id": "gas_siphon_s",
+   "name": "Gas Siphon S",
+   "slot": "Utility",
+   "size": 1,
+   "tier": 1,
+   "power": 5,
+   "stability": 5,
+   "price": 6000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.6,
+     0.6,
+     2
+    ],
+    "color": [
+     0.6,
+     0.9,
+     1
+    ]
+   },
+   "effects": {
+    "gas": 1.5
+   }
+  },
+  {
+   "id": "shield_extender_s",
+   "name": "Shield Extender S",
+   "slot": "Support",
+   "size": 1,
+   "tier": 1,
+   "power": 10,
+   "stability": 8,
+   "price": 9000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     1.2,
+     1.2,
+     1.2
+    ],
+    "color": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "shield": 250
+   }
+  },
+  {
+   "id": "armor_plate_s",
+   "name": "Armor Plate S",
+   "slot": "Support",
+   "size": 1,
+   "tier": 1,
+   "power": 0,
+   "stability": 14,
+   "price": 7000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     2,
+     0.4,
+     1
+    ],
+    "color": [
+     0.45,
+     0.45,
+     0.45
+    ]
+   },
+   "effects": {
+    "hull": 400,
+    "speed": -0.04
+   }
+  },
+  {
+   "id": "cargo_expander_s",
+   "name": "Cargo Expander S",
+   "slot": "Support",
+   "size": 1,
+   "tier": 1,
+   "power": 2,
+   "stability": 6,
+   "price": 5000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1.8,
+     1,
+     1
+    ],
+    "color": [
+     0.7,
+     0.6,
+     0.4
+    ]
+   },
+   "effects": {
+    "cargo": 60,
+    "speed": -0.03
+   }
+  },
+  {
+   "id": "reactor_s",
+   "name": "Auxiliary Reactor S",
+   "slot": "Support",
+   "size": 1,
+   "tier": 1,
+   "power": 0,
+   "stability": 10,
+   "price": 11000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1.2,
+     1.2,
+     1.2
+    ],
+    "color": [
+     1,
+     0.9,
+     0.4
+    ]
+   },
+   "effects": {
+    "powerOut": 30
+   }
+  },
+  {
+   "id": "fuel_tank_s",
+   "name": "Fuel Tank S",
+   "slot": "Support",
+   "size": 1,
+   "tier": 1,
+   "power": 1,
+   "stability": 4,
+   "price": 4000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1,
+     1,
+     2
+    ],
+    "color": [
+     0.9,
+     0.5,
+     0.2
+    ]
+   },
+   "effects": {
+    "shipFuel": 30
+   }
+  },
+  {
+   "id": "drive_s",
+   "name": "Drive S",
+   "slot": "Engine",
+   "size": 1,
+   "tier": 1,
+   "power": 12,
+   "stability": 4,
+   "price": 9000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     1.2,
+     1.2,
+     1.6
+    ],
+    "color": [
+     0.5,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "speed": 0.0
+   }
+  },
+  {
+   "id": "sprint_drive_s",
+   "name": "Sprint Drive S",
+   "slot": "Engine",
+   "size": 1,
+   "tier": 1,
+   "power": 20,
+   "stability": 10,
+   "price": 16000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     1.4,
+     1.4,
+     2.2
+    ],
+    "color": [
+     1,
+     0.5,
+     0.9
+    ]
+   },
+   "effects": {
+    "speed": 0.25,
+    "turn": 0.1
+   }
+  },
+  {
+   "id": "ore_hold_s",
+   "name": "Ore Hold S",
+   "slot": "Hold",
+   "size": 1,
+   "tier": 1,
+   "power": 2,
+   "stability": 12,
+   "price": 8000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.6,
+     0.5,
+     0.35
+    ]
+   },
+   "effects": {
+    "cargo": 150,
+    "oreOnly": true
+   }
+  },
+  {
+   "id": "freight_hold_s",
+   "name": "Freight Hold S",
+   "slot": "Hold",
+   "size": 1,
+   "tier": 1,
+   "power": 2,
+   "stability": 14,
+   "price": 9000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.5,
+     0.55,
+     0.6
+    ]
+   },
+   "effects": {
+    "cargo": 120,
+    "speed": -0.05
+   }
+  },
+  {
+   "id": "salvage_bay_s",
+   "name": "Salvage Bay S",
+   "slot": "Hold",
+   "size": 1,
+   "tier": 1,
+   "power": 3,
+   "stability": 12,
+   "price": 9000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.8,
+     0.6,
+     0.2
+    ]
+   },
+   "effects": {
+    "cargo": 80,
+    "salvage": 0.3
+   }
+  },
+  {
+   "id": "pulse_laser_m",
+   "name": "Pulse Laser M",
+   "slot": "Weapon",
+   "size": 2,
+   "tier": 1,
+   "power": 19,
+   "stability": 14,
+   "price": 46080,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.96,
+     0.96,
+     4.8
+    ],
+    "color": [
+     1,
+     0.4,
+     0.3
+    ]
+   },
+   "effects": {
+    "damage": 96,
+    "range": 6250.0,
+    "interval": 0.15
+   }
+  },
+  {
+   "id": "autocannon_m",
+   "name": "Autocannon M",
+   "slot": "Weapon",
+   "size": 2,
+   "tier": 1,
+   "power": 12,
+   "stability": 19,
+   "price": 40320,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1.2,
+     1.2,
+     3.84
+    ],
+    "color": [
+     0.7,
+     0.7,
+     0.6
+    ]
+   },
+   "effects": {
+    "damage": 53,
+    "range": 4375.0,
+    "interval": 0.08
+   }
+  },
+  {
+   "id": "railgun_m",
+   "name": "Railgun M",
+   "slot": "Weapon",
+   "size": 2,
+   "tier": 1,
+   "power": 34,
+   "stability": 24,
+   "price": 69120,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.84,
+     0.84,
+     7.68
+    ],
+    "color": [
+     0.4,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "damage": 384,
+    "range": 15000.0,
+    "interval": 0.9
+   }
+  },
+  {
+   "id": "mining_laser_m",
+   "name": "Mining Laser M",
+   "slot": "Weapon",
+   "size": 2,
+   "tier": 1,
+   "power": 14,
+   "stability": 12,
+   "price": 34560,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     1.2,
+     1.2,
+     3.36
+    ],
+    "color": [
+     0.3,
+     1,
+     0.5
+    ]
+   },
+   "effects": {
+    "mining": 4.8,
+    "range": 3000,
+    "interval": 0.25
+   }
+  },
+  {
+   "id": "salvager_m",
+   "name": "Salvager M",
+   "slot": "Weapon",
+   "size": 2,
+   "tier": 1,
+   "power": 12,
+   "stability": 10,
+   "price": 37440,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     1.2,
+     1.2,
+     2.88
+    ],
+    "color": [
+     1,
+     0.8,
+     0.3
+    ]
+   },
+   "effects": {
+    "salvage": 2.4,
+    "range": 2500,
+    "interval": 0.5
+   }
+  },
+  {
+   "id": "gas_siphon_m",
+   "name": "Gas Siphon M",
+   "slot": "Utility",
+   "size": 2,
+   "tier": 1,
+   "power": 12,
+   "stability": 12,
+   "price": 34560,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1.44,
+     1.44,
+     4.8
+    ],
+    "color": [
+     0.6,
+     0.9,
+     1
+    ]
+   },
+   "effects": {
+    "gas": 3.6
+   }
+  },
+  {
+   "id": "shield_extender_m",
+   "name": "Shield Extender M",
+   "slot": "Support",
+   "size": 2,
+   "tier": 1,
+   "power": 24,
+   "stability": 19,
+   "price": 51840,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     2.88,
+     2.88,
+     2.88
+    ],
+    "color": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "shield": 600
+   }
+  },
+  {
+   "id": "armor_plate_m",
+   "name": "Armor Plate M",
+   "slot": "Support",
+   "size": 2,
+   "tier": 1,
+   "power": 0,
+   "stability": 34,
+   "price": 40320,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     4.8,
+     0.96,
+     2.4
+    ],
+    "color": [
+     0.45,
+     0.45,
+     0.45
+    ]
+   },
+   "effects": {
+    "hull": 960,
+    "speed": -0.04
+   }
+  },
+  {
+   "id": "cargo_expander_m",
+   "name": "Cargo Expander M",
+   "slot": "Support",
+   "size": 2,
+   "tier": 1,
+   "power": 2,
+   "stability": 14,
+   "price": 28800,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     4.32,
+     2.4,
+     2.4
+    ],
+    "color": [
+     0.7,
+     0.6,
+     0.4
+    ]
+   },
+   "effects": {
+    "cargo": 346,
+    "speed": -0.03
+   }
+  },
+  {
+   "id": "reactor_m",
+   "name": "Auxiliary Reactor M",
+   "slot": "Support",
+   "size": 2,
+   "tier": 1,
+   "power": 0,
+   "stability": 24,
+   "price": 63360,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     2.88,
+     2.88,
+     2.88
+    ],
+    "color": [
+     1,
+     0.9,
+     0.4
+    ]
+   },
+   "effects": {
+    "powerOut": 72
+   }
+  },
+  {
+   "id": "fuel_tank_m",
+   "name": "Fuel Tank M",
+   "slot": "Support",
+   "size": 2,
+   "tier": 1,
+   "power": 1,
+   "stability": 10,
+   "price": 23040,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     2.4,
+     2.4,
+     4.8
+    ],
+    "color": [
+     0.9,
+     0.5,
+     0.2
+    ]
+   },
+   "effects": {
+    "shipFuel": 72
+   }
+  },
+  {
+   "id": "drive_m",
+   "name": "Drive M",
+   "slot": "Engine",
+   "size": 2,
+   "tier": 1,
+   "power": 29,
+   "stability": 10,
+   "price": 51840,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     2.88,
+     2.88,
+     3.84
+    ],
+    "color": [
+     0.5,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "speed": 0.0
+   }
+  },
+  {
+   "id": "sprint_drive_m",
+   "name": "Sprint Drive M",
+   "slot": "Engine",
+   "size": 2,
+   "tier": 1,
+   "power": 48,
+   "stability": 24,
+   "price": 92160,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     3.36,
+     3.36,
+     5.28
+    ],
+    "color": [
+     1,
+     0.5,
+     0.9
+    ]
+   },
+   "effects": {
+    "speed": 0.25,
+    "turn": 0.1
+   }
+  },
+  {
+   "id": "ore_hold_m",
+   "name": "Ore Hold M",
+   "slot": "Hold",
+   "size": 2,
+   "tier": 1,
+   "power": 2,
+   "stability": 29,
+   "price": 46080,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.6,
+     0.5,
+     0.35
+    ]
+   },
+   "effects": {
+    "cargo": 864,
+    "oreOnly": true
+   }
+  },
+  {
+   "id": "freight_hold_m",
+   "name": "Freight Hold M",
+   "slot": "Hold",
+   "size": 2,
+   "tier": 1,
+   "power": 2,
+   "stability": 34,
+   "price": 51840,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.5,
+     0.55,
+     0.6
+    ]
+   },
+   "effects": {
+    "cargo": 691,
+    "speed": -0.05
+   }
+  },
+  {
+   "id": "salvage_bay_m",
+   "name": "Salvage Bay M",
+   "slot": "Hold",
+   "size": 2,
+   "tier": 1,
+   "power": 3,
+   "stability": 29,
+   "price": 51840,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.8,
+     0.6,
+     0.2
+    ]
+   },
+   "effects": {
+    "cargo": 461,
+    "salvage": 0.3
+   }
+  },
+  {
+   "id": "pulse_laser_l",
+   "name": "Pulse Laser L",
+   "slot": "Weapon",
+   "size": 3,
+   "tier": 2,
+   "power": 40,
+   "stability": 30,
+   "price": 200000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     2.0,
+     2.0,
+     10.0
+    ],
+    "color": [
+     1,
+     0.4,
+     0.3
+    ]
+   },
+   "effects": {
+    "damage": 200,
+    "range": 7500.0,
+    "interval": 0.15
+   }
+  },
+  {
+   "id": "autocannon_l",
+   "name": "Autocannon L",
+   "slot": "Weapon",
+   "size": 3,
+   "tier": 2,
+   "power": 25,
+   "stability": 40,
+   "price": 175000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     2.5,
+     2.5,
+     8.0
+    ],
+    "color": [
+     0.7,
+     0.7,
+     0.6
+    ]
+   },
+   "effects": {
+    "damage": 110,
+    "range": 5250.0,
+    "interval": 0.08
+   }
+  },
+  {
+   "id": "railgun_l",
+   "name": "Railgun L",
+   "slot": "Weapon",
+   "size": 3,
+   "tier": 2,
+   "power": 70,
+   "stability": 50,
+   "price": 300000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1.75,
+     1.75,
+     16.0
+    ],
+    "color": [
+     0.4,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "damage": 800,
+    "range": 18000.0,
+    "interval": 0.9
+   }
+  },
+  {
+   "id": "mining_laser_l",
+   "name": "Mining Laser L",
+   "slot": "Weapon",
+   "size": 3,
+   "tier": 2,
+   "power": 30,
+   "stability": 25,
+   "price": 150000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     2.5,
+     2.5,
+     7.0
+    ],
+    "color": [
+     0.3,
+     1,
+     0.5
+    ]
+   },
+   "effects": {
+    "mining": 10,
+    "range": 3000,
+    "interval": 0.25
+   }
+  },
+  {
+   "id": "salvager_l",
+   "name": "Salvager L",
+   "slot": "Weapon",
+   "size": 3,
+   "tier": 2,
+   "power": 25,
+   "stability": 20,
+   "price": 162500,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     2.5,
+     2.5,
+     6.0
+    ],
+    "color": [
+     1,
+     0.8,
+     0.3
+    ]
+   },
+   "effects": {
+    "salvage": 5,
+    "range": 2500,
+    "interval": 0.5
+   }
+  },
+  {
+   "id": "gas_siphon_l",
+   "name": "Gas Siphon L",
+   "slot": "Utility",
+   "size": 3,
+   "tier": 2,
+   "power": 25,
+   "stability": 25,
+   "price": 150000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     3.0,
+     3.0,
+     10
+    ],
+    "color": [
+     0.6,
+     0.9,
+     1
+    ]
+   },
+   "effects": {
+    "gas": 7.5
+   }
+  },
+  {
+   "id": "shield_extender_l",
+   "name": "Shield Extender L",
+   "slot": "Support",
+   "size": 3,
+   "tier": 2,
+   "power": 50,
+   "stability": 40,
+   "price": 225000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     6.0,
+     6.0,
+     6.0
+    ],
+    "color": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "shield": 1250
+   }
+  },
+  {
+   "id": "armor_plate_l",
+   "name": "Armor Plate L",
+   "slot": "Support",
+   "size": 3,
+   "tier": 2,
+   "power": 0,
+   "stability": 70,
+   "price": 175000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     10,
+     2.0,
+     5
+    ],
+    "color": [
+     0.45,
+     0.45,
+     0.45
+    ]
+   },
+   "effects": {
+    "hull": 2000,
+    "speed": -0.04
+   }
+  },
+  {
+   "id": "cargo_expander_l",
+   "name": "Cargo Expander L",
+   "slot": "Support",
+   "size": 3,
+   "tier": 2,
+   "power": 2,
+   "stability": 30,
+   "price": 125000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     9.0,
+     5,
+     5
+    ],
+    "color": [
+     0.7,
+     0.6,
+     0.4
+    ]
+   },
+   "effects": {
+    "cargo": 1500,
+    "speed": -0.03
+   }
+  },
+  {
+   "id": "reactor_l",
+   "name": "Auxiliary Reactor L",
+   "slot": "Support",
+   "size": 3,
+   "tier": 2,
+   "power": 0,
+   "stability": 50,
+   "price": 275000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     6.0,
+     6.0,
+     6.0
+    ],
+    "color": [
+     1,
+     0.9,
+     0.4
+    ]
+   },
+   "effects": {
+    "powerOut": 150
+   }
+  },
+  {
+   "id": "fuel_tank_l",
+   "name": "Fuel Tank L",
+   "slot": "Support",
+   "size": 3,
+   "tier": 2,
+   "power": 1,
+   "stability": 20,
+   "price": 100000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     5,
+     5,
+     10
+    ],
+    "color": [
+     0.9,
+     0.5,
+     0.2
+    ]
+   },
+   "effects": {
+    "shipFuel": 150
+   }
+  },
+  {
+   "id": "drive_l",
+   "name": "Drive L",
+   "slot": "Engine",
+   "size": 3,
+   "tier": 2,
+   "power": 60,
+   "stability": 20,
+   "price": 225000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     6.0,
+     6.0,
+     8.0
+    ],
+    "color": [
+     0.5,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "speed": 0.0
+   }
+  },
+  {
+   "id": "sprint_drive_l",
+   "name": "Sprint Drive L",
+   "slot": "Engine",
+   "size": 3,
+   "tier": 2,
+   "power": 100,
+   "stability": 50,
+   "price": 400000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     7.0,
+     7.0,
+     11.0
+    ],
+    "color": [
+     1,
+     0.5,
+     0.9
+    ]
+   },
+   "effects": {
+    "speed": 0.25,
+    "turn": 0.1
+   }
+  },
+  {
+   "id": "ore_hold_l",
+   "name": "Ore Hold L",
+   "slot": "Hold",
+   "size": 3,
+   "tier": 2,
+   "power": 2,
+   "stability": 60,
+   "price": 200000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.6,
+     0.5,
+     0.35
+    ]
+   },
+   "effects": {
+    "cargo": 3750,
+    "oreOnly": true
+   }
+  },
+  {
+   "id": "freight_hold_l",
+   "name": "Freight Hold L",
+   "slot": "Hold",
+   "size": 3,
+   "tier": 2,
+   "power": 2,
+   "stability": 70,
+   "price": 225000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.5,
+     0.55,
+     0.6
+    ]
+   },
+   "effects": {
+    "cargo": 3000,
+    "speed": -0.05
+   }
+  },
+  {
+   "id": "salvage_bay_l",
+   "name": "Salvage Bay L",
+   "slot": "Hold",
+   "size": 3,
+   "tier": 2,
+   "power": 3,
+   "stability": 60,
+   "price": 225000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.8,
+     0.6,
+     0.2
+    ]
+   },
+   "effects": {
+    "cargo": 2000,
+    "salvage": 0.3
+   }
+  },
+  {
+   "id": "pulse_laser_capital",
+   "name": "Pulse Laser Capital",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 112,
+   "stability": 84,
+   "price": 1568000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     5.6000000000000005,
+     5.6000000000000005,
+     28.0
+    ],
+    "color": [
+     1,
+     0.4,
+     0.3
+    ]
+   },
+   "effects": {
+    "damage": 560,
+    "range": 8750.0,
+    "interval": 0.15
+   }
+  },
+  {
+   "id": "autocannon_capital",
+   "name": "Autocannon Capital",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 70,
+   "stability": 112,
+   "price": 1372000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     7.0,
+     7.0,
+     22.400000000000002
+    ],
+    "color": [
+     0.7,
+     0.7,
+     0.6
+    ]
+   },
+   "effects": {
+    "damage": 308,
+    "range": 6125.0,
+    "interval": 0.08
+   }
+  },
+  {
+   "id": "railgun_capital",
+   "name": "Railgun Capital",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 196,
+   "stability": 140,
+   "price": 2352000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     4.8999999999999995,
+     4.8999999999999995,
+     44.800000000000004
+    ],
+    "color": [
+     0.4,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "damage": 2240,
+    "range": 21000.0,
+    "interval": 0.9
+   }
+  },
+  {
+   "id": "mining_laser_capital",
+   "name": "Mining Laser Capital",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 84,
+   "stability": 70,
+   "price": 1176000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     7.0,
+     7.0,
+     19.599999999999998
+    ],
+    "color": [
+     0.3,
+     1,
+     0.5
+    ]
+   },
+   "effects": {
+    "mining": 28,
+    "range": 3000,
+    "interval": 0.25
+   }
+  },
+  {
+   "id": "salvager_capital",
+   "name": "Salvager Capital",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 70,
+   "stability": 56,
+   "price": 1274000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     7.0,
+     7.0,
+     16.8
+    ],
+    "color": [
+     1,
+     0.8,
+     0.3
+    ]
+   },
+   "effects": {
+    "salvage": 14,
+    "range": 2500,
+    "interval": 0.5
+   }
+  },
+  {
+   "id": "gas_siphon_capital",
+   "name": "Gas Siphon Capital",
+   "slot": "Utility",
+   "size": 4,
+   "tier": 3,
+   "power": 70,
+   "stability": 70,
+   "price": 1176000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     8.4,
+     8.4,
+     28
+    ],
+    "color": [
+     0.6,
+     0.9,
+     1
+    ]
+   },
+   "effects": {
+    "gas": 21.0
+   }
+  },
+  {
+   "id": "shield_extender_capital",
+   "name": "Shield Extender Capital",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 140,
+   "stability": 112,
+   "price": 1764000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     16.8,
+     16.8,
+     16.8
+    ],
+    "color": [
+     0.3,
+     0.6,
+     1
+    ]
+   },
+   "effects": {
+    "shield": 3500
+   }
+  },
+  {
+   "id": "armor_plate_capital",
+   "name": "Armor Plate Capital",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 0,
+   "stability": 196,
+   "price": 1372000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     28,
+     5.6000000000000005,
+     14
+    ],
+    "color": [
+     0.45,
+     0.45,
+     0.45
+    ]
+   },
+   "effects": {
+    "hull": 5600,
+    "speed": -0.04
+   }
+  },
+  {
+   "id": "cargo_expander_capital",
+   "name": "Cargo Expander Capital",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 2,
+   "stability": 84,
+   "price": 980000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     25.2,
+     14,
+     14
+    ],
+    "color": [
+     0.7,
+     0.6,
+     0.4
+    ]
+   },
+   "effects": {
+    "cargo": 11760,
+    "speed": -0.03
+   }
+  },
+  {
+   "id": "reactor_capital",
+   "name": "Auxiliary Reactor Capital",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 0,
+   "stability": 140,
+   "price": 2156000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     16.8,
+     16.8,
+     16.8
+    ],
+    "color": [
+     1,
+     0.9,
+     0.4
+    ]
+   },
+   "effects": {
+    "powerOut": 420
+   }
+  },
+  {
+   "id": "fuel_tank_capital",
+   "name": "Fuel Tank Capital",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 1,
+   "stability": 56,
+   "price": 784000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     14,
+     14,
+     28
+    ],
+    "color": [
+     0.9,
+     0.5,
+     0.2
+    ]
+   },
+   "effects": {
+    "shipFuel": 420
+   }
+  },
+  {
+   "id": "drive_capital",
+   "name": "Drive Capital",
+   "slot": "Engine",
+   "size": 4,
+   "tier": 3,
+   "power": 168,
+   "stability": 56,
+   "price": 1764000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     16.8,
+     16.8,
+     22.400000000000002
+    ],
+    "color": [
+     0.5,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "speed": 0.0
+   }
+  },
+  {
+   "id": "sprint_drive_capital",
+   "name": "Sprint Drive Capital",
+   "slot": "Engine",
+   "size": 4,
+   "tier": 3,
+   "power": 280,
+   "stability": 140,
+   "price": 3136000,
+   "visual": {
+    "shape": "Cone",
+    "scale": [
+     19.599999999999998,
+     19.599999999999998,
+     30.800000000000004
+    ],
+    "color": [
+     1,
+     0.5,
+     0.9
+    ]
+   },
+   "effects": {
+    "speed": 0.25,
+    "turn": 0.1
+   }
+  },
+  {
+   "id": "ore_hold_capital",
+   "name": "Ore Hold Capital",
+   "slot": "Hold",
+   "size": 4,
+   "tier": 3,
+   "power": 2,
+   "stability": 168,
+   "price": 1568000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.6,
+     0.5,
+     0.35
+    ]
+   },
+   "effects": {
+    "cargo": 29400,
+    "oreOnly": true
+   }
+  },
+  {
+   "id": "freight_hold_capital",
+   "name": "Freight Hold Capital",
+   "slot": "Hold",
+   "size": 4,
+   "tier": 3,
+   "power": 2,
+   "stability": 196,
+   "price": 1764000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.5,
+     0.55,
+     0.6
+    ]
+   },
+   "effects": {
+    "cargo": 23520,
+    "speed": -0.05
+   }
+  },
+  {
+   "id": "salvage_bay_capital",
+   "name": "Salvage Bay Capital",
+   "slot": "Hold",
+   "size": 4,
+   "tier": 3,
+   "power": 3,
+   "stability": 168,
+   "price": 1764000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     1,
+     1,
+     1
+    ],
+    "color": [
+     0.8,
+     0.6,
+     0.2
+    ]
+   },
+   "effects": {
+    "cargo": 15680,
+    "salvage": 0.3
+   }
+  },
+  {
+   "id": "scanner_array_s",
+   "name": "Scanner Array S",
+   "slot": "Utility",
+   "size": 1,
+   "tier": 1,
+   "power": 6,
+   "stability": 4,
+   "price": 10000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.3,
+     0.3,
+     3
+    ],
+    "color": [
+     0.8,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "scan": 0.5
+   }
+  },
+  {
+   "id": "tractor_beam_s",
+   "name": "Tractor Beam S",
+   "slot": "Utility",
+   "size": 1,
+   "tier": 1,
+   "power": 8,
+   "stability": 4,
+   "price": 9000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     0.8,
+     0.8,
+     0.8
+    ],
+    "color": [
+     0.4,
+     1,
+     0.9
+    ]
+   },
+   "effects": {
+    "tow": 1
+   }
+  },
+  {
+   "id": "scanner_array_m",
+   "name": "Scanner Array M",
+   "slot": "Utility",
+   "size": 2,
+   "tier": 2,
+   "power": 14,
+   "stability": 10,
+   "price": 57600,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.72,
+     0.72,
+     7.199999999999999
+    ],
+    "color": [
+     0.8,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "scan": 1.0
+   }
+  },
+  {
+   "id": "tractor_beam_m",
+   "name": "Tractor Beam M",
+   "slot": "Utility",
+   "size": 2,
+   "tier": 2,
+   "power": 19,
+   "stability": 10,
+   "price": 51840,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     1.92,
+     1.92,
+     1.92
+    ],
+    "color": [
+     0.4,
+     1,
+     0.9
+    ]
+   },
+   "effects": {
+    "tow": 2
+   }
+  },
+  {
+   "id": "scanner_array_l",
+   "name": "Scanner Array L",
+   "slot": "Utility",
+   "size": 3,
+   "tier": 3,
+   "power": 30,
+   "stability": 20,
+   "price": 250000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1.5,
+     1.5,
+     15
+    ],
+    "color": [
+     0.8,
+     0.8,
+     1
+    ]
+   },
+   "effects": {
+    "scan": 1.5
+   }
+  },
+  {
+   "id": "tractor_beam_l",
+   "name": "Tractor Beam L",
+   "slot": "Utility",
+   "size": 3,
+   "tier": 3,
+   "power": 40,
+   "stability": 20,
+   "price": 225000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     4.0,
+     4.0,
+     4.0
+    ],
+    "color": [
+     0.4,
+     1,
+     0.9
+    ]
+   },
+   "effects": {
+    "tow": 3
+   }
+  },
+  {
+   "id": "interdiction_field",
+   "name": "Interdiction Field",
+   "slot": "Utility",
+   "size": 2,
+   "tier": 2,
+   "power": 40,
+   "stability": 30,
+   "price": 180000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     3,
+     3,
+     3
+    ],
+    "color": [
+     1,
+     0.2,
+     0.2
+    ]
+   },
+   "effects": {
+    "interdict": 1
+   }
+  },
+  {
+   "id": "cloak_s",
+   "name": "Cloaking Device",
+   "slot": "Utility",
+   "size": 1,
+   "tier": 2,
+   "power": 25,
+   "stability": 10,
+   "price": 220000,
+   "visual": {
+    "shape": "Sphere",
+    "scale": [
+     0.8,
+     0.8,
+     0.8
+    ],
+    "color": [
+     0.3,
+     0.3,
+     0.4
+    ]
+   },
+   "effects": {
+    "cloak": 1
+   }
+  },
+  {
+   "id": "command_burst_m",
+   "name": "Mining Command Burst",
+   "slot": "Utility",
+   "size": 2,
+   "tier": 2,
+   "power": 30,
+   "stability": 20,
+   "price": 260000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     0.6,
+     0.6,
+     5
+    ],
+    "color": [
+     1,
+     1,
+     0.3
+    ]
+   },
+   "effects": {
+    "command": 0.25
+   }
+  },
+  {
+   "id": "command_burst_l",
+   "name": "Mining Command Burst L",
+   "slot": "Utility",
+   "size": 3,
+   "tier": 3,
+   "power": 60,
+   "stability": 40,
+   "price": 900000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     1,
+     1,
+     9
+    ],
+    "color": [
+     1,
+     1,
+     0.3
+    ]
+   },
+   "effects": {
+    "command": 0.4
+   }
+  },
+  {
+   "id": "jump_drive",
+   "name": "Jump Drive",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 300,
+   "stability": 120,
+   "price": 4000000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     12,
+     12,
+     20
+    ],
+    "color": [
+     0.7,
+     0.4,
+     1
+    ]
+   },
+   "effects": {
+    "jumpDrive": true
+   }
+  },
+  {
+   "id": "jump_fuel_bay",
+   "name": "Jump Fuel Bay",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 10,
+   "stability": 60,
+   "price": 600000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     10,
+     10,
+     16
+    ],
+    "color": [
+     0.9,
+     0.5,
+     0.2
+    ]
+   },
+   "effects": {
+    "jumpFuel": 1500
+   }
+  },
+  {
+   "id": "fighter_hangar",
+   "name": "Fighter Hangar",
+   "slot": "Support",
+   "size": 4,
+   "tier": 3,
+   "power": 120,
+   "stability": 150,
+   "price": 3000000,
+   "visual": {
+    "shape": "Cube",
+    "scale": [
+     40,
+     18,
+     10
+    ],
+    "color": [
+     0.5,
+     0.5,
+     0.55
+    ]
+   },
+   "effects": {
+    "fighters": 6
+   }
+  },
+  {
+   "id": "siege_cannon",
+   "name": "Siege Cannon",
+   "slot": "Weapon",
+   "size": 4,
+   "tier": 3,
+   "power": 400,
+   "stability": 200,
+   "price": 6000000,
+   "visual": {
+    "shape": "Cylinder",
+    "scale": [
+     10,
+     10,
+     70
+    ],
+    "color": [
+     1,
+     0.3,
+     0.2
+    ]
+   },
+   "effects": {
+    "damage": 6000,
+    "range": 40000,
+    "interval": 3.0
+   }
+  }
+ ]
+}
