@@ -1,4 +1,4 @@
-# World testing (universe, travel, ships, economy, NPCs, territory)
+# World testing (universe, travel, ships, economy, NPCs, territory, persistence)
 
 This is the in-editor test guide for the systems built on top of M1. `M1-TESTING.md` still covers flight, combat and controls.
 
@@ -346,3 +346,46 @@ Test commands are compiled out of Shipping builds.
 - [ ] Fit `interdiction_field`, `give munitions 10`, `interdict` next to a pilot riding a lane: they drop out with INTERDICTED. `corplane suppress on` protects the lane.
 - [ ] Land on a rocky world in your claim: `give kit_colony 1`, `colony found Home`. `colony build farm` on a dry world is refused. `governor hire great`, `governor budget 200000`, `corp deposit 500000`, `governor week`: buildings appear and a new queue is proposed; `colony take` loads produce.
 - [ ] `governor hire cheap` on a poor world, `governor week`: some builds waste money ("Wasted ... cr").
+
+## 7. Backend persistence (milestone 7)
+
+**What's in:** the Go backend stores **versioned JSON documents** in Postgres (`state_docs`, migration `0003`). The UE server's `AHDGameMode` loads them at start and writes them back every `SaveIntervalSeconds` (60 s) and on logout.
+
+| Document | Endpoint | Contents |
+|---|---|---|
+| `world/economy` | `GET/PUT /v1/world/economy` | NPC stock, regional consumption and trade, player orders, industry jobs, offline payouts (`UHDEconomySubsystem::ExportJson`). |
+| `world/territory` | `GET/PUT /v1/world/territory` | Companies, claims (DB inputs, samples, tiers, hires, policy), structures, colonies, player lanes, captured bases (`UHDTerritorySubsystem::ExportJson`). |
+| `world/rules` | `GET/PUT /v1/world/rules` | Declared wars. |
+| `pilot/<id>` | `GET/PUT /v1/pilots/{id}/state` | Credits, company tag, criminal timer, starter flag, revealed signatures, standings, skills, station storage, hangar, the active ship's hull + modules + hold. |
+| (list) | `GET /v1/world` | Versions and timestamps of the world documents. |
+
+The existing `/v1/pilots/{id}/ship` (position, HP) is unchanged.
+
+- **Safety rules:**
+  - World PUTs send `If-Match: <version>` (the version this server loaded; 0 = create). If another server wrote first, the backend answers **409** and this server **stops saving that document** (logged as an error).
+  - A document that failed to load (backend down) is **never saved**; the load retries every 30 s.
+  - A pilot is only saved after their state loaded (or was confirmed absent).
+  - Offline payouts (`ClaimPending`) are applied *after* the pilot state loads, so they aren't overwritten.
+  - A destroyed ship's fit isn't saved.
+- **Limits:** world docs ≤ 16 MiB, pilot docs ≤ 1 MiB. The body must be a JSON object. World kinds are `economy`, `territory` and `rules`. `SERVER_KEY` / `X-Helios-Server-Key` guards every `/v1` route.
+
+### Console
+| Command | Does |
+|---|---|
+| `HDCmd persist` | Backend URL, save interval, loaded versions per world doc (or BLOCKED / not loaded), loaded pilots. |
+| `HDCmd persist save` | Save world docs and online pilots now. |
+
+### Backend tests
+```
+cd backend
+go vet ./... && go test ./...
+# Optional, against a real Postgres (e.g. docker compose up db):
+HELIOS_TEST_DATABASE_URL="postgres://helios:helios@localhost:5432/helios?sslmode=disable" go test -run TestPGStore -v ./internal/state/
+```
+
+### Checklist
+- [ ] `docker compose up --build` in `backend/`, then PIE. On a fresh database `persist` shows `economy:v0 territory:v0 rules:v0`.
+- [ ] Trade, `corp create`, anchor a beacon, then `persist save`. `persist` now shows v1 for each; `curl localhost:8080/v1/world` lists them.
+- [ ] Stop PIE and start again: `corp info`, `claim` and `structures` come back; your credits, storage, standings, hangar, fit and hold are restored after login.
+- [ ] With the backend stopped, PIE logs "backend unreachable" and `persist` shows "not loaded". Nothing is overwritten when it comes back, and the load retries within 30 s.
+- [ ] Run a second server against the same backend and `persist save` on both: the slower one logs a 409 and shows BLOCKED.

@@ -13,6 +13,7 @@
 #include "HDNpcController.h"
 #include "HDSystemDirector.h"
 #include "HDUniverseSubsystem.h"
+#include "HDGameMode.h"
 #include "EngineUtils.h"
 
 namespace
@@ -74,7 +75,7 @@ namespace
 bool AHDPlayerController::HandleTerritoryCommand(const FString& Verb, const FString& Arg, AActor* Target)
 {
 	static const TCHAR* Verbs[] = { TEXT("corp"), TEXT("claim"), TEXT("anchor"), TEXT("structures"), TEXT("supply"), TEXT("unanchor"), TEXT("station"), TEXT("platform"),
-		TEXT("capture"), TEXT("corplane"), TEXT("interdict"), TEXT("colony"), TEXT("governor"), TEXT("siegenow") };
+		TEXT("capture"), TEXT("corplane"), TEXT("interdict"), TEXT("colony"), TEXT("governor"), TEXT("siegenow"), TEXT("persist") };
 	bool bMine = false;
 	for (const TCHAR* V : Verbs) { if (Verb == V) { bMine = true; break; } }
 	if (!bMine) return false;
@@ -90,6 +91,16 @@ bool AHDPlayerController::HandleTerritoryCommand(const FString& Verb, const FStr
 	const double Now = AHDPlayerState::NowUnix();
 	FHDCorp* MyCorp = Terr->CorpOf(PS);
 	const bool bCeo = Terr->IsCeo(PS);
+
+	if (Verb == TEXT("persist"))
+	{
+		// persist [save]: backend persistence status (M7); "save" writes world + online pilots now.
+		AHDGameMode* GM = World->GetAuthGameMode<AHDGameMode>();
+		if (!GM) return true;
+		if (Sub == TEXT("save")) { GM->SaveWorldState(); Notify(TEXT("Saving world state and online pilots...")); }
+		Notify(GM->DescribePersistence());
+		return true;
+	}
 
 	// ---------------------------------------------------------------- corp
 	if (Verb == TEXT("corp"))

@@ -344,6 +344,23 @@ FString UHDEconomySubsystem::ExportJson() const
 	TSharedRef<FJsonObject> Mined = MakeShared<FJsonObject>();
 	for (const TPair<int32, float>& P : RegionConsumed) Mined->SetNumberField(FString::FromInt(P.Key), P.Value);
 	Root->SetObjectField(TEXT("regionConsumed"), Mined);
+	TSharedRef<FJsonObject> TradeObj = MakeShared<FJsonObject>();
+	for (const TPair<int32, float>& P : RegionTrade) TradeObj->SetNumberField(FString::FromInt(P.Key), P.Value);
+	Root->SetObjectField(TEXT("regionTrade"), TradeObj);
+	TSharedRef<FJsonObject> StockObj = MakeShared<FJsonObject>();
+	for (const TPair<FString, float>& P : NpcStock) StockObj->SetNumberField(P.Key, P.Value);
+	Root->SetObjectField(TEXT("npcStock"), StockObj);
+	TArray<TSharedPtr<FJsonValue>> GoodsVals;
+	for (int32 I = 0; I < PendingGoodsList.Num() && I < PendingGoodsOwner.Num(); ++I)
+	{
+		TSharedRef<FJsonObject> G = MakeShared<FJsonObject>();
+		if (FJsonObjectConverter::UStructToJsonObject(FHDStoredStack::StaticStruct(), &PendingGoodsList[I], G, 0, 0))
+		{
+			G->SetStringField(TEXT("owner"), PendingGoodsOwner[I]);
+			GoodsVals.Add(MakeShared<FJsonValueObject>(G));
+		}
+	}
+	Root->SetArrayField(TEXT("pendingGoods"), GoodsVals);
 	Root->SetNumberField(TEXT("nextOrderId"), NextOrderId);
 	FString Out;
 	const TSharedRef<TJsonWriter<>> W = TJsonWriterFactory<>::Create(&Out);
@@ -389,6 +406,30 @@ void UHDEconomySubsystem::ImportJson(const FString& Json)
 	if (Root->TryGetObjectField(TEXT("regionConsumed"), O) && O)
 	{
 		for (const TPair<FString, TSharedPtr<FJsonValue>>& P : (*O)->Values) RegionConsumed.Add(FCString::Atoi(*P.Key), (float)P.Value->AsNumber());
+	}
+	if (Root->TryGetObjectField(TEXT("regionTrade"), O) && O)
+	{
+		for (const TPair<FString, TSharedPtr<FJsonValue>>& P : (*O)->Values) RegionTrade.Add(FCString::Atoi(*P.Key), (float)P.Value->AsNumber());
+	}
+	if (Root->TryGetObjectField(TEXT("npcStock"), O) && O)
+	{
+		for (const TPair<FString, TSharedPtr<FJsonValue>>& P : (*O)->Values) NpcStock.Add(P.Key, (float)P.Value->AsNumber());
+	}
+	if (Root->TryGetArrayField(TEXT("pendingGoods"), A) && A)
+	{
+		PendingGoodsList.Reset();
+		PendingGoodsOwner.Reset();
+		for (const TSharedPtr<FJsonValue>& V : *A)
+		{
+			FHDStoredStack Stack;
+			const TSharedPtr<FJsonObject> G = V.IsValid() ? V->AsObject() : TSharedPtr<FJsonObject>();
+			FString GoodsOwner;
+			if (G.IsValid() && G->TryGetStringField(TEXT("owner"), GoodsOwner) && FJsonObjectConverter::JsonObjectToUStruct(G.ToSharedRef(), &Stack, 0, 0))
+			{
+				PendingGoodsList.Add(Stack);
+				PendingGoodsOwner.Add(GoodsOwner);
+			}
+		}
 	}
 	double Next = 1.0;
 	if (Root->TryGetNumberField(TEXT("nextOrderId"), Next)) NextOrderId = FMath::Max(NextOrderId, (int32)Next);

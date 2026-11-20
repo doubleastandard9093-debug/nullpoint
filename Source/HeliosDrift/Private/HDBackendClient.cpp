@@ -149,3 +149,103 @@ void FHDBackendClient::SaveShip(const FHDShipRecord& Record)
 	});
 	Req->ProcessRequest();
 }
+
+// ---------------------------------------------------------------------------------------------
+// M7: versioned state documents
+// ---------------------------------------------------------------------------------------------
+void FHDBackendClient::LoadWorldDoc(const FString& Kind, FHDOnDocLoaded OnDone)
+{
+	LoadDoc(GetBaseUrl() + TEXT("/v1/world/") + FGenericPlatformHttp::UrlEncode(Kind), TEXT("world/") + Kind, OnDone);
+}
+
+void FHDBackendClient::SaveWorldDoc(const FString& Kind, const FString& DataJson, int64 IfVersion, FHDOnDocSaved OnDone)
+{
+	SaveDoc(GetBaseUrl() + TEXT("/v1/world/") + FGenericPlatformHttp::UrlEncode(Kind), TEXT("world/") + Kind, DataJson, IfVersion, OnDone);
+}
+
+void FHDBackendClient::LoadPilotState(const FString& PilotId, FHDOnDocLoaded OnDone)
+{
+	LoadDoc(GetBaseUrl() + TEXT("/v1/pilots/") + FGenericPlatformHttp::UrlEncode(PilotId) + TEXT("/state"), TEXT("pilot/") + PilotId, OnDone);
+}
+
+void FHDBackendClient::SavePilotState(const FString& PilotId, const FString& DataJson, FHDOnDocSaved OnDone)
+{
+	// The server hosting the session is authoritative for its pilots: unconditional write.
+	SaveDoc(GetBaseUrl() + TEXT("/v1/pilots/") + FGenericPlatformHttp::UrlEncode(PilotId) + TEXT("/state"), TEXT("pilot/") + PilotId, DataJson, -1, OnDone);
+}
+
+void FHDBackendClient::LoadDoc(const FString& Url, const FString& What, FHDOnDocLoaded OnDone)
+{
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Req = FHttpModule::Get().CreateRequest();
+	Req->SetURL(Url);
+	Req->SetVerb(TEXT("GET"));
+	AddAuth(Req);
+	Req->SetTimeout(30.f); // world documents can be several MB
+	Req->OnProcessRequestComplete().BindLambda([OnDone, What](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnected)
+	{
+		if (!bConnected || !Response.IsValid())
+		{
+			UE_LOG(LogHelios, Warning, TEXT("Load %s: backend unreachable at %s"), *What, *FHDBackendClient::GetBaseUrl());
+			OnDone.ExecuteIfBound(0, 0, FString());
+			return;
+		}
+		const int32 Code = Response->GetResponseCode();
+		if (Code == 404) { OnDone.ExecuteIfBound(404, 0, FString()); return; }
+		if (Code < 200 || Code >= 300)
+		{
+			UE_LOG(LogHelios, Warning, TEXT("Load %s failed: HTTP %d %s"), *What, Code, *Response->GetContentAsString().Left(200));
+			OnDone.ExecuteIfBound(Code, 0, FString());
+			return;
+		}
+		TSharedPtr<FJsonObject> Root;
+		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+		const TSharedPtr<FJsonObject>* DataObj = nullptr;
+		if (!FJsonSerializer::Deserialize(Reader, Root) || !Root.IsValid() || !Root->TryGetObjectField(TEXT("data"), DataObj) || !DataObj || !DataObj->IsValid())
+		{
+			UE_LOG(LogHelios, Warning, TEXT("Load %s: bad document"), *What);
+			OnDone.ExecuteIfBound(500, 0, FString());
+			return;
+		}
+		double Version = 0.0;
+		Root->TryGetNumberField(TEXT("version"), Version);
+		FString Data;
+		TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&Data);
+		FJsonSerializer::Serialize(DataObj->ToSharedRef(), Writer);
+		UE_LOG(LogHelios, Log, TEXT("Loaded %s v%lld (%d bytes)"), *What, (int64)Version, Data.Len());
+		OnDone.ExecuteIfBound(200, (int64)Version, Data);
+	});
+	Req->ProcessRequest();
+}
+
+void FHDBackendClient::SaveDoc(const FString& Url, const FString& What, const FString& DataJson, int64 IfVersion, FHDOnDocSaved OnDone)
+{
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Req = FHttpModule::Get().CreateRequest();
+	Req->SetURL(Url);
+	Req->SetVerb(TEXT("PUT"));
+	Req->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	if (IfVersion >= 0) Req->SetHeader(TEXT("If-Match"), FString::Printf(TEXT("%lld"), IfVersion));
+	AddAuth(Req);
+	Req->SetTimeout(30.f);
+	Req->SetContentAsString(DataJson);
+	Req->OnProcessRequestComplete().BindLambda([OnDone, What](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnected)
+	{
+		const int32 Code = (bConnected && Response.IsValid()) ? Response->GetResponseCode() : 0;
+		double Version = 0.0;
+		if (Response.IsValid())
+		{
+			TSharedPtr<FJsonObject> Root;
+			TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+			if (FJsonSerializer::Deserialize(Reader, Root) && Root.IsValid()) Root->TryGetNumberField(TEXT("version"), Version);
+		}
+		if (Code >= 200 && Code < 300)
+		{
+			UE_LOG(LogHelios, Verbose, TEXT("Saved %s v%lld"), *What, (int64)Version);
+		}
+		else
+		{
+			UE_LOG(LogHelios, Warning, TEXT("Save %s FAILED -> HTTP %d %s"), *What, Code, Response.IsValid() ? *Response->GetContentAsString().Left(200) : TEXT("(no response)"));
+		}
+		OnDone.ExecuteIfBound(Code >= 200 && Code < 300 ? 200 : Code, (int64)Version);
+	});
+	Req->ProcessRequest();
+}

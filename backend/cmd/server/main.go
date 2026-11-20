@@ -10,6 +10,7 @@ import (
 	"github.com/doubleastandard9093-debug/eve-elite-ogame-design/backend/internal/api"
 	"github.com/doubleastandard9093-debug/eve-elite-ogame-design/backend/internal/db"
 	"github.com/doubleastandard9093-debug/eve-elite-ogame-design/backend/internal/ships"
+	"github.com/doubleastandard9093-debug/eve-elite-ogame-design/backend/internal/state"
 )
 
 func main() {
@@ -37,10 +38,10 @@ func main() {
 	}
 	srv := &http.Server{
 		Addr:              addr,
-		Handler:           api.NewRouter(api.Config{DB: d, Ships: ships.PGStore{DB: d}, Version: "0.2.0", ServerKey: os.Getenv("SERVER_KEY")}),
+		Handler:           api.NewRouter(api.Config{DB: d, Ships: ships.PGStore{DB: d}, State: state.PGStore{DB: d}, Version: "0.3.0", ServerKey: os.Getenv("SERVER_KEY")}),
 		ReadHeaderTimeout: 5 * time.Second,
-		ReadTimeout:       15 * time.Second,
-		WriteTimeout:      15 * time.Second,
+		ReadTimeout:       30 * time.Second,
+		WriteTimeout:      30 * time.Second, // world documents can be several MB
 		IdleTimeout:       60 * time.Second,
 	}
 	log.Fatal(srv.ListenAndServe())
