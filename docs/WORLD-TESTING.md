@@ -200,3 +200,62 @@ Test commands are compiled out of Shipping builds.
 - [ ] `spawnwreck lance 1 1`: `salvageinfo` says unbreached (Solo/Corp allowed); `breach open` is refused; `breach solo` broadcasts. A second client is told someone else holds it.
 - [ ] `give tractor_beam_s`, fit it to a utility slot, `spawnwreck lance 0`, `tow`, fly to a shipyard, dock, `rebuild`: the hangar shows a recovered Lance.
 - [ ] Kill a ship (the target drone or a second client): a wreck appears where it died.
+
+## 5. NPCs, antagonists, encounters and security (milestone 5)
+
+**What's in:** `AHDNpcController` is a server-only AController that flies a normal `AHDShipPawn` through the same movement, laser and fitting components players use. `UHDNpcSubsystem` is a world subsystem ticked per active system by the director. Commands live in `HDNpcCommands.cpp`.
+
+- **Populations (doc 18):**
+  - Lawful: **Accord** security, **faction patrols** around industrial stations, **traders** that hop between stations carrying real cargo.
+  - Antagonists:
+    - **Rogues** prey on traders and small pilot hulls (they ignore anything over about 6,000 HP) and flee under 40% hull.
+    - **Pirates** fly as a leader plus a wing. Wingmen fly formation and take the leader's target, and the wing breaks and flees when the leader dies.
+    - **Sentinels** guard and never pursue or retreat.
+    - **Shadows** stay hidden until a pilot comes within 15 km, then reveal and offer a **shadow contract** paid in standing and information.
+- **NPC hardware ceiling:** NPC guns deal 0.8× (Accord 2.5×). NPC wrecks are never rebuildable. Pirates and rogues drop `pirate_tags`, which sell at Accord stations for standing. Sentinels may drop a `sentinel_core` (a researcher bounty).
+- **Spawn pressure is economic (doc 18):** pressure = 0.5 + regional trade volume (credits traded in the region, 6 h decay) / 250k + 0.15 × pilots in system, clamped to 0.5–2.5. Targets per band:
+  - Secured: 3 Accord, 3 traders, about 1×P rogues.
+  - Restricted: 1 Accord, 2 patrols, 3 traders, 1.5×P rogues, and a pirate wing when P > 1.2.
+  - Borderland: 1 patrol, 2 traders, 2×P rogues, 2×P+1 pirates.
+  - Frontier: 1 trader, 2×P rogues, 3×P+1 pirates, 1 shadow.
+  - The census runs every 15 s with at most one spawn per population per tick. The cap is 18 ambient NPCs per system. Ambient NPCs more than 2,000 km from every pilot are culled.
+- **Encounter anomalies (doc 20), spawned when a pilot streams the site in:**
+  - **Signal fire:** two damaged traders under attack by rogues (Secured/Restricted) or a pirate wing (Borderland+). Save at least one to get 3k × (1 + 2 × band) cr plus 1k per survivor and Accord standing.
+  - **Contraband drift:** containers of contraband and stolen-marked goods with a fence. `loot` them (and risk scans) or `report` them for a smaller legal payout plus standing.
+  - **Rogue nest:** 3 + 2 × band rogues that fight to the death. In Frontier, 25% field a capital-scale NPC (Monolith). A cleared nest pays out.
+  - **Dead signature:** ancient buoys with `signal_data`, components and sometimes a **star chart**: 5% Secured/Restricted, 15% Borderland, 40% Frontier. Looting a chart resolves the system's hidden links (wormholes, ruins). Borderland+ buoys may hide a shadow ship.
+  - Guarded sites: pirate bases (leader + 3 + band), sentinel vaults (2 + band sentinels, 50 km leash), deep-core guards, and the occasional rogue scavenger at Borderland+ hulks.
+- **PVP is a property of place (doc 15):**
+  - Secured: no PVP; shots do nothing ("Weapons safe") unless both pilots have `duel on`.
+  - Restricted: only between corps at war (48 h notice, existing `AHDGameState::Wars`).
+  - Borderland: at war, or inside a claimed volume (the territory hook arrives in M6).
+  - Frontier: open.
+  - Criminals are legal targets everywhere.
+- **Crimes:**
+  - Attacking lawful NPCs in Secured or Restricted space: criminal for 30 / 15 min and −0.5 Accord standing. The **Accord responds** in 8 s (3 Sentry cruisers) in Secured or 25 s (2) in Restricted, hunts you through the system, then leaves.
+  - Looting another pilot's wreck in Secured or Restricted is theft (criminal for 15 min).
+- **Contraband scans:** in Secured and Restricted space, being within 30 km of an Accord or patrol ship gets your hold scanned (every 5 min at most). Contraband and stolen-marked goods are seized with a 25% fine; if you can't pay, you're flagged criminal.
+- **Standing:** kills adjust it. Rogues give +0.02 Accord, pirates +0.05 Accord and −0.2 with their faction; patrols cost −1 with their faction, traders −0.3 Accord, Accord ships −2.
+
+### Console
+| Command | Does |
+|---|---|
+| `HDCmd npcs` | NPC contacts within 500 km: label, faction, state, hostile / targeting you. |
+| `HDCmd security` | Band rules, raider pressure, your criminal / duel status. |
+| `HDCmd duel on\|off` | Opt-in duel flag. |
+| `HDCmd report` | Report contraband containers within 10 km to the Accord. |
+| `HDCmd shadow` / `shadow deliver` | Your shadow contract. |
+| `HDCmd spawnnpc <pop> [hull\|-] [count]` | **Test:** spawn 15 km ahead (`accord patrol trader rogue pirate sentinel shadow`). |
+| `HDCmd crime [s]` / `pardon` / `clearnpcs` | **Test:** trigger the Accord response, clear the flag, remove all NPCs. |
+
+### Checklist
+- [ ] Start in Secured and wait about 30 s: `npcs` lists Accord ships and traders near the station. Target one with T; the HUD shows `Accord security Harrier`.
+- [ ] `spawnnpc rogue - 2`: they close in and fire. Damage one below 40% and it runs.
+- [ ] `spawnnpc pirate - 4`: the wing follows the leader. Kill the leader and the rest flee. Their wrecks have `pirate_tags` (`loot`); `sell pirate_tags all` at an Accord station works.
+- [ ] Shoot a trader in Secured: `CRIMINAL`, then `Accord security responding in 8 s`; three Sentries arrive and engage. `pardon` and `clearnpcs` reset.
+- [ ] Two PIE clients in Secured: shots do nothing (`Weapons safe`). Both `duel on`: damage lands.
+- [ ] Carry `give contraband_narcotics 5` near an Accord ship: within about 10 s it's seized and you're fined.
+- [ ] Scan down a signal fire (`scan`) and fly in: traders are under attack. Kill the raiders and you get a payout plus Accord standing.
+- [ ] A dead signature in Frontier (try a few): `loot` a buoy and sometimes get `Star chart: N hidden link(s) resolved`.
+- [ ] `spawnnpc shadow`: invisible until you're within 15 km, then a contract offer. `shadow deliver` at the named site resolves hidden signatures.
+- [ ] Spawn pressure: `security` shows the pressure rise after heavy trading in the region (`sell` large amounts).

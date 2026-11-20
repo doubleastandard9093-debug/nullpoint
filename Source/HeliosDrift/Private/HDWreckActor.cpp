@@ -60,6 +60,8 @@ void AHDWreckActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(AHDWreckActor, ModulesLeft);
 	DOREPLIFETIME(AHDWreckActor, PassProgress);
 	DOREPLIFETIME(AHDWreckActor, VictimPilot);
+	DOREPLIFETIME(AHDWreckActor, bCrate);
+	DOREPLIFETIME(AHDWreckActor, bNoRebuild);
 }
 
 const TCHAR* AHDWreckActor::GradeName(int32 G)
@@ -81,6 +83,7 @@ FString AHDWreckActor::FlagName(EHDHulkFlag F)
 
 FString AHDWreckActor::GetKindLabel() const
 {
+	if (bCrate) return FString::Printf(TEXT("Cargo container, %d stacks"), Loot.Num());
 	const TCHAR* AgeName = Age == EHDWreckAge::Fresh ? TEXT("Wreck") : Age == EHDWreckAge::Cooled ? TEXT("Hulk") : TEXT("Ancient derelict");
 	FString S = FString::Printf(TEXT("%s%s %s, %d modules"), bStationDerelict ? TEXT("Station ") : TEXT(""), AgeName, GradeName(Grade), ModulesLeft);
 	if (HulkClass > 0) S += FString::Printf(TEXT(", Class %d"), HulkClass);
@@ -130,6 +133,7 @@ void AHDWreckActor::ApplyVisual()
 	const FHDHullDef* H = C ? C->FindHull(HullId) : nullptr;
 	FVector Size = H ? H->SizeM : FVector(40.f, 18.f, 8.f);
 	if (bStationDerelict) Size = FVector(600.f, 400.f, 300.f);
+	if (bCrate) Size = FVector(5.f, 3.f, 3.f);
 	if (Mesh)
 	{
 		Mesh->SetRelativeScale3D(Size * 0.9);
@@ -238,9 +242,21 @@ FString AHDWreckActor::Work(AHDShipPawn* By, float Amount)
 	return Msg;
 }
 
+void AHDWreckActor::MakeCrate(const FString& Name, bool bInChart)
+{
+	bCrate = true;
+	bNoRebuild = true;
+	bChart = bInChart;
+	Grade = 5; // nothing to salvage: loot only
+	Modules.Reset();
+	ModulesLeft = 0;
+	DisplayName = Name;
+	ApplyVisual();
+}
+
 int64 AHDWreckActor::RebuildCost() const
 {
-	if (bStationDerelict || Grade > 3) return -1;
+	if (bStationDerelict || bNoRebuild || bCrate || Grade > 3) return -1;
 	const UHDCatalogSubsystem* C = UHDCatalogSubsystem::Get(this);
 	const FHDHullDef* H = C ? C->FindHull(HullId) : nullptr;
 	if (!H) return -1;

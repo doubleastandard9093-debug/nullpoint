@@ -234,6 +234,8 @@ void UHDEconomySubsystem::Tick(float Dt, UWorld* World)
 	// Regional consumption recovers exponentially.
 	const float Decay = FMath::Exp(-Dt / FMath::Max(60.f, RegionRecoveryHours * 3600.f));
 	for (TPair<int32, float>& P : RegionConsumed) P.Value *= Decay;
+	const float TradeDecay = FMath::Exp(-Dt / (6.f * 3600.f));
+	for (TPair<int32, float>& P : RegionTrade) P.Value *= TradeDecay;
 
 	StockRelaxTimer += Dt;
 	if (StockRelaxTimer >= 10.f)

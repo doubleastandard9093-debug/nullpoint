@@ -69,6 +69,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Mining") float RegionDepletionUnits = 40000.f;
 	UPROPERTY(EditAnywhere, Category = "Mining") float RegionRecoveryHours = 12.f;
 
+	// ---- Regional wealth (drives antagonist spawn pressure, doc 18) ----
+	void AddTrade(int32 Region, int64 Credits) { if (Region >= 0 && Credits > 0) RegionTrade.FindOrAdd(Region) += (float)Credits; }
+	float GetRegionTrade(int32 Region) const { const float* V = RegionTrade.Find(Region); return V ? *V : 0.f; }
+
 	// ---- NPC market ----
 	FHDQuote Quote(const AHDStationActor* St, const FName& Item) const;
 	/** Server: move NPC stock after a trade (positive = NPC received goods). */
@@ -110,6 +114,7 @@ public:
 
 private:
 	TMap<int32, float> RegionConsumed;
+	TMap<int32, float> RegionTrade;
 	/** NPC stock per "station|item". */
 	TMap<FString, float> NpcStock;
 	int32 NextOrderId = 1;

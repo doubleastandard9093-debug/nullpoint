@@ -44,6 +44,12 @@ public:
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Wreck") float PassProgress = 0.f;
 	/** Pilot who died here (field wrecks): looting someone else's wreck in lawful space is theft. */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Wreck") FString VictimPilot;
+	/** Loose cargo container (encounter loot): no hull, loot only. */
+	UPROPERTY(ReplicatedUsing = OnRep_Visual, BlueprintReadOnly, Category = "Wreck") bool bCrate = false;
+	/** NPC and encounter wrecks never rebuild (doc 20: anomalies never drop a rebuildable hull). */
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Wreck") bool bNoRebuild = false;
+	/** Dead-signature crate holding a chart toward a hidden wormhole or ruin gate. */
+	bool bChart = false;
 
 	/** Server state. */
 	TArray<FName> Modules;
@@ -72,6 +78,8 @@ public:
 	/** Credits to rebuild at a shipyard, or -1 if it can't be rebuilt. */
 	int64 RebuildCost() const;
 	static const TCHAR* GradeName(int32 G);
+	/** Server: turn this into a loot container. */
+	void MakeCrate(const FString& Name, bool bInChart);
 	static FString FlagName(EHDHulkFlag F);
 	/** Ship size factor (1 frigate ... 6 supercapital) from the hull class. */
 	int32 SizeFactor() const;

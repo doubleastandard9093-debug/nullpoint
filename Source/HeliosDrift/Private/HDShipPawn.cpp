@@ -9,6 +9,8 @@
 #include "HDEconomy.h"
 #include "HDWreckActor.h"
 #include "HDPlayerState.h"
+#include "HDNpcController.h"
+#include "HDNpcSubsystem.h"
 #include "HDPlayerController.h"
 #include "HeliosDrift.h"
 #include "Components/BoxComponent.h"
@@ -107,7 +109,7 @@ void AHDShipPawn::RecenterVR()
 void AHDShipPawn::NotifyControllerChanged()
 {
 	Super::NotifyControllerChanged();
-	if (IsLocallyControlled()) { RecenterVR(); }
+	if (IsLocallyControlled() && IsPlayerControlled()) { RecenterVR(); } // not for server-side NPC possession
 }
 
 void AHDShipPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -115,6 +117,7 @@ void AHDShipPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AHDShipPawn, HullHP);
 	DOREPLIFETIME(AHDShipPawn, SystemIndex);
+	DOREPLIFETIME(AHDShipPawn, DisplayLabel);
 	DOREPLIFETIME(AHDShipPawn, SystemOrigin);
 	DOREPLIFETIME(AHDShipPawn, HullClass);
 }
@@ -122,6 +125,12 @@ void AHDShipPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 float AHDShipPawn::TakeDamage(float Damage, FDamageEvent const& Event, AController* Inst, AActor* Causer)
 {
 	if (!HasAuthority() || HullHP <= 0.f || !(Damage > 0.f) || IsPendingKillPending()) return 0.f;
+	// PVP is a property of place (doc 15): illegal shots do nothing; attacks on lawful NPCs flag a criminal.
+	if (UHDNpcSubsystem* Npc = UHDNpcSubsystem::Get(this))
+	{
+		if (!Npc->CheckAttack(this, Inst, Causer)) return 0.f;
+	}
+	if (AHDNpcController* NC = Cast<AHDNpcController>(GetController())) { NC->OnDamaged(Causer); }
 	FVector Dir = Causer ? (GetActorLocation() - Causer->GetActorLocation()).GetSafeNormal() : FVector::ZeroVector;
 	if (Dir.IsNearlyZero()) { Dir = -GetActorForwardVector(); } // unknown source: treat as a hit on the fore facing
 	const float Overflow = Shields ? Shields->AbsorbDamage(Damage, Dir) : Damage;
@@ -364,6 +373,17 @@ void AHDShipPawn::SpawnDeathWreck(float Overkill)
 	AHDWreckActor* W = UHDEconomySubsystem::SpawnWreck(World, SystemIndex, GetActorLocation(), Fitting->HullId, Mods, Grade, 0, false);
 	if (!W) return;
 	if (const AHDPlayerState* PS = GetPlayerState<AHDPlayerState>()) W->VictimPilot = PS->PilotId;
+	if (const AHDNpcController* NC = Cast<AHDNpcController>(GetController()))
+	{
+		// NPC hulls never rebuild (doc 20); raiders drop ident tags for Accord bounties, sentinels their cores.
+		W->bNoRebuild = true;
+		FHDItemStack L;
+		L.Qty = 0;
+		if (NC->Pop == EHDNpcPop::Pirate) { L.Item = TEXT("pirate_tags"); L.Qty = FMath::RandRange(1, 3); }
+		else if (NC->Pop == EHDNpcPop::Rogue) { L.Item = TEXT("pirate_tags"); L.Qty = 1; }
+		else if (NC->Pop == EHDNpcPop::Sentinel && FMath::FRand() < 0.5f) { L.Item = TEXT("sentinel_core"); L.Qty = 1; }
+		if (L.Qty > 0) W->Loot.Add(L);
+	}
 	if (Cargo)
 	{
 		// Part of the hold survives the kill as loot.

@@ -181,7 +181,7 @@ bool AHDPlayerController::HandleShipCommand(const FString& Verb, const FString& 
 		if (!H) { Notify(TEXT("Unknown hull (HDCmd catalog hulls)")); return true; }
 		if (!IsNpcStation(Docked)) { Notify(TEXT("Player stations sell through their market (M4).")); return true; }
 		if (H->Supply == EHDSupplyTier::Advanced) { Notify(TEXT("Player-built only: fabricate it at a shipyard (HDCmd build) or buy from a player.")); return true; }
-		if (!H->Faction.IsNone() && Docked->Info.Faction != H->Faction) { Notify(FString::Printf(TEXT("Only %s stations sell the %s."), *H->Faction.ToString(), *H->Name)); return true; }
+		if (!H->Faction.IsNone() && HDShips::FactionKey(Docked->Info.Faction) != HDShips::FactionKey(H->Faction)) { Notify(FString::Printf(TEXT("Only %s stations sell the %s."), *H->Faction.ToString(), *H->Name)); return true; }
 		if (H->Supply == EHDSupplyTier::Faction && PS->GetStanding(H->Faction) < FactionHullStanding)
 		{
 			Notify(FString::Printf(TEXT("Needs standing %.0f with %s (you: %.1f)."), FactionHullStanding, *H->Faction.ToString(), PS->GetStanding(H->Faction)));

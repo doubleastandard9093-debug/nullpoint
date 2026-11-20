@@ -10,6 +10,7 @@
 #include "HDCatalog.h"
 #include "HDFittingComponent.h"
 #include "HDWreckActor.h"
+#include "HDNpcSubsystem.h"
 #include "HeliosDrift.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -468,9 +469,12 @@ void AHDSystemDirector::ClearSiteContents(AHDSiteActor* Site)
 	int32 Workable = 0, Total = 0;
 	for (const TObjectPtr<AActor>& C : Site->Contents)
 	{
-		if (const AHDWreckActor* W = Cast<AHDWreckActor>(C.Get())) { ++Total; if (W->Grade < 5) ++Workable; }
-		else if (const AHDAsteroidActor* R = Cast<AHDAsteroidActor>(C.Get())) { ++Total; if (!R->IsDepleted()) ++Workable; }
-		else if (C.Get() == nullptr) { ++Total; }
+		AActor* Act = C.Get();
+		if (!IsValid(Act)) { ++Total; continue; } // destroyed guard / collapsed wreck
+		++Total;
+		if (const AHDWreckActor* W = Cast<AHDWreckActor>(Act)) { if (W->Grade < 5 || W->Loot.Num() > 0) ++Workable; }
+		else if (const AHDAsteroidActor* R = Cast<AHDAsteroidActor>(Act)) { if (!R->IsDepleted()) ++Workable; }
+		else ++Workable; // living NPCs, structures
 	}
 	if (Total > 0 && Workable == 0) Site->bCleared = true;
 	for (TObjectPtr<AActor>& C : Site->Contents) { if (IsValid(C)) C->Destroy(); }
@@ -532,9 +536,17 @@ void AHDSystemDirector::SpawnSiteContents(FHDActiveSystem& A, AHDSiteActor* Site
 			Site->Contents.Add(W);
 		}
 	}
+	// Guards, convoys, raiders and loot containers for encounter anomalies and guarded sites.
+	if (UHDNpcSubsystem* Npc = UHDNpcSubsystem::Get(this))
+	{
+		TArray<AActor*> Spawned;
+		Npc->SpawnSiteEncounter(A, Site, R, Spawned);
+		for (AActor* Act : Spawned) Site->Contents.Add(Act);
+	}
 }
 
 void AHDSystemDirector::TickAmbient(FHDActiveSystem& A, const TArray<AHDShipPawn*>& Ships, float Dt)
 {
-	// Ambient traffic and economic spawn pressure are added by the NPC layer (milestone 5).
+	// Ambient traffic, antagonists with economic spawn pressure, encounters and security (doc 15, 18, 20).
+	if (UHDNpcSubsystem* Npc = UHDNpcSubsystem::Get(this)) Npc->TickSystem(A, Ships, Dt);
 }

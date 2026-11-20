@@ -151,6 +151,7 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 				Got += Afford; Spent += (int64)Afford * Q.NpcSells; Want -= Afford;
 			}
 		}
+		if (UHDUniverseSubsystem* U = UHDUniverseSubsystem::Get(this)) Econ->AddTrade(U->GetSystem(Docked->SystemIndex).Region, Spent);
 		if (Got == 0) { Notify(Q.NpcSells == 0 ? TEXT("Nobody sells that here at that price. Place a buy order: order buy <item> <qty> <price>") : TEXT("Can't afford it.")); return true; }
 		Notify(FString::Printf(TEXT("Bought %d x %s for %lld cr%s%s"), Got, *Cat->GetName(Item), Spent, bToStorage ? TEXT(" (overflow to station storage)") : TEXT(""),
 			Q.bStolenGoods ? TEXT(" - stolen goods: carries a legal mark in lawful space") : TEXT("")));
@@ -201,6 +202,7 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 			if (Docked->Info.Family == EHDStationFamily::AccordCivic && Item == FName(TEXT("pirate_tags"))) PS->AddStanding(TEXT("accord"), 0.02f * Want);
 			Want = 0;
 		}
+		if (UHDUniverseSubsystem* U = UHDUniverseSubsystem::Get(this)) Econ->AddTrade(U->GetSystem(Docked->SystemIndex).Region, Earned);
 		if (Sold == 0) { Notify(TEXT("Nobody buys that here. Place a sell order: order sell <item> <qty> <price>")); return true; }
 		Notify(FString::Printf(TEXT("Sold %d x %s for %lld cr (after tax)"), Sold, *Cat->GetName(Item), Earned));
 		return true;
@@ -435,6 +437,18 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 			if (S.Qty <= 0) W->Loot.RemoveAt(I);
 		}
 		Notify(FString::Printf(TEXT("Looted %d units%s"), Taken, W->Loot.Num() ? TEXT(" (hold full, some left)") : TEXT("")));
+		if (W->bChart)
+		{
+			// A chart resolves the system's hidden links for this pilot (doc 20: dead signatures point at real wormholes and ruins).
+			W->bChart = false;
+			int32 Revealed = 0;
+			for (TActorIterator<AHDJumpPointActor> It(GetWorld()); It; ++It)
+			{
+				if (It->SystemIndex == Ship->SystemIndex && It->bRequiresScan && !PS->HasRevealed(It->ObjectId)) { PS->Reveal(It->ObjectId); ++Revealed; }
+			}
+			Notify(Revealed > 0 ? FString::Printf(TEXT("Star chart: %d hidden link(s) resolved on your map"), Revealed) : FString(TEXT("Star chart: nothing hidden in this system; it's worth selling")));
+			if (Revealed == 0) Cargo->Add(TEXT("star_chart"), 1);
+		}
 		if (bTheft && Taken > 0) OnWreckLooted(W);
 		return true;
 	}

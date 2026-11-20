@@ -277,7 +277,7 @@ void AHDPlayerController::CycleTarget()
 	}
 	for (TActorIterator<APawn> It(GetWorld()); It; ++It)
 	{
-		if (*It == Ship) continue;
+		if (*It == Ship || It->IsHidden()) continue; // cloaked / unrevealed shadow ships
 		const double D2 = FVector::DistSquared(It->GetActorLocation(), Ship->GetActorLocation());
 		if (D2 < 2.0e7 * 2.0e7) { Cands.Add(TPair<double, AActor*>(D2, *It)); }
 	}

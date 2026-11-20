@@ -19,6 +19,8 @@ enum class EHDSupplyTier : uint8 { Baseline, Faction, Advanced };
 
 namespace HDShips
 {
+	/** Faction id key: "Halvar Combine" -> halvar_combine (stations carry display names, catalog/standing use keys). */
+	HELIOSDRIFT_API FName FactionKey(const FName& Faction);
 	/** Capital-size: capitals, supercapitals, jump freighters, capital industrials. */
 	inline bool IsCapitalSize(EHDHullClass C) { return C >= EHDHullClass::Capital; }
 	/** Needs gates, lanes, wormholes or anomalies to leave a system. */

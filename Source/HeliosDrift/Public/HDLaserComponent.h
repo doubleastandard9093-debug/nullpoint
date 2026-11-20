@@ -30,6 +30,8 @@ public:
 
 	/** Server: stop firing immediately (death, slipstream, etc.). */
 	void StopFiringAuthority() { bWantsFire = false; }
+	/** Server: NPC pilots pull the trigger directly. */
+	void SetFiringAuthority(bool bFiring) { bWantsFire = bFiring; }
 
 protected:
 	UFUNCTION(NetMulticast, Unreliable) void MulticastTracer(const FVector& Start, const FVector& End, bool bHit);

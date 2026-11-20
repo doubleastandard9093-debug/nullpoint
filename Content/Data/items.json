@@ -305,6 +305,30 @@
    "legal": true
   },
   {
+   "id": "sentinel_core",
+   "name": "Sentinel Core",
+   "category": "Bounty",
+   "volume": 0.5,
+   "price": 12000,
+   "legal": true
+  },
+  {
+   "id": "star_chart",
+   "name": "Star Chart Fragment",
+   "category": "Component",
+   "volume": 0.01,
+   "price": 4000,
+   "legal": true
+  },
+  {
+   "id": "signal_data",
+   "name": "Signal Data Cache",
+   "category": "Component",
+   "volume": 0.05,
+   "price": 900,
+   "legal": true
+  },
+  {
    "id": "pulse_laser_s",
    "name": "Pulse Laser S",
    "category": "Module",

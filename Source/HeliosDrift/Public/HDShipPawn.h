@@ -73,6 +73,8 @@ public:
 
 	/** Universe system this ship is in (-1 = none yet). Set by the system director. */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Universe") int32 SystemIndex = -1;
+	/** Shown on HUD target brackets for NPC ships ("Pirate Harrier"); empty for pilots. */
+	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Ship") FString DisplayLabel;
 	/** World position of that system's star (systems share the world in slots). */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Universe") FVector SystemOrigin = FVector::ZeroVector;
 	/** Server: move bookkeeping to a new system (the director positions the ship). */

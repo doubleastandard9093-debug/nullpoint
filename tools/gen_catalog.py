@@ -138,6 +138,9 @@ for i in [('food_rations', 'Food Rations', 0.5, 50), ('medical_supplies', 'Medic
 item('contraband_narcotics', 'Glimmer Dust', 'Contraband', 0.2, 2500, legal=False)
 item('contraband_weapons', 'Unregistered Arms', 'Contraband', 1, 4000, legal=False)
 item('pirate_tags', 'Pirate Ident Tags', 'Bounty', 0.01, 1500)
+item('sentinel_core', 'Sentinel Core', 'Bounty', 0.5, 12000)
+item('star_chart', 'Star Chart Fragment', 'Component', 0.01, 4000)
+item('signal_data', 'Signal Data Cache', 'Component', 0.05, 900)
 for m in M:
     item(m['id'], m['name'], 'Module', 2.0 * m['size'] ** 2, m['price'], tier=m['tier'])
 for h in H:

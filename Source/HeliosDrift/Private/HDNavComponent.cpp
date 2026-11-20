@@ -17,6 +17,13 @@
 
 namespace HDShips
 {
+	FName FactionKey(const FName& Faction)
+	{
+		if (Faction.IsNone()) return NAME_None;
+		FString S = Faction.ToString().ToLower();
+		S.ReplaceInline(TEXT(" "), TEXT("_"));
+		return FName(*S);
+	}
 	const TCHAR* ClassName(EHDHullClass C)
 	{
 		switch (C)

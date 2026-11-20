@@ -1,4 +1,5 @@
 #include "HDHUD.h"
+#include "GameFramework/PlayerState.h"
 #include "HDShipPawn.h"
 #include "HDShipTypes.h"
 #include "HDShipMovementComponent.h"
@@ -212,6 +213,12 @@ void AHDHUD::DrawTarget(const AHDShipPawn* Ship, AHDPlayerController* PC)
 	const double Dist = FVector::Dist(T->GetActorLocation(), Ship->GetActorLocation());
 	FString Name = T->GetName(), Kind = TEXT("Ship");
 	if (const AHDSpaceObject* O = Cast<AHDSpaceObject>(T)) { Name = O->DisplayName; Kind = O->GetKindLabel(); }
+	else if (const AHDShipPawn* TS = Cast<AHDShipPawn>(T))
+	{
+		const APlayerState* TPS = TS->GetPlayerState();
+		Name = !TS->DisplayLabel.IsEmpty() ? TS->DisplayLabel : (TPS ? TPS->GetPlayerName() : FString(TEXT("Ship")));
+		Kind = FString::Printf(TEXT("%s  hull %.0f"), HDShips::ClassName(TS->HullClass), TS->HullHP);
+	}
 	const float X = Canvas->ClipX - 420.f;
 	DrawText(FString::Printf(TEXT("TARGET %s"), *Name), Amber, X, 40.f);
 	DrawText(FString::Printf(TEXT("%s  %s"), *Kind, *FmtDist(Dist)), Amber, X, 60.f);
