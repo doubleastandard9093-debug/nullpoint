@@ -1,11 +1,16 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "HDUniverseTypes.h"
 #include "HDPlayerController.generated.h"
 
 class UInputMappingContext;
 class UInputAction;
 class ADirectionalLight;
+class AHDSpaceObject;
+
+/** Local map overlay state (M / hold View). */
+enum class EHDMapMode : uint8 { Closed, Galaxy, System };
 
 /** Runtime-built Enhanced Input actions (no .uasset needed). */
 USTRUCT()
@@ -35,6 +40,27 @@ struct FHDFlightInput
 	UPROPERTY(Transient) TObjectPtr<UInputAction> EqualizeShields;
 	UPROPERTY(Transient) TObjectPtr<UInputAction> RecenterVR;
 	UPROPERTY(Transient) TObjectPtr<UInputAction> Menu;
+	// ---- Travel (M2). Keyboard actions fire on press. ----
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Cruise;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Interact;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Dock;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Land;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Jump;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Map;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> Scan;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> TargetNext;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> MapNext;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> MapPrev;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> MapSelect;
+	// ---- Gamepad tap / hold pairs (bound on Triggered). Y, B, X, View. ----
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadYTap;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadYHold;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadBTap;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadBHold;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadXTap;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadXHold;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadViewTap;
+	UPROPERTY(Transient) TObjectPtr<UInputAction> PadViewHold;
 };
 
 UCLASS(Config = Game)
@@ -108,6 +134,35 @@ public:
 	/** HDCmd <verb> <arg>: send any server command directly. */
 	UFUNCTION(Exec) void HDCmd(const FString& Verb, const FString& Arg);
 
+	// ---- Maps and targeting (local) ----
+	/** Closed -> galaxy -> system -> closed. */
+	void CycleMap();
+	void CloseMap() { MapMode = EHDMapMode::Closed; }
+	bool IsMapOpen() const { return MapMode != EHDMapMode::Closed; }
+	EHDMapMode GetMapMode() const { return MapMode; }
+	/** Move the map cursor (+1 / -1). */
+	void MapStep(int32 Dir);
+	/** Galaxy map: zoom radius in/out. */
+	void MapZoom(int32 Dir);
+	/** Galaxy: set jump target + plot route. System: select the object as target. */
+	void MapSelect();
+	/** Cycle the selected target through visible objects in this system, nearest first. */
+	void CycleTarget();
+	AActor* GetSelectedTarget() const { return SelectedTarget.Get(); }
+	void SetSelectedTarget(AActor* A) { SelectedTarget = A; }
+	/** Galaxy map contents, refreshed when opened / zoomed. */
+	TArray<FHDMapEntry> GalaxyEntries;
+	/** System map contents (visible objects in our system). */
+	TArray<TWeakObjectPtr<AHDSpaceObject>> SystemEntries;
+	int32 MapCursor = 0;
+	float MapRadiusLy = 20.f;
+	/** Last plotted route (system indices, start first). */
+	TArray<int32> Route;
+	int32 RouteDestination = -1;
+	/** HDMap: toggle the map from the console. HDRoute <system>: plot a route without the map. */
+	UFUNCTION(Exec) void HDMap();
+	UFUNCTION(Exec) void HDRoute(const FString& System);
+
 	/** Server: handle one command. Implemented in HDCommands.cpp. */
 	void HandleCommand(const FString& Verb, const FString& Arg, AActor* Target);
 	/** Travel verbs (HDTravelCommands.cpp). Returns true if handled. */
@@ -132,4 +187,8 @@ private:
 	void BuildFlightInput();
 	bool bFlightBuilt = false;
 	bool bMenuOpen = false;
+	EHDMapMode MapMode = EHDMapMode::Closed;
+	TWeakObjectPtr<AActor> SelectedTarget;
+	void RefreshMapEntries();
+	void PlotRoute(int32 Dest);
 };

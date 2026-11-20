@@ -36,7 +36,7 @@ public:
 	/** Opt-in duel flag: the only PVP allowed in Secured space (doc 15). */
 	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") bool bDuelFlag = false;
 	/** Unix time until which this pilot is a criminal (attacked a lawful target in Secured/Restricted). */
-	UPROPERTY(Replicated, BlueprintReadOnly, Category = "Pilot") double CriminalUntil = 0.0;
+	UPROPERTY(Replicated) double CriminalUntil = 0.0;
 
 	/** Signatures (wormholes, sites) this pilot has scanned down. Owner only. */
 	UPROPERTY(Replicated) TArray<FName> Revealed;
@@ -69,7 +69,7 @@ struct FHDWar
 	UPROPERTY(BlueprintReadOnly, Category = "Rules") FName Aggressor;
 	UPROPERTY(BlueprintReadOnly, Category = "Rules") FName Defender;
 	/** Unix time the war becomes live (declaration + notice). */
-	UPROPERTY(BlueprintReadOnly, Category = "Rules") double LiveAt = 0.0;
+	UPROPERTY() double LiveAt = 0.0;
 };
 
 /** Replicates the universe seed so clients build the same galaxy, plus global rule state. */

@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "HDShipTypes.h"
 #include "HDShipPawn.generated.h"
 
 class UBoxComponent;
@@ -9,6 +10,8 @@ class UHDShipPowerComponent;
 class UHDShieldComponent;
 class UHDShipMovementComponent;
 class UHDLaserComponent;
+class UHDNavComponent;
+class AHDPlayerController;
 class USceneComponent;
 class UCameraComponent;
 struct FInputActionValue;
@@ -31,6 +34,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDShieldComponent> Shields;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDShipMovementComponent> Movement;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDLaserComponent> Laser;
+	/** Fuel, docking, landing, lanes, jumps, scanning (M2). */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ship") TObjectPtr<UHDNavComponent> Nav;
+	/** Hull size class: decides gates vs. jump drive (doc 13/14). Set by fitting / hull swap. */
+	UPROPERTY(EditDefaultsOnly, Replicated, BlueprintReadOnly, Category = "Ship") EHDHullClass HullClass = EHDHullClass::Frigate;
 	UPROPERTY(EditDefaultsOnly, Replicated, BlueprintReadOnly, Category = "Ship") float HullHP = 1000.f;
 	UPROPERTY(EditDefaultsOnly, Category = "Ship") float MaxHullHP = 1000.f;
 
@@ -82,4 +89,20 @@ private:
 	void OnEqualize(const FInputActionValue& V);
 	void OnRecenter(const FInputActionValue& V);
 	void SetPower(const FVector4& WSEA);
+	// Travel (M2)
+	void OnCruise(const FInputActionValue& V);
+	void OnInteract(const FInputActionValue& V);
+	void OnDock(const FInputActionValue& V);
+	void OnLand(const FInputActionValue& V);
+	void OnJump(const FInputActionValue& V);
+	void OnMap(const FInputActionValue& V);
+	void OnScan(const FInputActionValue& V);
+	void OnTargetNext(const FInputActionValue& V);
+	void OnMapNext(const FInputActionValue& V);
+	void OnMapPrev(const FInputActionValue& V);
+	void OnMapSelect(const FInputActionValue& V);
+	void OnViewTap(const FInputActionValue& V);
+	/** Local helper: send a command through our controller. */
+	void SendCmd(const TCHAR* Verb, AActor* Target = nullptr);
+	AHDPlayerController* GetHDController() const;
 };

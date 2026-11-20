@@ -3,6 +3,7 @@
 #include "HDWorldActors.h"
 #include "HDShipPawn.h"
 #include "HDShipMovementComponent.h"
+#include "HDNavComponent.h"
 #include "HDTargetDrone.h"
 #include "HDGameMode.h"
 #include "HeliosDrift.h"
@@ -267,6 +268,8 @@ bool AHDSystemDirector::PlaceShip(AHDShipPawn* Ship, int32 System, const FVector
 	const FHDActiveSystem* A = FindActive(System);
 	if (!A) return false;
 	Ship->SetSystem(System, A->Origin);
+	if (Ship->Nav) { Ship->Nav->DockedAt = nullptr; Ship->Nav->LandedOn = nullptr; }
+	if (Ship->Movement && Ship->Movement->GetTravelMode() != EHDTravelMode::Normal) { Ship->Movement->SetModeAuthority(EHDTravelMode::Normal); }
 	if (Ship->Movement) { Ship->Movement->TeleportAuthority(A->Origin + LocalPos, Rot.Quaternion(), true); }
 	else { Ship->SetActorLocationAndRotation(A->Origin + LocalPos, Rot); }
 	return true;

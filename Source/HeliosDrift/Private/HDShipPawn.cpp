@@ -2,6 +2,7 @@
 #include "HDShipPowerComponent.h"
 #include "HDShipMovementComponent.h"
 #include "HDLaserComponent.h"
+#include "HDNavComponent.h"
 #include "HDPlayerController.h"
 #include "HeliosDrift.h"
 #include "Components/BoxComponent.h"
@@ -45,6 +46,7 @@ AHDShipPawn::AHDShipPawn()
 	Shields = CreateDefaultSubobject<UHDShieldComponent>(TEXT("Shields"));
 	Movement = CreateDefaultSubobject<UHDShipMovementComponent>(TEXT("Movement"));
 	Laser = CreateDefaultSubobject<UHDLaserComponent>(TEXT("Laser"));
+	Nav = CreateDefaultSubobject<UHDNavComponent>(TEXT("Nav"));
 
 	CockpitRoot = CreateDefaultSubobject<USceneComponent>(TEXT("CockpitRoot"));
 	CockpitRoot->SetupAttachment(Collision);
@@ -91,6 +93,7 @@ void AHDShipPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AHDShipPawn, HullHP);
 	DOREPLIFETIME(AHDShipPawn, SystemIndex);
 	DOREPLIFETIME(AHDShipPawn, SystemOrigin);
+	DOREPLIFETIME(AHDShipPawn, HullClass);
 }
 
 float AHDShipPawn::TakeDamage(float Damage, FDamageEvent const& Event, AController* Inst, AActor* Causer)
@@ -165,6 +168,68 @@ void AHDShipPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	BindPress(In.PowerRun, &AHDShipPawn::OnPowerRun);
 	BindPress(In.EqualizeShields, &AHDShipPawn::OnEqualize);
 	BindPress(In.RecenterVR, &AHDShipPawn::OnRecenter);
+
+	// Travel (M2): keyboard on press.
+	BindPress(In.Cruise, &AHDShipPawn::OnCruise);
+	BindPress(In.Interact, &AHDShipPawn::OnInteract);
+	BindPress(In.Dock, &AHDShipPawn::OnDock);
+	BindPress(In.Land, &AHDShipPawn::OnLand);
+	BindPress(In.Jump, &AHDShipPawn::OnJump);
+	BindPress(In.Map, &AHDShipPawn::OnMap);
+	BindPress(In.Scan, &AHDShipPawn::OnScan);
+	BindPress(In.TargetNext, &AHDShipPawn::OnTargetNext);
+	BindPress(In.MapNext, &AHDShipPawn::OnMapNext);
+	BindPress(In.MapPrev, &AHDShipPawn::OnMapPrev);
+	BindPress(In.MapSelect, &AHDShipPawn::OnMapSelect);
+	// Gamepad tap/hold pairs: the Tap/Hold triggers decide, so bind Triggered.
+	auto BindTrig = [this, EIC](UInputAction* A, void (AHDShipPawn::*Fn)(const FInputActionValue&))
+	{
+		if (A) { EIC->BindAction(A, ETriggerEvent::Triggered, this, Fn); }
+	};
+	BindTrig(In.PadYTap, &AHDShipPawn::OnSlipstream);
+	BindTrig(In.PadYHold, &AHDShipPawn::OnCruise);
+	BindTrig(In.PadBTap, &AHDShipPawn::OnToggleFA);
+	BindTrig(In.PadBHold, &AHDShipPawn::OnInteract);
+	BindTrig(In.PadXTap, &AHDShipPawn::OnEqualize);
+	BindTrig(In.PadXHold, &AHDShipPawn::OnScan);
+	BindTrig(In.PadViewTap, &AHDShipPawn::OnViewTap);
+	BindTrig(In.PadViewHold, &AHDShipPawn::OnMap);
+}
+
+AHDPlayerController* AHDShipPawn::GetHDController() const { return Cast<AHDPlayerController>(GetController()); }
+
+void AHDShipPawn::SendCmd(const TCHAR* Verb, AActor* Target)
+{
+	if (AHDPlayerController* PC = GetHDController()) { PC->Cmd(Verb, FString(), Target); }
+}
+
+void AHDShipPawn::OnCruise(const FInputActionValue& V) { SendCmd(TEXT("cruise")); }
+void AHDShipPawn::OnInteract(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	SendCmd(TEXT("interact"), PC ? PC->GetSelectedTarget() : nullptr);
+}
+void AHDShipPawn::OnDock(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	SendCmd(TEXT("dock"), PC ? PC->GetSelectedTarget() : nullptr);
+}
+void AHDShipPawn::OnLand(const FInputActionValue& V) { SendCmd(TEXT("land")); }
+void AHDShipPawn::OnJump(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	SendCmd(TEXT("jump"), PC ? PC->GetSelectedTarget() : nullptr);
+}
+void AHDShipPawn::OnMap(const FInputActionValue& V) { if (AHDPlayerController* PC = GetHDController()) PC->CycleMap(); }
+void AHDShipPawn::OnScan(const FInputActionValue& V) { SendCmd(TEXT("scan")); }
+void AHDShipPawn::OnTargetNext(const FInputActionValue& V) { if (AHDPlayerController* PC = GetHDController()) PC->CycleTarget(); }
+void AHDShipPawn::OnMapNext(const FInputActionValue& V) { if (AHDPlayerController* PC = GetHDController()) PC->MapStep(1); }
+void AHDShipPawn::OnMapPrev(const FInputActionValue& V) { if (AHDPlayerController* PC = GetHDController()) PC->MapStep(-1); }
+void AHDShipPawn::OnMapSelect(const FInputActionValue& V) { if (AHDPlayerController* PC = GetHDController()) PC->MapSelect(); }
+void AHDShipPawn::OnViewTap(const FInputActionValue& V)
+{
+	if (IsVRActive()) { RecenterVR(); return; }
+	if (AHDPlayerController* PC = GetHDController()) PC->CycleTarget();
 }
 
 void AHDShipPawn::OnThrust(const FInputActionValue& V)   { if (Movement) Movement->InputLinear.X = V.Get<float>(); }
@@ -208,14 +273,40 @@ void AHDShipPawn::OnMenu(const FInputActionValue& V)
 	if (AHDPlayerController* PC = Cast<AHDPlayerController>(GetController())) { PC->ToggleMenu(); }
 }
 
-void AHDShipPawn::OnFireStart(const FInputActionValue& V) { if (Laser) Laser->ServerSetFiring(true); }
+void AHDShipPawn::OnFireStart(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	if (PC && PC->IsMapOpen()) { PC->MapSelect(); return; } // A selects on the map
+	if (Laser) Laser->ServerSetFiring(true);
+}
 void AHDShipPawn::OnFireStop(const FInputActionValue& V)  { if (Laser) Laser->ServerSetFiring(false); }
 void AHDShipPawn::OnToggleFA(const FInputActionValue& V)  { if (Movement) Movement->ToggleFlightAssist(); }
 void AHDShipPawn::OnSlipstream(const FInputActionValue& V) { if (Movement) Movement->ServerToggleSlipstream(); }
-void AHDShipPawn::OnPowerBalanced(const FInputActionValue& V) { SetPower(PresetBalanced); }
-void AHDShipPawn::OnPowerAttack(const FInputActionValue& V)   { SetPower(PresetAttack); }
-void AHDShipPawn::OnPowerTank(const FInputActionValue& V)     { SetPower(PresetTank); }
-void AHDShipPawn::OnPowerRun(const FInputActionValue& V)      { SetPower(PresetRun); }
+// D-pad / 1-4: power presets, or map navigation while the map is open (up/down move, right/left zoom).
+void AHDShipPawn::OnPowerBalanced(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	if (PC && PC->IsMapOpen()) { PC->MapStep(-1); return; }
+	SetPower(PresetBalanced);
+}
+void AHDShipPawn::OnPowerAttack(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	if (PC && PC->IsMapOpen()) { PC->MapZoom(1); return; }
+	SetPower(PresetAttack);
+}
+void AHDShipPawn::OnPowerTank(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	if (PC && PC->IsMapOpen()) { PC->MapStep(1); return; }
+	SetPower(PresetTank);
+}
+void AHDShipPawn::OnPowerRun(const FInputActionValue& V)
+{
+	AHDPlayerController* PC = GetHDController();
+	if (PC && PC->IsMapOpen()) { PC->MapZoom(-1); return; }
+	SetPower(PresetRun);
+}
 void AHDShipPawn::OnEqualize(const FInputActionValue& V)  { if (Shields) Shields->ServerEqualize(); }
 void AHDShipPawn::OnRecenter(const FInputActionValue& V)  { RecenterVR(); }
 

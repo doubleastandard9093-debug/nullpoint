@@ -47,11 +47,22 @@ For lag testing, open the console with `` ` `` in a client and run `NetEmulation
 | Pitch / yaw | Mouse, or arrow keys | Right stick |
 | Roll | Q / E | LB / RB |
 | Fire laser | LMB or Space | A |
-| Toggle Flight Assist | Z | B |
-| Equalize shields | X | X |
-| Slipstream (spool, engage, drop) | J | Y |
+| Toggle Flight Assist | Z | Tap B |
+| Equalize shields | X | Tap X |
+| Slipstream (spool, engage, drop) | J | Tap Y |
 | Power: Balanced / Attack / Tank / Run | 1 / 2 / 3 / 4 | D-pad up / right / down / left |
-| Recenter VR | Home | View |
+| Recenter VR | Home | Tap View (in VR) |
+| Cruise (orbital / supercruise) | C | Hold Y |
+| Interact: dock / undock / land / lift off / gate / lane / capital jump | G | Hold B |
+| Dock / undock | H | (Hold B) |
+| Land / lift off | L | (Hold B) |
+| Jump (gate in range, or capital drive to jump target) | B | (Hold B) |
+| Scan pulse | K | Hold X |
+| Next target | T | Tap View (flat screen) |
+| Map: galaxy, then system, then closed | M | Hold View |
+| Map cursor / zoom / select (map open) | PgUp PgDn or 1 / 3, zoom 2 / 4, Enter | D-pad up/down, D-pad right/left zoom, A |
+
+Tap means press and release within 0.3 s. Hold fires once after 0.45 s.
 | Controls overlay (menu placeholder) | Tab | Menu |
 
 **Why this layout:** the triggers and the left stick both drive thrust. When both are used, the one pushed harder wins, so they never fight. Fire is on A so your thumb never has to leave thrust. Vertical thrust is held on the stick clicks, which keeps the whole D-pad free for the four power presets.
