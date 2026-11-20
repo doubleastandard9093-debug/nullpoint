@@ -1,4 +1,5 @@
 #include "HDNpcSubsystem.h"
+#include "HDTerritory.h"
 #include "HDNpcController.h"
 #include "HDShipPawn.h"
 #include "HDShipTypes.h"
@@ -76,7 +77,9 @@ EHDSecurityBand UHDNpcSubsystem::BandOf(int32 System) const
 
 bool UHDNpcSubsystem::IsInClaim(int32 System, const FVector& WorldLoc) const
 {
-	return false; // replaced by the territory layer (M6)
+	// A claim covers its whole system (the announced volume).
+	const UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this);
+	return Terr && Terr->ClaimInSystem(System) != nullptr;
 }
 
 // ---------------------------------------------------------------------------------------------

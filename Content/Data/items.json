@@ -329,6 +329,110 @@
    "legal": true
   },
   {
+   "id": "munitions",
+   "name": "Munitions",
+   "category": "Component",
+   "volume": 0.1,
+   "price": 90,
+   "legal": true
+  },
+  {
+   "id": "kit_beacon",
+   "name": "Claim Beacon Kit",
+   "category": "Component",
+   "volume": 40,
+   "price": 400000,
+   "legal": true
+  },
+  {
+   "id": "kit_gun",
+   "name": "Gun Placement Kit",
+   "category": "Component",
+   "volume": 8,
+   "price": 60000,
+   "legal": true
+  },
+  {
+   "id": "kit_platform",
+   "name": "Defense Platform Kit",
+   "category": "Component",
+   "volume": 25,
+   "price": 220000,
+   "legal": true
+  },
+  {
+   "id": "kit_habitat",
+   "name": "Habitat Ring Kit",
+   "category": "Component",
+   "volume": 60,
+   "price": 180000,
+   "legal": true
+  },
+  {
+   "id": "kit_refinery",
+   "name": "Orbital Refinery Kit",
+   "category": "Component",
+   "volume": 50,
+   "price": 260000,
+   "legal": true
+  },
+  {
+   "id": "kit_factory",
+   "name": "Orbital Factory Kit",
+   "category": "Component",
+   "volume": 50,
+   "price": 300000,
+   "legal": true
+  },
+  {
+   "id": "kit_fuel_platform",
+   "name": "Gas Giant Fuel Platform Kit",
+   "category": "Component",
+   "volume": 60,
+   "price": 350000,
+   "legal": true
+  },
+  {
+   "id": "kit_station",
+   "name": "Station Core Kit",
+   "category": "Component",
+   "volume": 120,
+   "price": 900000,
+   "legal": true
+  },
+  {
+   "id": "kit_section",
+   "name": "Station Section Kit",
+   "category": "Component",
+   "volume": 30,
+   "price": 120000,
+   "legal": true
+  },
+  {
+   "id": "kit_interdictor",
+   "name": "Lane Interdictor Kit",
+   "category": "Component",
+   "volume": 20,
+   "price": 160000,
+   "legal": true
+  },
+  {
+   "id": "kit_lane",
+   "name": "Trade Lane Ring Pair Kit",
+   "category": "Component",
+   "volume": 100,
+   "price": 1200000,
+   "legal": true
+  },
+  {
+   "id": "kit_colony",
+   "name": "Colony Seed Kit",
+   "category": "Component",
+   "volume": 80,
+   "price": 500000,
+   "legal": true
+  },
+  {
    "id": "pulse_laser_s",
    "name": "Pulse Laser S",
    "category": "Module",

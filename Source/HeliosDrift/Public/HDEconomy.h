@@ -37,6 +37,8 @@ struct FHDJob
 	UPROPERTY(BlueprintReadOnly, Category = "Industry") FName Recipe;
 	UPROPERTY(BlueprintReadOnly, Category = "Industry") int32 Runs = 1;
 	UPROPERTY() double FinishUnix = 0.0;
+	/** System of the station (claim output accounting). */
+	UPROPERTY() int32 System = -1;
 };
 
 /** NPC price quote for one item at one station. Price 0 = not traded that way here. */

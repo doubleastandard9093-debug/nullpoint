@@ -181,6 +181,8 @@ public:
 	bool HandleTerritoryCommand(const FString& Verb, const FString& Arg, AActor* Target);
 	/** Multi-line helper. */
 	void NotifyLines(const FString& Text);
+	/** Server: interdiction module cooldown (world seconds). */
+	float InterdictReadyAt = 0.f;
 
 protected:
 	virtual void BeginPlay() override;

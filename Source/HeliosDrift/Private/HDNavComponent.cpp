@@ -1,5 +1,6 @@
 #include "HDNavComponent.h"
 #include "HDEconomy.h"
+#include "HDTerritory.h"
 #include "HDShipPawn.h"
 #include "HDShipMovementComponent.h"
 #include "HDShipTypes.h"
@@ -244,11 +245,16 @@ void UHDNavComponent::RequestDock(AActor* Target)
 	if (S->GetVelocity().Size() > MaxDockSpeed) { Notify(TEXT("Too fast to dock (max 200 m/s).")); return; }
 	if (!St->OwnerCorp.IsNone())
 	{
-		const AHDPlayerState* PS = S->GetPlayerState<AHDPlayerState>();
-		if (!PS || (PS->Corp != St->OwnerCorp && St->Info.Family == EHDStationFamily::CorporateModular && !St->Info.bFuelStation))
+		// Player-owned stations, fuel platforms and captured bases: access rules and docking toll (doc 19 §7D.1b).
+		const UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this);
+		int32 DockToll = 0;
+		FString Why;
+		if (Terr && !Terr->CanDock(St, S, DockToll, Why)) { Notify(Why); return; }
+		if (DockToll > 0)
 		{
-			Notify(TEXT("Docking refused: company-only station."));
-			return;
+			AHDPlayerState* TollPS = S->GetPlayerState<AHDPlayerState>();
+			if (!TollPS || TollPS->Credits < DockToll) { Notify(FString::Printf(TEXT("Docking refused: toll is %d cr."), DockToll)); return; }
+			ChargeToll(DockToll, St->OwnerCorp);
 		}
 	}
 	if (St->Info.Family == EHDStationFamily::PirateKitbash && St->OwnerCorp.IsNone())
@@ -330,13 +336,16 @@ void UHDNavComponent::RequestLane(AHDTradeLaneActor* Lane)
 	Notify(FString::Printf(TEXT("Lane engaged: %.0f km to exit"), FVector::Dist(Exit, S->GetActorLocation()) / 1.0e5));
 }
 
-void UHDNavComponent::ChargeToll(int32 Toll, const FName& Owner)
+void UHDNavComponent::ChargeToll(int32 Toll, const FName& TollCorp)
 {
 	AHDShipPawn* S = Ship();
 	AHDPlayerState* PS = S ? S->GetPlayerState<AHDPlayerState>() : nullptr;
-	if (PS && PS->TrySpend(Toll)) { Notify(FString::Printf(TEXT("Toll paid: %d cr to %s"), Toll, *Owner.ToString())); }
-	// Toll income goes to the owner; it never counts toward a claim's Defense Budget (doc 15). See HDTerritory.
-	OnTollPaid.Broadcast(Owner, Toll);
+	if (!PS || PS->Corp == TollCorp) return; // owners ride free
+	if (!PS->TrySpend(Toll)) { Notify(FString::Printf(TEXT("Can't pay the %d cr toll to %s"), Toll, *TollCorp.ToString())); return; }
+	Notify(FString::Printf(TEXT("Toll paid: %d cr to %s"), Toll, *TollCorp.ToString()));
+	// Toll income goes to the owner's treasury; it never counts toward a claim's Defense Budget (doc 15).
+	if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this)) Terr->AddTollIncome(TollCorp, Toll);
+	OnTollPaid.Broadcast(TollCorp, Toll);
 }
 
 bool UHDNavComponent::CanUseLink(const AHDJumpPointActor* J, FString& Why) const

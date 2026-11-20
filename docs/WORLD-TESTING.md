@@ -228,7 +228,7 @@ Test commands are compiled out of Shipping builds.
 - **PVP is a property of place (doc 15):**
   - Secured: no PVP; shots do nothing ("Weapons safe") unless both pilots have `duel on`.
   - Restricted: only between corps at war (48 h notice, existing `AHDGameState::Wars`).
-  - Borderland: at war, or inside a claimed volume (the territory hook arrives in M6).
+  - Borderland: at war, or inside a claimed volume (any system with a company claim, M6).
   - Frontier: open.
   - Criminals are legal targets everywhere.
 - **Crimes:**
@@ -259,3 +259,90 @@ Test commands are compiled out of Shipping builds.
 - [ ] A dead signature in Frontier (try a few): `loot` a buoy and sometimes get `Star chart: N hidden link(s) resolved`.
 - [ ] `spawnnpc shadow`: invisible until you're within 15 km, then a contract offer. `shadow deliver` at the named site resolves hidden signatures.
 - [ ] Spawn pressure: `security` shows the pressure rise after heavy trading in the region (`sell` large amounts).
+
+## 6. Territory, defense, building and governors (milestone 6)
+
+**What's in:** `UHDTerritorySubsystem` (game instance, ticked by the director) holds companies, claims, structures, player lanes, captured bases and colonies. `AHDStructureActor` is the in-world body of a structure while its system is active. Commands live in `HDTerritoryCommands.cpp`. Kits (`kit_beacon`, `kit_gun`, `kit_platform`, `kit_habitat`, `kit_refinery`, `kit_factory`, `kit_fuel_platform`, `kit_station`, `kit_section`, `kit_interdictor`, `kit_lane`, `kit_colony`) and `munitions` are built at factories from components (`recipes kit_`).
+
+- **Companies:** `corp create` costs 100k cr. Members, invites, treasury, CEO-only withdraw and war (the existing 48 h notice). Membership is restored on login from territory state.
+- **Claims (doc 06/15):** anchor a beacon (not in Secured). The claim covers its system, announces itself to pilots entering, and makes Borderland PVP legal inside it (`IsInClaim`). Borderland claims also take over site salvage rights: non-members pay `SiteTollPct` (default 10%) of the salvage value to the treasury.
+- **Defense Budget:**
+  - Raw DB = 50,000 × g^0.536 cr/day, where g = (30-day output / 120M + 30-day trade / 400M + residents / 60) / 3. Doubling all three inputs gives about 1.45×.
+  - Output comes from industry jobs in the system, colony production and fuel platforms. Trade comes from market buys and sells at stations in the system. Residents are company pilots registered with `claim reside` within the last 14 days, plus colony population / 1000, capped by berths (beacon 10, habitat 40, station 60, colony habitat 20).
+  - Anti-spike: DB = min(24 h average, 7-day average) of hourly samples. A new claim ramps up over its first week. DB is then capped by band: Restricted 70k, Borderland 100k, Frontier 150k.
+  - **Taxes and tolls never feed DB.**
+- **The five-tier ladder:**
+  - Upkeep (per structure per day) comes off the top first.
+  - Tier 1 guns and tier 2 platforms: the allocation buys munitions at 90 cr each.
+  - Tier 3: capital stipend, split between company capital pilots in the system.
+  - Tier 4: NPC-flown defenders. Patrol fighters at 1,500 cr/day each (max 12); with ≥ 12,000 cr/day and a `claim wing <faction>` contract (non-negative CEO standing), squadron leaders join.
+  - Tier 5: hired players, **capped at 50% of DB**. Contracts are escrowed (no contract without tier 5 budget), paid hourly, and vetted by a standing minimum only.
+  - The claim shows UNDEFENDED or THIN GARRISON on entry.
+- **Structures (doc 19):**
+  - Anchoring depends on the structure: on a surface (landed), in a belt, in dead space, or (fuel platforms only) in a gas giant's upper atmosphere.
+  - Upkeep is fuel (`supply fuel`, which uses `jump_fuel`) and ammo (`supply ammo`, which uses `munitions`). A structure that's been out of fuel for 48 h becomes a derelict wreck.
+  - Guns (20 km, 70 dps), platforms (30 km, 220 dps) and stations with hardpoint sections (120 dps each × routing efficiency) shoot whatever is hostile to the owner: pirates, rogues, criminals, corps at war, the KOS list and recent aggressors. Guns past 4 per system get 0.85^(n−4).
+  - Surface structures can only be hit by attackers within 3 km altitude (or landed).
+  - Destroyed hardware drops a salvage crate worth about 40% of the kit inputs.
+- **Sieges:** a beacon or station knocked below 50% is REINFORCED (invulnerable) until the owner's `claim window` hour at least 24 h out, then VULNERABLE for 2 h. Survivors pay defender bonuses (10k to members present, 2 days' rate to hires). A destroyed beacon makes the claim fall; stations decay to derelicts.
+- **Stations:**
+  - `station family modular|kitbash` is chosen before the first section. Sections are added with `station add` (power, hardpoint, support, market, refinery, shipyard, dock), each costing a `kit_section`.
+  - Modular: hard cap 8 sections.
+  - Kitbash: no cap, but each section past 6 costs 15% routing efficiency, drains integrity 1%/day and has a 3%/day chance to shear off as salvage. A power deficit halves efficiency and switches services off.
+  - In a fight, station sections are lost outside-in.
+- **Fuel platforms:** player stations that produce jump fuel at the giant's weekly density (Rare 0.4, Consistent 1, Abundant 1.8). Access is `open` (docking toll), `standing <min>` or `corp`. Tolls go to the treasury.
+- **Pirate bases:** `capture` an unowned kitbash base once no pirates fly within 200 km. Docking becomes the company's to grant.
+- **Player lanes:**
+  - Build with `corplane start`, fly 500 km or more, then `corplane finish <toll>` (uses a `kit_lane`). The toll is charged on entry (members ride free), goes to the treasury, and is never DB.
+  - `corplane suppress on` costs 50k/day from the treasury and makes the lane immune to interdiction.
+- **Interdiction:** needs an `interdiction_field` module, a claimed system or Frontier, and 5 munitions per pulse (60 s cooldown). It drops every ship riding a non-suppressed lane within 100 km, sends the lane's owner telemetry, and marks the system's lanes cut for 1 h (trade prices +25%).
+- **Colonies (doc 19 §7D.1a):**
+  - `colony found` while landed (not gas giants or stars, not Secured; uses a `kit_colony`).
+  - Buildings are gated by the world's real resources:
+    - mine needs minerals ≥ 0.15;
+    - farm needs water and fertility ≥ 0.3;
+    - fuel_extractor needs volatiles ≥ 0.25;
+    - refinery needs minerals or volatiles ≥ 0.15.
+  - Direct mode: `colony build <b>`, paid from the treasury.
+  - Weekly, population grows if fed, and production goes into colony storage (`colony take` loads it). Output feeds claim DB and is halved by a full-week orbital blockade (hostiles near the world, no company ship present).
+- **Governors:** `governor hire cheap|good|great` (2k, 8k or 25k cr/week).
+  - Each week a governor proposes a queue for its focus, which you can edit: `governor queue|add|remove|propose|focus|budget`.
+  - A great governor reads the geology, keeps housing and food ahead, and leans into rich resources.
+  - A cheap one ignores geology and overbuilds one sector; builds that fail the gate waste 25% of their cost.
+  - An unpaid salary means the governor quits.
+
+### Console
+| Command | Does |
+|---|---|
+| `HDCmd corp create <id> <name>` / `invite <pilot>` / `join <id>` / `leave` / `info` / `list` | Companies. |
+| `HDCmd corp deposit\|withdraw <cr>` / `corp war <id>` | Treasury and war (CEO). |
+| `HDCmd anchor beacon\|gun\|platform\|habitat\|refinery\|factory\|fuel\|station\|interdictor` | Anchor from a kit in your hold. |
+| `HDCmd claim` / `claim reside` / `claim hires` | Claim readout, residency, contracts. |
+| `HDCmd claim budget <tier 1-5> <cr/day>` | Set a tier allocation (validated against DB, upkeep and the tier 5 cap). |
+| `HDCmd claim hire <pilot> <cr/day> <days>` | Escrowed tier 5 contract. |
+| `HDCmd claim kos add\|remove <corp>` / `window <hourUTC>` / `minstanding <v>` / `wing <faction>` / `toll site <pct>` | Claim policy. |
+| `HDCmd structures` / `supply fuel\|ammo <n>` / `unanchor` | Structure list, upkeep, repack (full integrity returns the kit). |
+| `HDCmd station family\|add <section>\|remove` | Build out a station. |
+| `HDCmd platform access open\|standing <min>\|corp` / `platform toll <cr>` | Fuel platform / station access. |
+| `HDCmd capture` | Take an emptied pirate base. |
+| `HDCmd lane start` / `corplane finish <toll>` / `corplane toll <cr>` / `corplane suppress on\|off` / `lane` | Player lanes. |
+| `HDCmd interdict` | Interdiction pulse. |
+| `HDCmd colony found <name>` / `colony` / `colony build <b>` / `colony take` / `colony list` | Colonies. |
+| `HDCmd governor hire\|fire\|focus\|budget\|queue\|add\|remove\|propose` | Governors. |
+| `HDCmd claim simulate <outputM> <tradeM> <residents>` / `claim hours <n>` | **Test:** set DB inputs, push hourly samples. |
+| `HDCmd governor week` / `siegenow` | **Test:** run the colony week now, end a reinforcement timer. |
+
+### Checklist
+- [ ] `credits 2000000`, `corp create test Test Co`. In a Borderland system: `give kit_beacon 1`, `anchor beacon`. `claim` shows DB 0 (ramping) and the Borderland ceiling of 100k.
+- [ ] `claim simulate 120 400 60` then `claim hours 168`: DB ≈ 50,000. `claim simulate 240 800 120` + `claim hours 168`: ≈ 72,500 (1.45×). In Restricted the cap holds at 70k.
+- [ ] `claim simulate 120 400 60` + `claim hours 24` on a fresh claim: DB stays low (the 7-day window). The anti-spike works.
+- [ ] At DB 50k: `claim budget 5 25000` is accepted and `claim budget 5 30000` is refused (50% cap). A total above DB − upkeep is refused too.
+- [ ] `give kit_gun 3`, `anchor gun` ×3 a few km apart; `give munitions 200`, `supply ammo 50` at each. `spawnnpc pirate - 3` nearby: the guns fire and ammo drops.
+- [ ] `claim budget 4 6000`: within about 30 s, 4 patrol defenders spawn around the beacon and attack hostiles.
+- [ ] Second PIE client (different corp) shoots the beacon below 50%: REINFORCED, damage stops. `siegenow`, then it's VULNERABLE; let it survive 2 h (or destroy it) and the claim falls.
+- [ ] `give kit_station 1`, `anchor station`, `station family kitbash`, `give kit_section 10`, `station add` ×10: efficiency drops past 6 sections; `structures` shows it.
+- [ ] Near a gas giant's cloud tops: `give kit_fuel_platform 1`, `anchor fuel`. It docks like a station; `platform access corp` refuses other pilots; `platform toll 500` charges others on docking.
+- [ ] `corplane start`, fly 600 km, `give kit_lane 1`, `corplane finish 200`. A second pilot riding it pays 200 cr; `corp info` shows toll income, while claim DB is unchanged.
+- [ ] Fit `interdiction_field`, `give munitions 10`, `interdict` next to a pilot riding a lane: they drop out with INTERDICTED. `corplane suppress on` protects the lane.
+- [ ] Land on a rocky world in your claim: `give kit_colony 1`, `colony found Home`. `colony build farm` on a dry world is refused. `governor hire great`, `governor budget 200000`, `corp deposit 500000`, `governor week`: buildings appear and a new queue is proposed; `colony take` loads produce.
+- [ ] `governor hire cheap` on a poor world, `governor week`: some builds waste money ("Wasted ... cr").

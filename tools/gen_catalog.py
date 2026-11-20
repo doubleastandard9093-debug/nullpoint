@@ -141,6 +141,23 @@ item('pirate_tags', 'Pirate Ident Tags', 'Bounty', 0.01, 1500)
 item('sentinel_core', 'Sentinel Core', 'Bounty', 0.5, 12000)
 item('star_chart', 'Star Chart Fragment', 'Component', 0.01, 4000)
 item('signal_data', 'Signal Data Cache', 'Component', 0.05, 900)
+item('munitions', 'Munitions', 'Component', 0.1, 90)
+# Structure kits (doc 19): anchored from the hold. Everything traces back to mining.
+KITS = [
+    ('kit_beacon', 'Claim Beacon Kit', 40, 400000, {'structural_frame': 40, 'power_cell': 20, 'sensor_array': 10, 'circuit_board': 20}, 600),
+    ('kit_gun', 'Gun Placement Kit', 8, 60000, {'structural_frame': 8, 'focusing_lens': 6, 'power_cell': 4}, 120),
+    ('kit_platform', 'Defense Platform Kit', 25, 220000, {'structural_frame': 25, 'shield_emitter': 10, 'focusing_lens': 12, 'power_cell': 12}, 300),
+    ('kit_habitat', 'Habitat Ring Kit', 60, 180000, {'habitat_block': 3, 'structural_frame': 20, 'power_cell': 10}, 300),
+    ('kit_refinery', 'Orbital Refinery Kit', 50, 260000, {'structural_frame': 40, 'power_cell': 20, 'drive_coil': 10}, 360),
+    ('kit_factory', 'Orbital Factory Kit', 50, 300000, {'structural_frame': 40, 'circuit_board': 30, 'power_cell': 20}, 360),
+    ('kit_fuel_platform', 'Gas Giant Fuel Platform Kit', 60, 350000, {'structural_frame': 50, 'drive_coil': 20, 'power_cell': 20, 'sensor_array': 6}, 420),
+    ('kit_station', 'Station Core Kit', 120, 900000, {'dock_section': 4, 'habitat_block': 4, 'structural_frame': 80, 'power_cell': 40}, 900),
+    ('kit_section', 'Station Section Kit', 30, 120000, {'structural_frame': 25, 'power_cell': 10, 'circuit_board': 10}, 180),
+    ('kit_interdictor', 'Lane Interdictor Kit', 20, 160000, {'structural_frame': 15, 'drive_coil': 15, 'sensor_array': 8}, 240),
+    ('kit_lane', 'Trade Lane Ring Pair Kit', 100, 1200000, {'structural_frame': 120, 'drive_coil': 60, 'power_cell': 60, 'sensor_array': 20}, 900),
+    ('kit_colony', 'Colony Seed Kit', 80, 500000, {'habitat_block': 6, 'structural_frame': 40, 'food_rations': 200, 'medical_supplies': 50}, 600),
+]
+for k in KITS: item(k[0], k[1], 'Component', k[2], k[3])
 for m in M:
     item(m['id'], m['name'], 'Module', 2.0 * m['size'] ** 2, m['price'], tier=m['tier'])
 for h in H:
@@ -157,6 +174,8 @@ rec('melt_ice', 'water', 10, {'ice_water': 20}, 8, 'refinery')
 rec('crack_volatile_ice', 'volatiles', 10, {'ice_volatile': 20}, 12, 'refinery')
 rec('crack_gas', 'volatiles', 10, {'gas_volatile': 25}, 12, 'refinery')
 rec('jump_fuel', 'jump_fuel', 20, {'gas_nebular': 25}, 10, 'refinery')
+rec('munitions', 'munitions', 50, {'ferrite_ingot': 10, 'volatiles': 5}, 10, 'factory')
+for k in KITS: rec(k[0], k[0], 1, k[4], k[5], 'factory')
 rec('recycle_scrap', 'ferrite_ingot', 6, {'salvage_scrap': 10}, 6, 'refinery')
 rec('recycle_alloy', 'ferrite_ingot', 10, {'salvage_alloy': 5}, 6, 'refinery')
 rec('structural_frame', 'structural_frame', 1, {'ferrite_ingot': 12}, 10, 'factory')

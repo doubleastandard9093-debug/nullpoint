@@ -7,6 +7,7 @@
 #include "HDPlayerState.h"
 #include "HDWorldActors.h"
 #include "HDNpcSubsystem.h"
+#include "HDTerritory.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 
@@ -42,6 +43,11 @@ bool AHDNpcController::IsHostileTo(const AActor* Other) const
 	if (Other == LastAttacker.Get() && GetWorld() && GetWorld()->GetTimeSeconds() - LastAttackedTime < 60.f) return true;
 	const AHDNpcController* NC = Cast<AHDNpcController>(S->GetController());
 	const AHDPlayerState* PS = S->GetPlayerState<AHDPlayerState>();
+	if (!DefendCorp.IsNone())
+	{
+		const UHDTerritorySubsystem* T = UHDTerritorySubsystem::Get(this);
+		return T && T->IsHostileToCorp(DefendCorp, S);
+	}
 	switch (Pop)
 	{
 	case EHDNpcPop::Accord:

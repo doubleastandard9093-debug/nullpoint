@@ -11,6 +11,7 @@
 #include "HDFittingComponent.h"
 #include "HDWreckActor.h"
 #include "HDNpcSubsystem.h"
+#include "HDTerritory.h"
 #include "HeliosDrift.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -206,6 +207,8 @@ void AHDSystemDirector::SpawnSystemContent(FHDActiveSystem& A)
 			}
 		}
 	}
+	// Player territory: structures, player lanes, station proxies and captured bases (M6).
+	if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this)) Terr->SpawnForSystem(A);
 }
 
 void AHDSystemDirector::Deactivate(int32 ActiveIndex)
@@ -376,6 +379,7 @@ void AHDSystemDirector::Tick(float DeltaSeconds)
 	}
 
 	if (UHDEconomySubsystem* Econ = UHDEconomySubsystem::Get(this)) Econ->Tick(DeltaSeconds, GetWorld());
+	if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this)) Terr->Tick(DeltaSeconds, GetWorld());
 }
 
 void AHDSystemDirector::StreamFields(FHDActiveSystem& A, const TArray<AHDShipPawn*>& Ships, float Dt)

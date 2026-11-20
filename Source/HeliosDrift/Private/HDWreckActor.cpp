@@ -7,6 +7,7 @@
 #include "HDCargoComponent.h"
 #include "HDSystemDirector.h"
 #include "HDGameMode.h"
+#include "HDTerritory.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
 #include "UObject/ConstructorHelpers.h"
@@ -206,10 +207,13 @@ FString AHDWreckActor::Work(AHDShipPawn* By, float Amount)
 	UHDCargoComponent* Cargo = By ? By->Cargo.Get() : nullptr;
 	const float Mul = FlagYield(Flag);
 	TArray<FString> Got;
-	auto Give = [&Got, Cargo](const FName& Item, int32 Qty)
+	int64 GotValue = 0;
+	const UHDCatalogSubsystem* Catalog = UHDCatalogSubsystem::Get(this);
+	auto Give = [&Got, &GotValue, Cargo, Catalog](const FName& Item, int32 Qty)
 	{
 		if (Qty <= 0) return;
 		const int32 N = Cargo ? Cargo->Add(Item, Qty) : 0;
+		if (N > 0 && Catalog) { if (const FHDItemDef* Def = Catalog->FindItem(Item)) GotValue += (int64)Def->Price * N; }
 		if (N > 0) Got.Add(FString::Printf(TEXT("%s x%d"), *Item.ToString(), N));
 		if (N < Qty) Got.Add(TEXT("(hold full)"));
 	};
@@ -237,7 +241,21 @@ FString AHDWreckActor::Work(AHDShipPawn* By, float Amount)
 	if ((Flag == EHDHulkFlag::Open || Age == EHDWreckAge::Ancient) && FMath::FRand() < 0.15f * Mul) Give(TEXT("ancient_relic"), 1);
 	++TimesWorked;
 	Grade = FMath::Min(Grade + 1, 5);
-	const FString Msg = FString::Printf(TEXT("Salvage pass complete: %s. Now %s."), Got.Num() ? *FString::Join(Got, TEXT(", ")) : TEXT("nothing usable"), GradeName(Grade));
+	FString Msg = FString::Printf(TEXT("Salvage pass complete: %s. Now %s."), Got.Num() ? *FString::Join(Got, TEXT(", ")) : TEXT("nothing usable"), GradeName(Grade));
+	// Salvage rights inside a Borderland claim: non-members pay the owner's site toll (doc 20). Never feeds DB.
+	AHDPlayerState* WorkerPS = By ? By->GetPlayerState<AHDPlayerState>() : nullptr;
+	UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this);
+	if (WorkerPS && Terr && !SalvageTollOwner.IsNone() && WorkerPS->Corp != SalvageTollOwner && GotValue > 0)
+	{
+		const FHDClaim* Claim = Terr->ClaimInSystem(SystemIndex);
+		const int32 Pct = Claim && Claim->Corp == SalvageTollOwner ? Claim->SiteTollPct : 10;
+		const int64 SiteToll = GotValue * Pct / 100;
+		if (SiteToll > 0 && WorkerPS->TrySpend(SiteToll))
+		{
+			Terr->AddTollIncome(SalvageTollOwner, SiteToll);
+			Msg += FString::Printf(TEXT(" Salvage toll %lld cr to %s."), SiteToll, *SalvageTollOwner.ToString());
+		}
+	}
 	if (Grade >= 5 && !TowedBy.IsValid()) { SetLifeSpan(30.f); }
 	return Msg;
 }

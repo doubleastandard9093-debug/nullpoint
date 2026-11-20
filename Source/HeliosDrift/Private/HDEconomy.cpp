@@ -1,4 +1,5 @@
 #include "HDEconomy.h"
+#include "HDTerritory.h"
 #include "HDCatalog.h"
 #include "HDWorldActors.h"
 #include "HDWreckActor.h"
@@ -294,6 +295,12 @@ void UHDEconomySubsystem::Tick(float Dt, UWorld* World)
 			else
 			{
 				DeliverToStorage(World, J.Owner, J.Station, R->Output, R->Qty * J.Runs, 0);
+			}
+			// Industrial output feeds the Defense Budget of a claim in the job's system (doc 15).
+			if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(World))
+			{
+				const FHDItemDef* OutDef = Cat->FindItem(R->Output);
+				if (OutDef && J.System >= 0) Terr->AddIndustrialOutput(J.System, (double)OutDef->Price * R->Qty * J.Runs);
 			}
 			if (AHDPlayerState* PS = FindOnlinePilot(World, J.Owner))
 			{

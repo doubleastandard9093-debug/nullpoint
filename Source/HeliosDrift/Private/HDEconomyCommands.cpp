@@ -10,6 +10,7 @@
 #include "HDWorldActors.h"
 #include "HDWreckActor.h"
 #include "HDEconomy.h"
+#include "HDTerritory.h"
 #include "HDUniverseSubsystem.h"
 #include "EngineUtils.h"
 
@@ -152,6 +153,7 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 			}
 		}
 		if (UHDUniverseSubsystem* U = UHDUniverseSubsystem::Get(this)) Econ->AddTrade(U->GetSystem(Docked->SystemIndex).Region, Spent);
+		if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this)) Terr->AddTrade(Docked->SystemIndex, (double)Spent);
 		if (Got == 0) { Notify(Q.NpcSells == 0 ? TEXT("Nobody sells that here at that price. Place a buy order: order buy <item> <qty> <price>") : TEXT("Can't afford it.")); return true; }
 		Notify(FString::Printf(TEXT("Bought %d x %s for %lld cr%s%s"), Got, *Cat->GetName(Item), Spent, bToStorage ? TEXT(" (overflow to station storage)") : TEXT(""),
 			Q.bStolenGoods ? TEXT(" - stolen goods: carries a legal mark in lawful space") : TEXT("")));
@@ -203,6 +205,7 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 			Want = 0;
 		}
 		if (UHDUniverseSubsystem* U = UHDUniverseSubsystem::Get(this)) Econ->AddTrade(U->GetSystem(Docked->SystemIndex).Region, Earned);
+		if (UHDTerritorySubsystem* Terr = UHDTerritorySubsystem::Get(this)) Terr->AddTrade(Docked->SystemIndex, (double)Earned);
 		if (Sold == 0) { Notify(TEXT("Nobody buys that here. Place a sell order: order sell <item> <qty> <price>")); return true; }
 		Notify(FString::Printf(TEXT("Sold %d x %s for %lld cr (after tax)"), Sold, *Cat->GetName(Item), Earned));
 		return true;
@@ -330,6 +333,7 @@ bool AHDPlayerController::HandleEconomyCommand(const FString& Verb, const FStrin
 		FHDJob J;
 		J.Owner = PS->PilotId;
 		J.Station = Docked->ObjectId;
+		J.System = Docked->SystemIndex;
 		J.Recipe = R->Id;
 		J.Runs = Runs;
 		J.FinishUnix = AHDPlayerState::NowUnix() + R->Seconds * Runs;

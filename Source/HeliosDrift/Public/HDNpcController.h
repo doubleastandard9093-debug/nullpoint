@@ -38,6 +38,8 @@ public:
 	EHDNpcState State = EHDNpcState::Idle;
 	/** Faction key (e.g. halvar_combine, black_tally, accord). */
 	FName Faction;
+	/** Tier 4 claim defenders: fight whatever is hostile to this company's claim (doc 15). */
+	FName DefendCorp;
 	/** Where it lives: patrol centre, guard anchor or spawn point (world). */
 	FVector Home = FVector::ZeroVector;
 	/** Sentinels / site guards never chase beyond this from Home (cm). */

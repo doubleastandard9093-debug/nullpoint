@@ -118,7 +118,7 @@ private:
 	void CompleteJump();
 	void CompleteScan();
 	bool CanUseLink(const AHDJumpPointActor* J, FString& Why) const;
-	void ChargeToll(int32 Toll, const FName& Owner);
+	void ChargeToll(int32 Toll, const FName& TollCorp);
 
 	/** Server-only: pending jump details. */
 	int32 PendingSystem = -1;
